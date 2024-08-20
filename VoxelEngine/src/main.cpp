@@ -1,33 +1,22 @@
-#include <GLFW/glfw3.h>
+#include "window.h"
+
+#include <iostream>
 
 int main() {
-    // Initialize GLFW
-    if (!glfwInit()) {
-        return -1;
+    try {
+        Window window(800, 600, "AAAAAAAAAAAA");
+
+        while (!window.shouldClose()) {
+            // Render your Voxel Engine here
+
+            window.swapBuffers();
+            window.pollEvents();
+        }
     }
-
-    // Create a window
-    GLFWwindow* window = glfwCreateWindow(800, 600, "AAAAAAAAAAAAA", nullptr, nullptr);
-    if (!window) {
-        glfwTerminate();
-        return -1;
+    catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return 1;
     }
-
-    // Make the window's context current
-    glfwMakeContextCurrent(window);
-
-    // Main loop
-    while (!glfwWindowShouldClose(window)) {
-        // Render your Voxel Engine here
-
-        // Swap buffers and poll events
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
-
-    // Cleanup
-    glfwDestroyWindow(window);
-    glfwTerminate();
 
     return 0;
 }
