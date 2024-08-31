@@ -48,6 +48,10 @@ struct QueueFamilyIndices {
 
 class HelloTriangleApplication {
 public:
+    HelloTriangleApplication()
+        : window(nullptr), instance(VK_NULL_HANDLE), debugMessenger(VK_NULL_HANDLE),
+        physicalDevice(VK_NULL_HANDLE), device(VK_NULL_HANDLE), graphicsQueue(VK_NULL_HANDLE) {}
+
     void run() {
         initWindow();
         initVulkan();
