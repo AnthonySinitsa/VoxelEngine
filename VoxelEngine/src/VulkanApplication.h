@@ -9,9 +9,9 @@ namespace vge {
             static constexpr int WIDTH = 800;
             static constexpr int HEIGHT = 600;
 
-            void run(){};
+            void run();
 
         private:
-            Window Window{WIDTH, HEIGHT, "screw AI"};
+            Window vgeWindow{WIDTH, HEIGHT, "AAAAAAAAAA"};
     };
-}
+} // namespace
