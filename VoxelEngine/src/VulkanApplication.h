@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Window.h"
+#include "Graphics/Pipeline.h"
 
 namespace vge {
     class VulkanApplication {
@@ -13,5 +14,6 @@ namespace vge {
 
         private:
             Window vgeWindow{WIDTH, HEIGHT, "AAAAAAAAAA"};
+            Pipeline vgePipeline{"shaders/vertex_shader.vert.spv", "shaders/fragment_shader.frag.spv"};
     };
 } // namespace
