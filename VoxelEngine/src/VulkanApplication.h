@@ -2,6 +2,7 @@
 
 #include "Window.h"
 #include "Graphics/Pipeline.h"
+#include "Device/Device.h"
 
 namespace vge {
     class VulkanApplication {
@@ -14,6 +15,12 @@ namespace vge {
 
         private:
             Window vgeWindow{WIDTH, HEIGHT, "AAAAAAAAAA"};
-            Pipeline vgePipeline{"shaders/vertex_shader.vert.spv", "shaders/fragment_shader.frag.spv"};
+            VgeDevice vgeDevice{vgeWindow};
+            Pipeline vgePipeline{
+                vgeDevice,
+                "shaders/vertex_shader.vert.spv",
+                "shaders/fragment_shader.frag.spv",
+                Pipeline::defaultPipelineConfigInfo(WIDTH, HEIGHT)
+            };
     };
 } // namespace
