@@ -1,5 +1,6 @@
 #include "Window.h"
 #include <GLFW/glfw3.h>
+#include <stdexcept>
 
 namespace vge {
     Window::Window(int w, int h, std::string name) : width{w}, height{h}, windowName{name} {
@@ -18,4 +19,11 @@ namespace vge {
 
         window = glfwCreateWindow(width, height, windowName.c_str(), nullptr, nullptr);
     }
+
+    void Window::createWindowSurface(VkInstance instance, VkSurfaceKHR *surface){
+        if(glfwCreateWindowSurface(instance, window, nullptr, surface) != VK_SUCCESS) {
+            throw std::runtime_error("failed to create window surface");
+        }
+    }
+
 } // namespace
