@@ -77,7 +77,7 @@ namespace vge{
         shaderStages[1].pSpecializationInfo = nullptr;
 
         VkPipelineVertexInputStateCreateInfo vertexInputInfo{};
-        vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
+        vertexInputInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_VERTEX_INPUT_STATE_CREATE_INFO;
         vertexInputInfo.vertexAttributeDescriptionCount = 0;
         vertexInputInfo.vertexBindingDescriptionCount = 0;
         vertexInputInfo.pVertexAttributeDescriptions = nullptr;
