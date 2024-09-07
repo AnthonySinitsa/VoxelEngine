@@ -30,7 +30,7 @@ namespace vge{
         pipelineLayoutInfo.pSetLayouts = nullptr;
         pipelineLayoutInfo.pushConstantRangeCount = 0;
         pipelineLayoutInfo.pPushConstantRanges = nullptr;
-        if(vkCreatePipelineLayout(vgeDevice.device(), &pipelineLayoutInfo, nullptr, &pipelineLayoutInfo) != VK_SUCCESS){
+        if (vkCreatePipelineLayout(vgeDevice.device(), &pipelineLayoutInfo, nullptr, &pipelineLayout) != VK_SUCCESS){
             throw std::runtime_error("failed to create pipeline layout!!!");
         }
     }
