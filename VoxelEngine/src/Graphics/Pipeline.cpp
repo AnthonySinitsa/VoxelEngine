@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <stdexcept>
+#include <cassert>
 #include <iostream>
 #include <vulkan/vulkan_core.h>
 
@@ -45,6 +46,13 @@ namespace vge{
     void Pipeline::createGraphicsPipeline(
         const std::string& vertFilepath, const std::string&fragFilepath, const PipelineConfigInfo& configInfo
     ){
+
+        assert(
+            configInfo.pipelineLayout != VK_NULL_HANDLE &&
+            "Cannot create graphics pipeline:: no piplineLayout provided in configInfo");
+        assert(
+            configInfo.renderPass != VK_NULL_HANDLE &&
+            "Cannot create graphics pipeline:: no renderPass provided in configInfo");
         auto vertCode = readFile(vertFilepath);
         auto fragCode = readFile(fragFilepath);
 
@@ -83,6 +91,7 @@ namespace vge{
         pipelineInfo.pInputAssemblyState = &configInfo.inputAssemblyInfo;
         pipelineInfo.pViewportState = &configInfo.viewportInfo;
         pipelineInfo.pRasterizationState = &configInfo.rasterizationInfo;
+        pipelineInfo.pMultisampleState = &configInfo.multisampleInfo;
         pipelineInfo.pColorBlendState = &configInfo.colorBlendInfo;
         pipelineInfo.pDepthStencilState = &configInfo.depthStencilInfo;
         pipelineInfo.pDynamicState = nullptr;
