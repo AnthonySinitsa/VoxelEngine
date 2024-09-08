@@ -22,8 +22,10 @@ namespace vge{
     void VulkanApplication::run(){
         while(!vgeWindow.shouldClose()){
             glfwPollEvents();
+            drawFrame();
         }
     }
+
 
     void VulkanApplication::createPipelineLayout(){
         VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
@@ -37,6 +39,7 @@ namespace vge{
         }
     }
 
+
     void VulkanApplication::createPipeline(){
         auto pipelineConfig =
             Pipeline::defaultPipelineConfigInfo(vgeSwapChain.width(), vgeSwapChain.height());
@@ -49,6 +52,7 @@ namespace vge{
             pipelineConfig
         );
     }
+
 
     void VulkanApplication::createCommandBuffers(){
         commandBuffers.resize(vgeSwapChain.imageCount());
@@ -96,5 +100,19 @@ namespace vge{
             }
         }
     }
-    void VulkanApplication::drawFrame(){}
+
+
+    void VulkanApplication::drawFrame(){
+        uint32_t imageIndex;
+        auto result = vgeSwapChain.acquireNextImage(&imageIndex);
+
+        if(result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR){
+            throw std::runtime_error("failed to acquire swap chain image!!!");
+        }
+
+        result = vgeSwapChain.submitCommandBuffers(&commandBuffers[imageIndex], &imageIndex);
+        if(result != VK_SUCCESS){
+            throw std::runtime_error("failed to acquire swap chain image!!!");
+        }
+    }
 } // namespace
