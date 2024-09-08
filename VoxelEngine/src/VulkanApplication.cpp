@@ -24,6 +24,8 @@ namespace vge{
             glfwPollEvents();
             drawFrame();
         }
+
+        vkDeviceWaitIdle(vgeDevice.device());
     }
 
 
