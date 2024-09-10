@@ -4,6 +4,7 @@
 #include "Graphics/Pipeline.h"
 #include "Device/Device.h"
 #include "Presentation/SwapChain.h"
+#include "Models/Model.h"
 
 // std
 #include <memory>
@@ -25,6 +26,7 @@ namespace vge {
             void run();
 
         private:
+            void loadModels();
             void createPipelineLayout();
             void createPipeline();
             void createCommandBuffers();
@@ -36,5 +38,6 @@ namespace vge {
             std::unique_ptr<Pipeline> vgePipeline;
             VkPipelineLayout pipelineLayout;
             std::vector<VkCommandBuffer> commandBuffers;
+            std::unique_ptr<Model> vgeModel;
     };
 } // namespace
