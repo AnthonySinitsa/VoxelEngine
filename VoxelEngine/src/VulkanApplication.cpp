@@ -1,4 +1,5 @@
 #include "VulkanApplication.h"
+#include "Device/Device.h"
 #include <cstdint>
 #include <vulkan/vulkan_core.h>
 
@@ -10,6 +11,7 @@
 namespace vge{
 
     VulkanApplication::VulkanApplication(){
+        loadModels();
         createPipelineLayout();
         createPipeline();
         createCommandBuffers();
@@ -26,6 +28,16 @@ namespace vge{
         }
 
         vkDeviceWaitIdle(vgeDevice.device());
+    }
+
+
+    void VulkanApplication::loadModels(){
+        std::vector<Model::Vertex> vertices{
+            {{0.0f, -0.5f}},
+            {{0.5f, 0.5f}},
+            {{-0.5f, 0.5f}},
+        };
+        vgeModel = std::make_unique<Model>(vgeDevice, vertices);
     }
 
 
@@ -94,7 +106,8 @@ namespace vge{
             vkCmdBeginRenderPass(commandBuffers[i], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
 
             vgePipeline->bind(commandBuffers[i]);
-            vkCmdDraw(commandBuffers[i], 3, 1, 0, 0);
+            vgeModel->bind(commandBuffers[i]);
+            vgeModel->draw(commandBuffers[i]);
 
             vkCmdEndRenderPass(commandBuffers[i]);
             if(vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS){
