@@ -1,6 +1,7 @@
 #include "VulkanApplication.h"
 #include "Device/Device.h"
 #include <cstdint>
+#include <memory>
 #include <vulkan/vulkan_core.h>
 
 
@@ -13,7 +14,7 @@ namespace vge{
     VulkanApplication::VulkanApplication(){
         loadModels();
         createPipelineLayout();
-        createPipeline();
+        recreateSwapChain();
         createCommandBuffers();
     }
 
@@ -67,6 +68,19 @@ namespace vge{
             "shaders/fragment_shader.frag.spv",
             pipelineConfig
         );
+    }
+
+
+    void VulkanApplication::recreateSwapChain(){
+        auto extent = vgeWindow.getExtent();
+        while(extent.width == 0 || extent.height == 0){
+            extent = vgeWindow.getExtent();
+            glfwWaitEvents();
+        }
+
+        vkDeviceWaitIdle(vgeDevice.device());
+        vgeSwapChain = std::make_unique<VgeSwapChain>(vgeDevice, extent);
+        createPipeline();
     }
 
 
