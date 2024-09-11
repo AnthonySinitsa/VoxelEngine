@@ -35,7 +35,7 @@ namespace vge{
         ~Pipeline();
 
         Pipeline(const Pipeline&) = delete;
-        void operator=(const Pipeline&) = delete;
+        Pipeline& operator=(const Pipeline&) = delete;
 
         void bind(VkCommandBuffer commandBuffer);
         static PipelineConfigInfo defaultPipelineConfigInfo(uint32_t width, uint32_t height);

@@ -19,7 +19,7 @@ class VgeSwapChain {
   ~VgeSwapChain();
 
   VgeSwapChain(const VgeSwapChain &) = delete;
-  void operator=(const VgeSwapChain &) = delete;
+  VgeSwapChain& operator=(const VgeSwapChain &) = delete;
 
   VkFramebuffer getFrameBuffer(int index) { return swapChainFramebuffers[index]; }
   VkRenderPass getRenderPass() { return renderPass; }
