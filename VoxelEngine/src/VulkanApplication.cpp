@@ -138,11 +138,21 @@ namespace vge{
         uint32_t imageIndex;
         auto result = vgeSwapChain->acquireNextImage(&imageIndex);
 
+        if(result == VK_ERROR_OUT_OF_DATE_KHR){
+            recreateSwapChain();
+            return;
+        }
         if(result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR){
             throw std::runtime_error("failed to acquire swap chain image!!!");
         }
 
+        recordCommandBuffer(imageIndex);
         result = vgeSwapChain->submitCommandBuffers(&commandBuffers[imageIndex], &imageIndex);
+        if(result == VK_ERROR_OUT_OF_DATE_KHR || result == VK_SUBOPTIMAL_KHR || vgeWindow.wasWindowResized()){
+            vgeWindow.resetWindowResizedFlag();
+            recreateSwapChain();
+            return;
+        }
         if(result != VK_SUCCESS){
             throw std::runtime_error("failed to acquire swap chain image!!!");
         }
