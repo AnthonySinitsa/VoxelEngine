@@ -56,8 +56,10 @@ namespace vge{
 
     void VulkanApplication::createPipeline(){
         auto pipelineConfig =
-            Pipeline::defaultPipelineConfigInfo(vgeSwapChain.width(), vgeSwapChain.height());
-        pipelineConfig.renderPass = vgeSwapChain.getRenderPass();
+            Pipeline::defaultPipelineConfigInfo(
+                vgeSwapChain->width(),
+                vgeSwapChain->height());
+        pipelineConfig.renderPass = vgeSwapChain->getRenderPass();
         pipelineConfig.pipelineLayout = pipelineLayout;
         vgePipeline = std::make_unique<Pipeline>(
             vgeDevice,
@@ -69,7 +71,7 @@ namespace vge{
 
 
     void VulkanApplication::createCommandBuffers(){
-        commandBuffers.resize(vgeSwapChain.imageCount());
+        commandBuffers.resize(vgeSwapChain->imageCount());
 
         VkCommandBufferAllocateInfo allocInfo{};
         allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -91,11 +93,11 @@ namespace vge{
 
             VkRenderPassBeginInfo renderPassInfo{};
             renderPassInfo.sType = VK_STRUCTURE_TYPE_RENDER_PASS_BEGIN_INFO;
-            renderPassInfo.renderPass = vgeSwapChain.getRenderPass();
-            renderPassInfo.framebuffer = vgeSwapChain.getFrameBuffer(i);
+            renderPassInfo.renderPass = vgeSwapChain->getRenderPass();
+            renderPassInfo.framebuffer = vgeSwapChain->getFrameBuffer(i);
 
             renderPassInfo.renderArea.offset = {0, 0};
-            renderPassInfo.renderArea.extent = vgeSwapChain.getSwapChainExtent();
+            renderPassInfo.renderArea.extent = vgeSwapChain->getSwapChainExtent();
 
             std::array<VkClearValue, 2> clearValues{};
             clearValues[0].color = {0.1f, 0.1f, 0.1f, 1.0f};
@@ -119,13 +121,13 @@ namespace vge{
 
     void VulkanApplication::drawFrame(){
         uint32_t imageIndex;
-        auto result = vgeSwapChain.acquireNextImage(&imageIndex);
+        auto result = vgeSwapChain->acquireNextImage(&imageIndex);
 
         if(result != VK_SUCCESS && result != VK_SUBOPTIMAL_KHR){
             throw std::runtime_error("failed to acquire swap chain image!!!");
         }
 
-        result = vgeSwapChain.submitCommandBuffers(&commandBuffers[imageIndex], &imageIndex);
+        result = vgeSwapChain->submitCommandBuffers(&commandBuffers[imageIndex], &imageIndex);
         if(result != VK_SUCCESS){
             throw std::runtime_error("failed to acquire swap chain image!!!");
         }
