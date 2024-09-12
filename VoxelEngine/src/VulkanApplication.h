@@ -30,11 +30,14 @@ namespace vge {
             void createPipelineLayout();
             void createPipeline();
             void createCommandBuffers();
+            void freeCommandBuffers();
             void drawFrame();
+            void recreateSwapChain();
+            void recordCommandBuffer(int imageIndex);
 
             Window vgeWindow{WIDTH, HEIGHT, "AAAAAAAAAA"};
             VgeDevice vgeDevice{vgeWindow};
-            VgeSwapChain vgeSwapChain{vgeDevice, vgeWindow.getExtent()};
+            std::unique_ptr<VgeSwapChain> vgeSwapChain;
             std::unique_ptr<Pipeline> vgePipeline;
             VkPipelineLayout pipelineLayout;
             std::vector<VkCommandBuffer> commandBuffers;
