@@ -56,10 +56,8 @@ namespace vge{
 
 
     void VulkanApplication::createPipeline(){
-        auto pipelineConfig =
-            Pipeline::defaultPipelineConfigInfo(
-                vgeSwapChain->width(),
-                vgeSwapChain->height());
+        PipelineConfigInfo pipelineConfig{};
+        Pipeline::defaultPipelineConfigInfo(pipelineConfig);
         pipelineConfig.renderPass = vgeSwapChain->getRenderPass();
         pipelineConfig.pipelineLayout = pipelineLayout;
         vgePipeline = std::make_unique<Pipeline>(
@@ -122,6 +120,17 @@ namespace vge{
         renderPassInfo.pClearValues = clearValues.data();
 
         vkCmdBeginRenderPass(commandBuffers[imageIndex], &renderPassInfo, VK_SUBPASS_CONTENTS_INLINE);
+
+        VkViewport viewport{};
+        viewport.x = 0.0f;
+        viewport.y = 0.0f;
+        viewport.width = static_cast<float>(vgeSwapChain->getSwapChainExtent().width);
+        viewport.height = static_cast<float>(vgeSwapChain->getSwapChainExtent().height);
+        viewport.minDepth = 0.0f;
+        viewport.maxDepth = 1.0f;
+        VkRect2D scissor{{0, 0}, vgeSwapChain->getSwapChainExtent()};
+        vkCmdSetViewport(commandBuffers[imageIndex], 0, 1, &viewport);
+        vkCmdSetScissor(commandBuffers[imageIndex], 0, 1, &scissor);
 
         vgePipeline->bind(commandBuffers[imageIndex]);
         vgeModel->bind(commandBuffers[imageIndex]);
