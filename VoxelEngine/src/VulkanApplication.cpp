@@ -1,5 +1,6 @@
 #include "VulkanApplication.h"
 #include "Device/Device.h"
+#include "Presentation/SwapChain.h"
 #include <cstdint>
 #include <memory>
 #include <vulkan/vulkan_core.h>
@@ -56,6 +57,9 @@ namespace vge{
 
 
     void VulkanApplication::createPipeline(){
+        assert(vgeSwapChain != nullptr && "Cannot create pipeline before swap chain!!!");
+        assert(pipelineLayout != nullptr && "Cannot create pipeline before pipeline layout!!!");
+
         PipelineConfigInfo pipelineConfig{};
         Pipeline::defaultPipelineConfigInfo(pipelineConfig);
         pipelineConfig.renderPass = vgeSwapChain->getRenderPass();
@@ -77,7 +81,16 @@ namespace vge{
         }
 
         vkDeviceWaitIdle(vgeDevice.device());
-        vgeSwapChain = std::make_unique<VgeSwapChain>(vgeDevice, extent);
+
+        if(vgeSwapChain == nullptr){
+            vgeSwapChain = std::make_unique<VgeSwapChain>(vgeDevice, extent);
+        } else {
+            vgeSwapChain = std::make_unique<VgeSwapChain>(vgeDevice, extent, std::move(vgeSwapChain));
+            if(vgeSwapChain->imageCount() != commandBuffers.size()){
+                freeCommandBuffers();
+                createCommandBuffers();
+            }
+        }
         createPipeline();
     }
 
@@ -94,6 +107,17 @@ namespace vge{
         if(vkAllocateCommandBuffers(vgeDevice.device(), &allocInfo, commandBuffers.data()) != VK_SUCCESS){
             throw std::runtime_error("failed to allocate command buffers!!!");
         }
+    }
+
+
+    void VulkanApplication::freeCommandBuffers(){
+        vkFreeCommandBuffers(
+            vgeDevice.device(),
+            vgeDevice.getCommandPool(),
+            static_cast<uint32_t>(commandBuffers.size()),
+            commandBuffers.data()
+        );
+        commandBuffers.clear();
     }
 
 
