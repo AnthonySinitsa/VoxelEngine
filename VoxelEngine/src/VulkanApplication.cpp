@@ -18,7 +18,7 @@ namespace vge{
 
     struct SimplePushConstantData{
         glm::vec2 offset;
-        glm::vec3 color;
+        alignas(16) glm::vec3 color;
     };
 
     VulkanApplication::VulkanApplication(){
