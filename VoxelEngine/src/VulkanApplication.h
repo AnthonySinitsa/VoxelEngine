@@ -10,6 +10,7 @@
 // std
 #include <memory>
 #include <vector>
+#include <vulkan/vulkan_core.h>
 
 namespace vge {
     class VulkanApplication {
@@ -27,7 +28,7 @@ namespace vge {
             void run();
 
         private:
-            void loadModels();
+            void loadGameObjects();
             void createPipelineLayout();
             void createPipeline();
             void createCommandBuffers();
@@ -35,6 +36,7 @@ namespace vge {
             void drawFrame();
             void recreateSwapChain();
             void recordCommandBuffer(int imageIndex);
+            void renderGameObjects(VkCommandBuffer commandBuffer);
 
             Window vgeWindow{WIDTH, HEIGHT, "AAAAAAAAAA"};
             VgeDevice vgeDevice{vgeWindow};
@@ -42,6 +44,6 @@ namespace vge {
             std::unique_ptr<Pipeline> vgePipeline;
             VkPipelineLayout pipelineLayout;
             std::vector<VkCommandBuffer> commandBuffers;
-            std::unique_ptr<Model> vgeModel;
+            std::vector<GameObject> gameObjects;
     };
 } // namespace

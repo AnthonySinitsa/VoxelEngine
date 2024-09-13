@@ -1,5 +1,6 @@
 #include "VulkanApplication.h"
 #include "Device/Device.h"
+#include "Game/GameObject.h"
 #include "Presentation/SwapChain.h"
 #include <cstdint>
 #include <memory>
@@ -23,7 +24,7 @@ namespace vge{
     };
 
     VulkanApplication::VulkanApplication(){
-        loadModels();
+        loadGameObjects();
         createPipelineLayout();
         recreateSwapChain();
         createCommandBuffers();
@@ -43,13 +44,20 @@ namespace vge{
     }
 
 
-    void VulkanApplication::loadModels(){
+    void VulkanApplication::loadGameObjects(){
         std::vector<Model::Vertex> vertices{
             {{0.0f, -0.5f}, {1.0f, 0.0f, 0.0f}},
             {{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
             {{-0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}},
         };
-        vgeModel = std::make_unique<Model>(vgeDevice, vertices);
+        auto vgeModel = std::make_shared<Model>(vgeDevice, vertices);
+
+        auto triangle = GameObject::createGameObject();
+        triangle.model = vgeModel;
+        triangle.color = {.1f, .8f, .1f};
+        triangle.transform2d.translation.x = .2f;
+
+        gameObjects.push_back(std::move(triangle));
     }
 
 
@@ -137,9 +145,6 @@ namespace vge{
 
 
     void VulkanApplication::recordCommandBuffer(int imageIndex){
-        static int frame = 0;
-        frame = (frame + 1) % 1000;
-
         VkCommandBufferBeginInfo beginInfo{};
         beginInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_BEGIN_INFO;
 
@@ -174,28 +179,35 @@ namespace vge{
         vkCmdSetViewport(commandBuffers[imageIndex], 0, 1, &viewport);
         vkCmdSetScissor(commandBuffers[imageIndex], 0, 1, &scissor);
 
-        vgePipeline->bind(commandBuffers[imageIndex]);
-        vgeModel->bind(commandBuffers[imageIndex]);
+        renderGameObjects(commandBuffers[imageIndex]);
 
-        for(int j = 0; j < 4; ++j){
+        vkCmdEndRenderPass(commandBuffers[imageIndex]);
+        if(vkEndCommandBuffer(commandBuffers[imageIndex]) != VK_SUCCESS){
+            throw std::runtime_error("failed to record command buffer!!!");
+        }
+    }
+
+
+    void VulkanApplication::renderGameObjects(VkCommandBuffer commandBuffer) {
+        vgePipeline->bind(commandBuffer);
+
+        for(auto& obj: gameObjects){
             SimplePushConstantData push{};
-            push.offset = {0-.5f + frame * 0.002f, -0.4f + j * 0.25f};
-            push.color = {0.0f, 0.0f, 0.2f + 0.2f * j};
+            push.offset = obj.transform2d.translation;
+            push.color = obj.color;
+            push.transform = obj.transform2d.mat2();
 
             vkCmdPushConstants(
-                commandBuffers[imageIndex],
+                commandBuffer,
                 pipelineLayout,
                 VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT,
                 0,
                 sizeof(SimplePushConstantData),
                 &push
             );
-            vgeModel->draw(commandBuffers[imageIndex]);
-        }
 
-        vkCmdEndRenderPass(commandBuffers[imageIndex]);
-        if(vkEndCommandBuffer(commandBuffers[imageIndex]) != VK_SUCCESS){
-            throw std::runtime_error("failed to record command buffer!!!");
+            obj.model->bind(commandBuffer);
+            obj.model->draw(commandBuffer);
         }
     }
 
