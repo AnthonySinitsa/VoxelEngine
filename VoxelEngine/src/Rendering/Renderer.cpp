@@ -100,7 +100,7 @@ namespace vge{
             vgeWindow.resetWindowResizedFlag();
             recreateSwapChain();
         }
-        if(result != VK_SUCCESS){
+        else if(result != VK_SUCCESS){
             throw std::runtime_error("failed to acquire swap chain image!!!");
         }
 
