@@ -1,11 +1,9 @@
 #pragma once
 
-#include "Window.h"
-#include "Graphics/Pipeline.h"
 #include "Device/Device.h"
 #include "Game/GameObject.h"
-#include "Presentation/SwapChain.h"
-#include "Models/Model.h"
+#include "Rendering/Renderer.h"
+#include "Window.h"
 
 // std
 #include <memory>
@@ -29,21 +27,11 @@ namespace vge {
 
         private:
             void loadGameObjects();
-            void createPipelineLayout();
-            void createPipeline();
-            void createCommandBuffers();
-            void freeCommandBuffers();
-            void drawFrame();
-            void recreateSwapChain();
-            void recordCommandBuffer(int imageIndex);
-            void renderGameObjects(VkCommandBuffer commandBuffer);
 
             Window vgeWindow{WIDTH, HEIGHT, "AAAAAAAAAA"};
             VgeDevice vgeDevice{vgeWindow};
-            std::unique_ptr<VgeSwapChain> vgeSwapChain;
-            std::unique_ptr<Pipeline> vgePipeline;
-            VkPipelineLayout pipelineLayout;
-            std::vector<VkCommandBuffer> commandBuffers;
+            Renderer vgeRenderer{vgeWindow, vgeDevice};
+
             std::vector<GameObject> gameObjects;
     };
 } // namespace
