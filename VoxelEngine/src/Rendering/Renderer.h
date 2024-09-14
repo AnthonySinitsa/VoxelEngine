@@ -5,7 +5,6 @@
 #include "../Presentation/SwapChain.h"
 
 // std
-#include <cstdint>
 #include <memory>
 #include <vector>
 #include <cassert>

@@ -1,12 +1,9 @@
 #include "Renderer.h"
-#include "../Device/Device.h"
-#include "../Presentation/SwapChain.h"
 
 // std
-#include <cstdint>
-#include <stdexcept>
-#include <memory>
 #include <array>
+#include <cassert>
+#include <stdexcept>
 #include <vulkan/vulkan_core.h>
 
 namespace vge{
@@ -37,7 +34,6 @@ namespace vge{
                 throw std::runtime_error("Swap chain image(or depth) format has changed!!!");
             }
         }
-        // come back here soon
     }
 
 

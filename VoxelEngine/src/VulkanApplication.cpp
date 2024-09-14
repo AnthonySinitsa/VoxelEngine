@@ -14,9 +14,7 @@
 
 namespace vge{
 
-    VulkanApplication::VulkanApplication(){
-        loadGameObjects();
-    }
+    VulkanApplication::VulkanApplication(){ loadGameObjects(); }
 
     VulkanApplication::~VulkanApplication(){}
 
