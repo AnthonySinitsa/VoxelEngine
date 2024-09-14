@@ -1,6 +1,5 @@
 #include "Renderer.h"
 #include "../Device/Device.h"
-#include "../Game/GameObject.h"
 #include "../Presentation/SwapChain.h"
 
 // std
