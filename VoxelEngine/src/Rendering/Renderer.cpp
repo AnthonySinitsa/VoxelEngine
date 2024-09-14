@@ -36,18 +36,13 @@ namespace vge{
             if(!oldSwapChain->compareSwapFormats(*vgeSwapChain.get())){
                 throw std::runtime_error("Swap chain image(or depth) format has changed!!!");
             }
-
-            if(vgeSwapChain->imageCount() != commandBuffers.size()){
-                freeCommandBuffers();
-                createCommandBuffers();
-            }
         }
         // come back here soon
     }
 
 
     void Renderer::createCommandBuffers(){
-        commandBuffers.resize(vgeSwapChain->imageCount());
+        commandBuffers.resize(VgeSwapChain::MAX_FRAMES_IN_FLIGHT);
 
         VkCommandBufferAllocateInfo allocInfo{};
         allocInfo.sType = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
@@ -114,6 +109,7 @@ namespace vge{
         }
 
         isFrameStarted = false;
+        currentFrameIndex = (currentFrameIndex + 1) % VgeSwapChain::MAX_FRAMES_IN_FLIGHT;
     }
 
 
