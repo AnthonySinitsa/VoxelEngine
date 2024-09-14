@@ -5,7 +5,6 @@
 #include "Device/Device.h"
 #include "Game/GameObject.h"
 #include "Presentation/SwapChain.h"
-#include "Models/Model.h"
 
 // std
 #include <memory>

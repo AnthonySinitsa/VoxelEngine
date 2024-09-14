@@ -2,9 +2,6 @@
 #include "Device/Device.h"
 #include "Game/GameObject.h"
 #include "Presentation/SwapChain.h"
-#include <cstdint>
-#include <memory>
-#include <vulkan/vulkan_core.h>
 
 // libs
 #define GLM_FORCE_RADIANS
@@ -13,8 +10,11 @@
 #include <glm/gtc/constants.hpp>
 
 // std
+#include <cstdint>
+#include <memory>
 #include <stdexcept>
 #include <array>
+#include <vulkan/vulkan_core.h>
 
 namespace vge{
 
