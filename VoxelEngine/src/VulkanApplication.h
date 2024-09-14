@@ -4,7 +4,7 @@
 #include "Graphics/Pipeline.h"
 #include "Device/Device.h"
 #include "Game/GameObject.h"
-#include "Presentation/SwapChain.h"
+#include "Rendering/Renderer.h"
 
 // std
 #include <memory>
@@ -30,19 +30,14 @@ namespace vge {
             void loadGameObjects();
             void createPipelineLayout();
             void createPipeline();
-            void createCommandBuffers();
-            void freeCommandBuffers();
-            void drawFrame();
-            void recreateSwapChain();
-            void recordCommandBuffer(int imageIndex);
             void renderGameObjects(VkCommandBuffer commandBuffer);
 
             Window vgeWindow{WIDTH, HEIGHT, "AAAAAAAAAA"};
             VgeDevice vgeDevice{vgeWindow};
-            std::unique_ptr<VgeSwapChain> vgeSwapChain;
+            Renderer vgeRenderer{vgeWindow, vgeDevice};
+
             std::unique_ptr<Pipeline> vgePipeline;
             VkPipelineLayout pipelineLayout;
-            std::vector<VkCommandBuffer> commandBuffers;
             std::vector<GameObject> gameObjects;
     };
 } // namespace
