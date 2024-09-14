@@ -30,8 +30,8 @@ namespace vge{
                 vgeRenderer.beginSwapChainRenderPass(commandBuffer);
                 renderSystem.renderGameObjects(commandBuffer, gameObjects);
                 vgeRenderer.endSwapChainRenderPass(commandBuffer);
+                vgeRenderer.endFrame();
             }
-            vgeRenderer.endFrame();
         }
 
         vkDeviceWaitIdle(vgeDevice.device());

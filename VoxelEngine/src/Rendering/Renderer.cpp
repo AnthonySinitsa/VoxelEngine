@@ -30,7 +30,13 @@ namespace vge{
         if(vgeSwapChain == nullptr){
             vgeSwapChain = std::make_unique<VgeSwapChain>(vgeDevice, extent);
         } else {
-            vgeSwapChain = std::make_unique<VgeSwapChain>(vgeDevice, extent, std::move(vgeSwapChain));
+            std::shared_ptr<VgeSwapChain> oldSwapChain = std::move(vgeSwapChain);
+            vgeSwapChain = std::make_unique<VgeSwapChain>(vgeDevice, extent, oldSwapChain);
+
+            if(!oldSwapChain->compareSwapFormats(*vgeSwapChain.get())){
+                throw std::runtime_error("Swap chain image(or depth) format has changed!!!");
+            }
+
             if(vgeSwapChain->imageCount() != commandBuffers.size()){
                 freeCommandBuffers();
                 createCommandBuffers();
