@@ -15,15 +15,38 @@ namespace vge{
         glm::vec3 scale{1.f, 1.f, 1.f};
         glm::vec3 rotation{};
 
-        // Matrix corresponds to translate & Ry * Rx * Rz * scale transformation
-        // Rotation convention uses tait-bryan angles with axis order Y(1), X(2), Z(3)
-        glm::mat4 mat4(){
-            auto transform = glm::translate(glm::mat4{1.f}, translation);
-            transform = glm::rotate(transform, rotation.y, {0.f, 1.f, 0.f});
-            transform = glm::rotate(transform, rotation.x, {1.f, 0.f, 0.f});
-            transform = glm::rotate(transform, rotation.z, {0.f, 0.f, 1.f});
-            transform = glm::scale(transform, scale);
-            return transform;
+        // Matrix corrsponds to Translate * Ry * Rx * Rz * Scale
+        // Rotations correspond to Tait-bryan angles of Y(1), X(2), Z(3)
+        // https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
+        glm::mat4 mat4() {
+            const float cosYaw = glm::cos(rotation.y);
+            const float sinYaw = glm::sin(rotation.y);
+            const float cosPitch = glm::cos(rotation.x);
+            const float sinPitch = glm::sin(rotation.x);
+            const float cosRoll = glm::cos(rotation.z);
+            const float sinRoll = glm::sin(rotation.z);
+
+            return glm::mat4{
+                {
+                    scale.x * (cosYaw * cosRoll + sinYaw * sinPitch * sinRoll),
+                    scale.x * (cosPitch * sinRoll),
+                    scale.x * (cosYaw * sinPitch * sinRoll - cosRoll * sinYaw),
+                    0.0f,
+                },
+                {
+                    scale.y * (cosRoll * sinYaw * sinPitch - cosYaw * sinRoll),
+                    scale.y * (cosPitch * cosRoll),
+                    scale.y * (cosYaw * cosRoll * sinPitch + sinYaw * sinRoll),
+                    0.0f,
+                },
+                {
+                    scale.z * (cosPitch * sinYaw),
+                    scale.z * (-sinPitch),
+                    scale.z * (cosYaw * cosPitch),
+                    0.0f,
+                },
+                {translation.x, translation.y, translation.z, 1.0f}
+            };
         }
     };
 
