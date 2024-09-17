@@ -62,8 +62,13 @@ namespace vge{
     }
 
 
-    void RenderSystem::renderGameObjects(VkCommandBuffer commandBuffer, std::vector<GameObject> &gameObjects) {
+    void RenderSystem::renderGameObjects(
+        VkCommandBuffer commandBuffer,
+        std::vector<GameObject> &gameObjects,
+        const Camera &camera) {
         vgePipeline->bind(commandBuffer);
+
+        auto projectionView = camera.getProjection() * camera.getView();
 
         for(auto& obj : gameObjects){
             obj.transform.rotation.y = glm::mod(obj.transform.rotation.y + 0.0001f, glm::two_pi<float>());
@@ -72,7 +77,7 @@ namespace vge{
 
             SimplePushConstantData push{};
             push.color = obj.color;
-            push.transform = obj.transform.mat4();
+            push.transform = projectionView * obj.transform.mat4();
 
             vkCmdPushConstants(
                 commandBuffer,

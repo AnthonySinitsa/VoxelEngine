@@ -21,6 +21,7 @@ namespace vge {
             Renderer &operator=(const Renderer &) = delete;
 
             VkRenderPass getSwapChainRenderPass() const { return vgeSwapChain->getRenderPass(); }
+            float getAspectRatio() const { return vgeSwapChain->extentAspectRatio(); }
             bool isFrameInProgress() const { return isFrameStarted; }
 
             VkCommandBuffer getCurrentCommandBuffer() const {
