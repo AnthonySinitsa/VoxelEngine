@@ -28,7 +28,8 @@ namespace vge{
             glfwPollEvents();
 
             float aspect = vgeRenderer.getAspectRatio();
-            camera.setOrthographicProjection(-aspect, aspect, -1, 1, -1, 1);
+            // camera.setOrthographicProjection(-aspect, aspect, -1, 1, -1, 1);
+            camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 10.f);
 
             if(auto commandBuffer = vgeRenderer.beginFrame()){
                 vgeRenderer.beginSwapChainRenderPass(commandBuffer);
@@ -107,7 +108,7 @@ namespace vge{
 
         auto cube = GameObject::createGameObject();
         cube.model = vgeModel;
-        cube.transform.translation = {.0f, .0f, .5f};
+        cube.transform.translation = {.0f, .0f, 2.5f};
         cube.transform.scale = {.5, .5f, .5f};
         gameObjects.push_back(std::move(cube));
     }
