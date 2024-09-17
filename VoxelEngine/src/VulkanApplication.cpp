@@ -23,12 +23,15 @@ namespace vge{
     void VulkanApplication::run(){
         RenderSystem renderSystem{vgeDevice, vgeRenderer.getSwapChainRenderPass()};
         Camera camera{};
+        // camera.setViewDirection(glm::vec3(0.f), glm::vec3(0.5f, 0.f, 1.f));
+        camera.setViewTarget(glm::vec3(-1.f, -2.f, 2.f), glm::vec3(0.f, 0.f, 2.5f));
 
         while(!vgeWindow.shouldClose()){
             glfwPollEvents();
 
             float aspect = vgeRenderer.getAspectRatio();
             // camera.setOrthographicProjection(-aspect, aspect, -1, 1, -1, 1);
+            // FYI: 10.f is the clipping plane
             camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 10.f);
 
             if(auto commandBuffer = vgeRenderer.beginFrame()){

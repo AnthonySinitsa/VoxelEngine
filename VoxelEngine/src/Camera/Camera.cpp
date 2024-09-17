@@ -81,4 +81,4 @@ namespace vge{
       viewMatrix[3][2] = -glm::dot(w, position);
     }
 
-}
+} // namespace
