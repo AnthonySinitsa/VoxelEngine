@@ -1,8 +1,11 @@
 #include "VulkanApplication.h"
 
 #include "Camera/Camera.h"
+#include "Game/GameObject.h"
 #include "Rendering/RenderSystem.h"
 #include "Rendering/Renderer.h"
+#include "Input/Input.h"
+#include <GLFW/glfw3.h>
 
 // libs
 #define GLM_FORCE_RADIANS
@@ -24,21 +27,30 @@ namespace vge{
     void VulkanApplication::run(){
         RenderSystem renderSystem{vgeDevice, vgeRenderer.getSwapChainRenderPass()};
         Camera camera{};
-        // camera.setViewDirection(glm::vec3(0.f), glm::vec3(0.5f, 0.f, 1.f));
         camera.setViewTarget(glm::vec3(-1.f, -2.f, 2.f), glm::vec3(0.f, 0.f, 2.5f));
+
+        auto viewerObject = GameObject::createGameObject();
+        Input cameraController{};
 
         auto currentTime = std::chrono::high_resolution_clock::now();
 
         while(!vgeWindow.shouldClose()){
             glfwPollEvents();
 
+            if(cameraController.isEscapePressed(vgeWindow.getGLFWwindow())){
+                glfwSetWindowShouldClose(vgeWindow.getGLFWwindow(), GLFW_TRUE);
+                continue;
+            }
+
             auto newTime = std::chrono::high_resolution_clock::now();
             float frameTime =
                 std::chrono::duration<float, std::chrono::seconds::period>(newTime - currentTime).count();
             currentTime = newTime;
 
+            cameraController.moveInPlaneXZ(vgeWindow.getGLFWwindow(), frameTime, viewerObject);
+            camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
+
             float aspect = vgeRenderer.getAspectRatio();
-            // camera.setOrthographicProjection(-aspect, aspect, -1, 1, -1, 1);
             // FYI: 10.f is the clipping plane
             camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 10.f);
 
