@@ -1,6 +1,8 @@
 #include "VulkanApplication.h"
 
+#include "Camera/Camera.h"
 #include "Rendering/RenderSystem.h"
+#include "Rendering/Renderer.h"
 
 // libs
 #define GLM_FORCE_RADIANS
@@ -20,13 +22,17 @@ namespace vge{
 
     void VulkanApplication::run(){
         RenderSystem renderSystem{vgeDevice, vgeRenderer.getSwapChainRenderPass()};
+        Camera camera{};
 
         while(!vgeWindow.shouldClose()){
             glfwPollEvents();
 
+            float aspect = vgeRenderer.getAspectRatio();
+            camera.setOrthographicProjection(-aspect, aspect, -1, 1, -1, 1);
+
             if(auto commandBuffer = vgeRenderer.beginFrame()){
                 vgeRenderer.beginSwapChainRenderPass(commandBuffer);
-                renderSystem.renderGameObjects(commandBuffer, gameObjects);
+                renderSystem.renderGameObjects(commandBuffer, gameObjects, camera);
                 vgeRenderer.endSwapChainRenderPass(commandBuffer);
                 vgeRenderer.endFrame();
             }
