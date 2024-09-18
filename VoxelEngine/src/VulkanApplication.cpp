@@ -1,8 +1,11 @@
 #include "VulkanApplication.h"
 
 #include "Camera/Camera.h"
+#include "Game/GameObject.h"
 #include "Rendering/RenderSystem.h"
 #include "Rendering/Renderer.h"
+#include "Input/Input.h"
+#include <GLFW/glfw3.h>
 
 // libs
 #define GLM_FORCE_RADIANS
@@ -11,6 +14,7 @@
 #include <glm/gtc/constants.hpp>
 
 // std
+#include <chrono>
 #include <cassert>
 #include <vulkan/vulkan_core.h>
 
@@ -23,14 +27,37 @@ namespace vge{
     void VulkanApplication::run(){
         RenderSystem renderSystem{vgeDevice, vgeRenderer.getSwapChainRenderPass()};
         Camera camera{};
-        // camera.setViewDirection(glm::vec3(0.f), glm::vec3(0.5f, 0.f, 1.f));
         camera.setViewTarget(glm::vec3(-1.f, -2.f, 2.f), glm::vec3(0.f, 0.f, 2.5f));
+
+        auto viewerObject = GameObject::createGameObject();
+        Input cameraController{vgeWindow.getGLFWwindow()};
+
+        auto currentTime = std::chrono::high_resolution_clock::now();
 
         while(!vgeWindow.shouldClose()){
             glfwPollEvents();
 
+            if(cameraController.isEscapePressed(vgeWindow.getGLFWwindow())){
+                glfwSetWindowShouldClose(vgeWindow.getGLFWwindow(), GLFW_TRUE);
+                continue;
+            }
+
+            if (glfwGetKey(vgeWindow.getGLFWwindow(), GLFW_KEY_TAB) == GLFW_PRESS) {
+                static bool cursorCaptured = true;
+                cursorCaptured = !cursorCaptured;
+                glfwSetInputMode(vgeWindow.getGLFWwindow(), GLFW_CURSOR,
+                                 cursorCaptured ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+            }
+
+            auto newTime = std::chrono::high_resolution_clock::now();
+            float frameTime =
+                std::chrono::duration<float, std::chrono::seconds::period>(newTime - currentTime).count();
+            currentTime = newTime;
+
+            cameraController.moveInPlaneXZ(vgeWindow.getGLFWwindow(), frameTime, viewerObject);
+            camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
+
             float aspect = vgeRenderer.getAspectRatio();
-            // camera.setOrthographicProjection(-aspect, aspect, -1, 1, -1, 1);
             // FYI: 10.f is the clipping plane
             camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 10.f);
 
