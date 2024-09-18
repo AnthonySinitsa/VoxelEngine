@@ -4,7 +4,6 @@
 #include "../Window.h"
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
-#include <chrono>
 
 namespace vge{
 
@@ -37,8 +36,8 @@ namespace vge{
 
             KeyMappings keys{};
             float moveSpeed{3.f};
-            float lookSpeed{0.002f};
-            float mouseSensitivity{1.0f}; // Acts as a multiplier
+            float lookSpeed{1.5f};
+            float mouseSensitivity{0.1f};
 
         private:
             static void mousePosCallback(GLFWwindow* window, double xpos, double ypos);
@@ -48,6 +47,5 @@ namespace vge{
             bool firstMouse = true;
             float lastX = 0.f;
             float lastY = 0.f;
-            std::chrono::steady_clock::time_point lastMouseMoveTime;
     };
 } // namespace

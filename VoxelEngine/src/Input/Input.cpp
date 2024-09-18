@@ -1,7 +1,6 @@
 #include "Input.h"
 
 // std
-#include <chrono>
 #include <glm/gtc/constants.hpp>
 #include <limits>
 #include <GLFW/glfw3.h>
@@ -56,35 +55,21 @@ namespace vge{
 
 
     void Input::mouseCallback(double xpos, double ypos){
-        auto now = std::chrono::steady_clock::now();
-
         if (firstMouse) {
             lastX = xpos;
             lastY = ypos;
-            lastMouseMoveTime = now;
             firstMouse = false;
-            return;
         }
 
-        double xoffset = xpos - lastX;
-        double yoffset = lastY - ypos; // Reversed since y-coordinates range from bottom to top
-
-        // Calculate time since last mousem ovement
-        auto timeDelta =
-            std::chrono::duration_cast<std::chrono::duration<float>>(now - lastMouseMoveTime).count();
-
-        // Calculate mouse speed
-        float mouseSpeed =
-            static_cast<float>(glm::length(glm::vec2(xoffset, yoffset))) / (timeDelta + 0.0001f); // Avoid division by zero
-
-        // Apply mouse sensitivity as a multiplier
-        float adjustedSensitivity = mouseSensitivity * mouseSpeed;
-
-        mouseDelta.x += static_cast<float>(xoffset) * adjustedSensitivity;
-        mouseDelta.y += static_cast<float>(xoffset) * adjustedSensitivity;
-
+        float xoffset = xpos - lastX;
+        float yoffset = lastY - ypos; // Reversed since y-coordinates range from bottom to top
         lastX = xpos;
         lastY = ypos;
-        lastMouseMoveTime = now;
+
+        xoffset *= mouseSensitivity;
+        yoffset *= mouseSensitivity;
+
+        mouseDelta.x += xoffset;
+        mouseDelta.y += yoffset;
     }
 } // namespace
