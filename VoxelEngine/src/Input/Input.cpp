@@ -1,6 +1,7 @@
 #include "Input.h"
 
 // std
+#include <chrono>
 #include <glm/gtc/constants.hpp>
 #include <limits>
 #include <GLFW/glfw3.h>
@@ -13,6 +14,10 @@ namespace vge{
         if(glfwGetKey(window, keys.lookLeft) == GLFW_PRESS)rotate.y -= 1.f;
         if(glfwGetKey(window, keys.lookUp) == GLFW_PRESS)rotate.x += 1.f;
         if(glfwGetKey(window, keys.lookDown) == GLFW_PRESS)rotate.x -= 1.f;
+
+        // Apply mouse rotation
+        rotate.x += mouseDelta.y;
+        rotate.y += mouseDelta.x;
 
         if(glm::dot(rotate, rotate) > std::numeric_limits<float>::epsilon()){
             gameObject.transform.rotation  += lookSpeed * dt * glm::normalize(rotate);
@@ -38,5 +43,48 @@ namespace vge{
         if(glm::dot(moveDir, moveDir) > std::numeric_limits<float>::epsilon()){
             gameObject.transform.translation  += moveSpeed * dt * glm::normalize(moveDir);
         }
+
+        // Reset mouse delta
+        mouseDelta = glm::vec2{0.0f};
+    }
+
+
+    void Input::mousePosCallback(GLFWwindow* window, double xpos, double ypos){
+        auto input = reinterpret_cast<Input*>(glfwGetWindowUserPointer(window));
+        input->mouseCallback(xpos, ypos);
+    }
+
+
+    void Input::mouseCallback(double xpos, double ypos){
+        auto now = std::chrono::steady_clock::now();
+
+        if (firstMouse) {
+            lastX = xpos;
+            lastY = ypos;
+            lastMouseMoveTime = now;
+            firstMouse = false;
+            return;
+        }
+
+        double xoffset = xpos - lastX;
+        double yoffset = lastY - ypos; // Reversed since y-coordinates range from bottom to top
+
+        // Calculate time since last mousem ovement
+        auto timeDelta =
+            std::chrono::duration_cast<std::chrono::duration<float>>(now - lastMouseMoveTime).count();
+
+        // Calculate mouse speed
+        float mouseSpeed =
+            static_cast<float>(glm::length(glm::vec2(xoffset, yoffset))) / (timeDelta + 0.0001f); // Avoid division by zero
+
+        // Apply mouse sensitivity as a multiplier
+        float adjustedSensitivity = mouseSensitivity * mouseSpeed;
+
+        mouseDelta.x += static_cast<float>(xoffset) * adjustedSensitivity;
+        mouseDelta.y += static_cast<float>(xoffset) * adjustedSensitivity;
+
+        lastX = xpos;
+        lastY = ypos;
+        lastMouseMoveTime = now;
     }
 } // namespace

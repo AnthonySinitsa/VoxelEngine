@@ -30,7 +30,7 @@ namespace vge{
         camera.setViewTarget(glm::vec3(-1.f, -2.f, 2.f), glm::vec3(0.f, 0.f, 2.5f));
 
         auto viewerObject = GameObject::createGameObject();
-        Input cameraController{};
+        Input cameraController{vgeWindow.getGLFWwindow()};
 
         auto currentTime = std::chrono::high_resolution_clock::now();
 
@@ -40,6 +40,13 @@ namespace vge{
             if(cameraController.isEscapePressed(vgeWindow.getGLFWwindow())){
                 glfwSetWindowShouldClose(vgeWindow.getGLFWwindow(), GLFW_TRUE);
                 continue;
+            }
+
+            if (glfwGetKey(vgeWindow.getGLFWwindow(), GLFW_KEY_TAB) == GLFW_PRESS) {
+                static bool cursorCaptured = true;
+                cursorCaptured = !cursorCaptured;
+                glfwSetInputMode(vgeWindow.getGLFWwindow(), GLFW_CURSOR,
+                                 cursorCaptured ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
             }
 
             auto newTime = std::chrono::high_resolution_clock::now();
