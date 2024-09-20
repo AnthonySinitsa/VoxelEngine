@@ -3,7 +3,7 @@ CFLAGS = -std=c++20 -O2
 LDFLAGS = -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
 # Paths to ImGui
-IMGUI_DIR = $(shell echo ~/Projects/ExternalLibs/imgui)
+IMGUI_DIR = /home/po/Projects/ExternalLibs/imgui
 IMGUI_BACKENDS_DIR = $(IMGUI_DIR)/backends
 
 # ImGui source files
