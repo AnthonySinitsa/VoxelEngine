@@ -5,11 +5,11 @@
 #include "Rendering/RenderSystem.h"
 #include "Rendering/Renderer.h"
 #include "Input/Input.h"
-#include <GLFW/glfw3.h>
 
 // libs
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
+#include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp>
 

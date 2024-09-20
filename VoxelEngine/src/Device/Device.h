@@ -5,6 +5,7 @@
 // std lib headers
 #include <string>
 #include <vector>
+#include <vulkan/vulkan_core.h>
 
 namespace vge {
 
@@ -50,6 +51,9 @@ class VgeDevice {
   QueueFamilyIndices findPhysicalQueueFamilies() { return findQueueFamilies(physicalDevice); }
   VkFormat findSupportedFormat(
       const std::vector<VkFormat> &candidates, VkImageTiling tiling, VkFormatFeatureFlags features);
+
+  VkInstance getInstance() const { return instance; }
+  VkPhysicalDevice getPhysicalDevice() const { return physicalDevice; }
 
   // Buffer Helper Functions
   void createBuffer(
