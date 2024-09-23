@@ -1,96 +1,61 @@
 #include "ImGuiManager.h"
-
-// libs
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_vulkan.h>
-#include <iostream>
 
-namespace vge {
+void ImGuiManager::Init(
+    GLFWwindow* window,
+    VkInstance instance,
+    VkDevice device,
+    VkPhysicalDevice physicalDevice,
+    VkQueue graphicsQueue,
+    VkQueue presentQueue,
+    VkRenderPass renderPass
+) {
+    // Initialize ImGui for Vulkan
+    ImGui_ImplGlfw_InitForVulkan(window, true);
 
-ImGuiManager::ImGuiManager(Window& window, VgeDevice& device, Renderer& renderer)
-    : window(window), device(device), renderer(renderer) {}
-
-ImGuiManager::~ImGuiManager() {
-    cleanup();
-}
-
-void ImGuiManager::init() {
-    createDescriptorPool();
-
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-
-    ImGui::StyleColorsDark();
-
-    ImGui_ImplGlfw_InitForVulkan(window.getGLFWwindow(), true);
     ImGui_ImplVulkan_InitInfo init_info = {};
-    init_info.Instance = device.getInstance();
-    init_info.PhysicalDevice = device.getPhysicalDevice();
-    init_info.Device = device.device();
-    init_info.QueueFamily = device.findPhysicalQueueFamilies().graphicsFamily;
-    init_info.Queue = device.graphicsQueue();
+    init_info.Instance = instance;
+    init_info.PhysicalDevice = device.getPhysicalDevice();  // Adjust based on how you retrieve it
+    init_info.Device = device.device();  // Your Vulkan logical device
+    init_info.Queue = device.getGraphicsQueue();  // Adjust this to fit your device class
     init_info.PipelineCache = VK_NULL_HANDLE;
-    init_info.DescriptorPool = imguiPool;
-    init_info.Subpass = 0;
+    init_info.DescriptorPool = device.getDescriptorPool();  // You may need to add this if it's managed by VgeDevice
     init_info.MinImageCount = 2;
-    init_info.ImageCount = vgeSwapChain->imageCount();
+    init_info.ImageCount = device.getSwapChainImageCount();  // Adjust based on how you manage swapchain images
     init_info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
-    init_info.Allocator = nullptr;
-    init_info.CheckVkResultFn = nullptr;
+
     ImGui_ImplVulkan_Init(&init_info);
 
-    // Upload Fonts
-    VkCommandBuffer command_buffer = device.beginSingleTimeCommands();
+    // Record a single-time command buffer to upload fonts
+    VkCommandBuffer commandBuffer = device.beginSingleTimeCommands();
     ImGui_ImplVulkan_CreateFontsTexture();
-    device.endSingleTimeCommands(command_buffer);
+    device.endSingleTimeCommands(commandBuffer);
+
     ImGui_ImplVulkan_DestroyFontsTexture();
 }
 
-void ImGuiManager::newFrame() {
+void ImGuiManager::BeginFrame() {
     ImGui_ImplVulkan_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 }
 
-void ImGuiManager::render(VkCommandBuffer commandBuffer) {
+void ImGuiManager::Render() {
+    // Create a simple test window
+    ImGui::Begin("Test Window");
+    if (ImGui::Button("Press me")) {
+        // Do something
+    }
+    ImGui::End();
+
+    // Render ImGui
     ImGui::Render();
-    ImGui_ImplVulkan_RenderDrawData(ImGui::GetDrawData(), commandBuffer);
 }
 
-void ImGuiManager::cleanup() {
-    vkDestroyDescriptorPool(device.device(), imguiPool, nullptr);
+void ImGuiManager::Shutdown() {
     ImGui_ImplVulkan_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
 }
-
-void ImGuiManager::createDescriptorPool() {
-    VkDescriptorPoolSize pool_sizes[] = {
-        { VK_DESCRIPTOR_TYPE_SAMPLER, 1000 },
-        { VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, 1000 },
-        { VK_DESCRIPTOR_TYPE_SAMPLED_IMAGE, 1000 },
-        { VK_DESCRIPTOR_TYPE_STORAGE_IMAGE, 1000 },
-        { VK_DESCRIPTOR_TYPE_UNIFORM_TEXEL_BUFFER, 1000 },
-        { VK_DESCRIPTOR_TYPE_STORAGE_TEXEL_BUFFER, 1000 },
-        { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, 1000 },
-        { VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 1000 },
-        { VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER_DYNAMIC, 1000 },
-        { VK_DESCRIPTOR_TYPE_STORAGE_BUFFER_DYNAMIC, 1000 },
-        { VK_DESCRIPTOR_TYPE_INPUT_ATTACHMENT, 1000 }
-    };
-
-    VkDescriptorPoolCreateInfo pool_info = {};
-    pool_info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-    pool_info.flags = VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT;
-    pool_info.maxSets = 1000;
-    pool_info.poolSizeCount = std::size(pool_sizes);
-    pool_info.pPoolSizes = pool_sizes;
-
-    if (vkCreateDescriptorPool(device.device(), &pool_info, nullptr, &imguiPool) != VK_SUCCESS) {
-        throw std::runtime_error("Failed to create descriptor pool for ImGui");
-    }
-}
-
-} // namespace
