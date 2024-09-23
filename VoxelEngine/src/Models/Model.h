@@ -24,7 +24,12 @@ namespace vge{
             static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions();
         };
 
-        Model(VgeDevice& device, const std::vector<Vertex> &vertices);
+        struct Builder {
+            std::vector<Vertex> vertices{};
+            std::vector<uint32_t> indices{};
+        };
+
+        Model(VgeDevice& device, const Model::Builder &builder);
         ~Model();
 
         Model(const Model &) = delete;
@@ -35,10 +40,17 @@ namespace vge{
 
         private:
         void createVertexBuffer(const std::vector<Vertex> &vertices);
+        void createIndexBuffer(const std::vector<uint32_t> &indices);
 
         VgeDevice& vgeDevice;
+
         VkBuffer vertexBuffer;
         VkDeviceMemory vertexBufferMemory;
         uint32_t vertexCount;
+
+        bool hasIndexBuffer = false;
+        VkBuffer indexBuffer;
+        VkDeviceMemory indexBufferMemory;
+        uint32_t indexCount;
     };
 } // namespace

@@ -8,13 +8,19 @@
 #include <cstring>
 
 namespace vge{
-    Model::Model(VgeDevice& device, const std::vector<Vertex> &vertices) : vgeDevice{device}{
-        createVertexBuffer(vertices);
+    Model::Model(VgeDevice& device, const Model::Builder &builder) : vgeDevice{device}{
+        createVertexBuffer(builder.vertices);
+        createIndexBuffer(builder.indices);
     }
 
     Model::~Model(){
         vkDestroyBuffer(vgeDevice.device(), vertexBuffer, nullptr);
         vkFreeMemory(vgeDevice.device(), vertexBufferMemory, nullptr);
+
+        if(hasIndexBuffer){
+            vkDestroyBuffer(vgeDevice.device(), indexBuffer, nullptr);
+            vkFreeMemory(vgeDevice.device(), indexBufferMemory, nullptr);
+        }
     }
 
 
@@ -36,13 +42,45 @@ namespace vge{
     }
 
 
+    void Model::createIndexBuffer(const std::vector<uint32_t> &indices){
+        indexCount = static_cast<uint32_t>(indices.size());
+        hasIndexBuffer = indexCount > 0;
+
+        if(!hasIndexBuffer){
+            return;
+        }
+
+        VkDeviceSize bufferSize = sizeof(indices[0]) * indexCount;
+        vgeDevice.createBuffer(
+            bufferSize,
+            VK_BUFFER_USAGE_INDEX_BUFFER_BIT,
+            VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT,
+            indexBuffer,
+            indexBufferMemory
+        );
+        void *data;
+        vkMapMemory(vgeDevice.device(), indexBufferMemory, 0, bufferSize, 0, &data);
+        memcpy(data, indices.data(), static_cast<size_t>(bufferSize));
+        vkUnmapMemory(vgeDevice.device(), indexBufferMemory);
+    }
+
+
     void Model::bind(VkCommandBuffer commandBuffer){
         VkBuffer buffers[] = {vertexBuffer};
         VkDeviceSize offsets[] = {0};
         vkCmdBindVertexBuffers(commandBuffer, 0, 1, buffers, offsets);
+
+        if(hasIndexBuffer){
+            vkCmdBindIndexBuffer(commandBuffer, indexBuffer, 0, VK_INDEX_TYPE_UINT32);
+        }
     }
 
     void Model::draw(VkCommandBuffer commandBuffer){
+        if(hasIndexBuffer){
+            vkCmdDrawIndexed(commandBuffer, indexCount, 1, 0, 0, 0);
+        } else {
+            vkCmdDraw(commandBuffer, vertexCount, 1, 0, 0);
+        }
         vkCmdDraw(commandBuffer, vertexCount, 1, 0, 0);
     }
 
