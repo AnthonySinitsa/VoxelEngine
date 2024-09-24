@@ -1,18 +1,33 @@
 #include "Model.h"
-#include <cstddef>
-#include <memory>
-#include <stdexcept>
-#include <vulkan/vulkan_core.h>
+
+#include "../Utils/utils.h"
 
 // libs
 #define TINYOBJLOADER_IMPLEMENTATION
 #include <tiny_obj_loader.h>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/hash.hpp>
 
 // std
 #include <cassert>
 #include <cstdint>
 #include <cstring>
-#include <iostream>
+#include <unordered_map>
+#include <stdexcept>
+#include <cstddef>
+#include <memory>
+#include <vulkan/vulkan_core.h>
+
+namespace std {
+    template <>
+    struct hash<vge::Model::Vertex> {
+        size_t operator()(vge::Model::Vertex const &vertex) const {
+            size_t seed = 0;
+            vge::hashCombine(seed, vertex.position, vertex.color, vertex.normal, vertex.uv);
+            return seed;
+        }
+    };
+} // namespace std
 
 namespace vge{
     Model::Model(VgeDevice& device, const Model::Builder &builder) : vgeDevice{device}{
@@ -35,7 +50,6 @@ namespace vge{
         VgeDevice &device, const std::string &filepath){
             Builder builder{};
             builder.loadModel(filepath);
-            std::cout << "Vertex count: " << builder.vertices.size() << "\n";
             return std::make_unique<Model>(device, builder);
         }
 
@@ -171,6 +185,7 @@ namespace vge{
         vertices.clear();
         indices.clear();
 
+        std::unordered_map<Vertex, uint32_t> uniqueVertices{};
         for(const auto &shape : shapes) {
             for(const auto &index : shape.mesh.indices){
                 Vertex vertex{};
@@ -209,7 +224,11 @@ namespace vge{
                     };
                 }
 
-                vertices.push_back(vertex);
+                if(uniqueVertices.count(vertex) == 0){
+                    uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());
+                    vertices.push_back(vertex);
+                }
+                indices.push_back(uniqueVertices[vertex]);
             }
         }
     }
