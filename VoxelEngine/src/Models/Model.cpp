@@ -2,6 +2,10 @@
 #include <cstddef>
 #include <vulkan/vulkan_core.h>
 
+// libs
+#define TINYOBJLOADER_IMPLEMENTATION
+#include <tiny_obj_loader.h>
+
 // std
 #include <cassert>
 #include <cstdint>
