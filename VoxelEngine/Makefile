@@ -6,6 +6,9 @@ LDFLAGS = -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 IMGUI_DIR = /home/po/Projects/ExternalLibs/imgui
 IMGUI_BACKENDS_DIR = $(IMGUI_DIR)/backends
 
+# Path to tinyobjloader
+TINYOBJ_PATH = /home/po/Projects/ExternalLibs/tinyobjloader
+
 # ImGui source files
 IMGUI_SRC = $(IMGUI_DIR)/imgui.cpp \
             $(IMGUI_DIR)/imgui_draw.cpp \
@@ -17,8 +20,8 @@ IMGUI_SRC = $(IMGUI_DIR)/imgui.cpp \
 SRC_DIR = src
 SRC_FILES = $(shell find $(SRC_DIR) -name "*.cpp")
 
-# ImGui include directories
-INCLUDES = -I$(IMGUI_DIR) -I$(IMGUI_BACKENDS_DIR)
+# Include directories
+INCLUDES = -I$(IMGUI_DIR) -I$(IMGUI_BACKENDS_DIR) -I$(TINYOBJ_PATH)
 
 SHADER_SCRIPT = compile.sh
 SHADER_FILES = shaders/vertex_shader.vert shaders/fragment_shader.frag
