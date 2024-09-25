@@ -1,0 +1,16 @@
+{
+    "name": "VoxelEngine",
+    "settings": {
+    "lsp": {
+        "cpp": {
+        "command": "clangd",
+        "args": ["--background-index"]
+        }
+    }
+    },
+    "include_dirs": [
+    "/home/po/Projects/ExternalLibs/tinyobjloader",
+    "/home/po/Projects/ExternalLibs/imgui",
+    "/home/po/Projects/ExternalLibs/imgui/backends"
+    ]
+}
