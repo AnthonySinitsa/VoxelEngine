@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../Device/Device.h"
-#include <vulkan/vulkan_core.h>
 
 // libs
 #define GLM_FORCE_RADIANS
@@ -11,7 +10,6 @@
 // std
 #include <memory>
 #include <vector>
-#include <cstdint>
 
 namespace vge{
     class Model{
@@ -39,7 +37,7 @@ namespace vge{
             void loadModel(const std::string &filepath);
         };
 
-        Model(VgeDevice& device, const Model::Builder &builder);
+        Model(VgeDevice &device, const Model::Builder &builder);
         ~Model();
 
         Model(const Model &) = delete;

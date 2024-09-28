@@ -16,7 +16,6 @@
 #include <stdexcept>
 #include <cstddef>
 #include <memory>
-#include <vulkan/vulkan_core.h>
 #include <iostream>
 
 namespace std {
