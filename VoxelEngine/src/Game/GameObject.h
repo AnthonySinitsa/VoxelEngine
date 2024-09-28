@@ -18,36 +18,8 @@ namespace vge{
         // Matrix corrsponds to Translate * Ry * Rx * Rz * Scale
         // Rotations correspond to Tait-bryan angles of Y(1), X(2), Z(3)
         // https://en.wikipedia.org/wiki/Euler_angles#Rotation_matrix
-        glm::mat4 mat4() {
-            const float cosYaw = glm::cos(rotation.y);
-            const float sinYaw = glm::sin(rotation.y);
-            const float cosPitch = glm::cos(rotation.x);
-            const float sinPitch = glm::sin(rotation.x);
-            const float cosRoll = glm::cos(rotation.z);
-            const float sinRoll = glm::sin(rotation.z);
-
-            return glm::mat4{
-                {
-                    scale.x * (cosYaw * cosRoll + sinYaw * sinPitch * sinRoll),
-                    scale.x * (cosPitch * sinRoll),
-                    scale.x * (cosYaw * sinPitch * sinRoll - cosRoll * sinYaw),
-                    0.0f,
-                },
-                {
-                    scale.y * (cosRoll * sinYaw * sinPitch - cosYaw * sinRoll),
-                    scale.y * (cosPitch * cosRoll),
-                    scale.y * (cosYaw * cosRoll * sinPitch + sinYaw * sinRoll),
-                    0.0f,
-                },
-                {
-                    scale.z * (cosPitch * sinYaw),
-                    scale.z * (-sinPitch),
-                    scale.z * (cosYaw * cosPitch),
-                    0.0f,
-                },
-                {translation.x, translation.y, translation.z, 1.0f}
-            };
-        }
+        glm::mat4 mat4();
+        glm::mat3 normalMatrix();
     };
 
     class GameObject{

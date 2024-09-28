@@ -76,13 +76,14 @@ namespace vge{
 
 
     void VulkanApplication::loadGameObjects(){
-        std::shared_ptr<Model> vgeModel = Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/Lowpoly_tree_sample.obj");
+        std::shared_ptr<Model> vgeModel =
+            Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/flat_vase.obj");
 
-        auto cube = GameObject::createGameObject();
-        cube.model = vgeModel;
-        cube.transform.translation = {.0f, .0f, 2.5f};
-        cube.transform.rotation = {.0f, .0f, 3.0f};
-        cube.transform.scale = {.5, .5f, .5f};
-        gameObjects.push_back(std::move(cube));
+        auto gameObj = GameObject::createGameObject();
+        gameObj.model = vgeModel;
+        gameObj.transform.translation = {.0f, .0f, 2.5f};
+        gameObj.transform.scale = glm::vec3{3.f};
+        // gameObj.transform.rotation = glm::vec3{glm::radians(180.0f), 0.f, 0.f};
+        gameObjects.push_back(std::move(gameObj));
     }
 } // namespace

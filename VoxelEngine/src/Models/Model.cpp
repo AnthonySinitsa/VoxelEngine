@@ -17,6 +17,7 @@
 #include <cstddef>
 #include <memory>
 #include <vulkan/vulkan_core.h>
+#include <iostream>
 
 namespace std {
     template <>
@@ -50,6 +51,7 @@ namespace vge{
         VgeDevice &device, const std::string &filepath){
             Builder builder{};
             builder.loadModel(filepath);
+            std::cout << "Vertex Count: " << builder.indices.size() << "\n";
             return std::make_unique<Model>(device, builder);
         }
 
