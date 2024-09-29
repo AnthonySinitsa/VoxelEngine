@@ -16,7 +16,6 @@
 #include <stdexcept>
 #include <cstddef>
 #include <memory>
-#include <iostream>
 
 namespace std {
     template <>
@@ -50,7 +49,7 @@ namespace vge{
         VgeDevice &device, const std::string &filepath){
             Builder builder{};
             builder.loadModel(filepath);
-            std::cout << "Vertex Count: " << builder.indices.size() << "\n";
+            // std::cout << "Vertex Count: " << builder.vertices.size() << "\n";
             return std::make_unique<Model>(device, builder);
         }
 
@@ -142,11 +141,12 @@ namespace vge{
 
     void Model::draw(VkCommandBuffer commandBuffer){
         if(hasIndexBuffer){
+            // This command draws geometry based onan index buffer
             vkCmdDrawIndexed(commandBuffer, indexCount, 1, 0, 0, 0);
         } else {
+            // This command draws geometry directly from the vertex buffer, without using index buffer
             vkCmdDraw(commandBuffer, vertexCount, 1, 0, 0);
         }
-        vkCmdDraw(commandBuffer, vertexCount, 1, 0, 0);
     }
 
 

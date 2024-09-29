@@ -70,13 +70,13 @@ namespace vge{
 
     void VulkanApplication::loadGameObjects(){
         std::shared_ptr<Model> vgeModel =
-            Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/smooth_vase.obj");
+            Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/Lowpoly_tree.obj");
 
         auto gameObj = GameObject::createGameObject();
         gameObj.model = vgeModel;
         gameObj.transform.translation = {.0f, .0f, 2.5f};
-        gameObj.transform.scale = glm::vec3{3.f};
-        // gameObj.transform.rotation = glm::vec3{glm::radians(180.0f), 0.f, 0.f};
+        gameObj.transform.scale = glm::vec3{1.f};
+        gameObj.transform.rotation = glm::vec3{glm::radians(180.0f), 0.f, 0.f};
         gameObjects.push_back(std::move(gameObj));
     }
 } // namespace
