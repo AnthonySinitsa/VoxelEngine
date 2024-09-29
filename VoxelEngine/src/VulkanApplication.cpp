@@ -42,13 +42,6 @@ namespace vge{
                 continue;
             }
 
-            if (glfwGetKey(vgeWindow.getGLFWwindow(), GLFW_KEY_TAB) == GLFW_PRESS) {
-                static bool cursorCaptured = true;
-                cursorCaptured = !cursorCaptured;
-                glfwSetInputMode(vgeWindow.getGLFWwindow(), GLFW_CURSOR,
-                                 cursorCaptured ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
-            }
-
             auto newTime = std::chrono::high_resolution_clock::now();
             float frameTime =
                 std::chrono::duration<float, std::chrono::seconds::period>(newTime - currentTime).count();
@@ -77,13 +70,13 @@ namespace vge{
 
     void VulkanApplication::loadGameObjects(){
         std::shared_ptr<Model> vgeModel =
-            Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/flat_vase.obj");
+            Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/Lowpoly_tree.obj");
 
         auto gameObj = GameObject::createGameObject();
         gameObj.model = vgeModel;
         gameObj.transform.translation = {.0f, .0f, 2.5f};
-        gameObj.transform.scale = glm::vec3{3.f};
-        // gameObj.transform.rotation = glm::vec3{glm::radians(180.0f), 0.f, 0.f};
+        gameObj.transform.scale = glm::vec3{1.f};
+        gameObj.transform.rotation = glm::vec3{glm::radians(180.0f), 0.f, 0.f};
         gameObjects.push_back(std::move(gameObj));
     }
 } // namespace

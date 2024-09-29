@@ -11,7 +11,7 @@
 namespace vge{
 
     struct TransformComponent{
-        glm::vec3 translation{}; // position offset
+        glm::vec3 translation{};
         glm::vec3 scale{1.f, 1.f, 1.f};
         glm::vec3 rotation{};
 
@@ -33,10 +33,10 @@ namespace vge{
 
         GameObject(const GameObject &) = delete;
         GameObject &operator=(const GameObject &) = delete;
-        GameObject(GameObject&&) = default;
-        GameObject &operator=(GameObject&&) = default;
+        GameObject(GameObject &&) = default;
+        GameObject &operator=(GameObject &&) = default;
 
-        const id_t getId() { return id; }
+        id_t getId() { return id; }
 
         std::shared_ptr<Model> model{};
         glm::vec3 color{};
