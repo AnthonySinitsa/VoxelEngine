@@ -16,6 +16,7 @@
 #include <stdexcept>
 #include <cstddef>
 #include <memory>
+#include <iostream>
 
 namespace std {
     template <>
@@ -49,7 +50,7 @@ namespace vge{
         VgeDevice &device, const std::string &filepath){
             Builder builder{};
             builder.loadModel(filepath);
-            // std::cout << "Vertex Count: " << builder.vertices.size() << "\n";
+            std::cout << "Vertex Count: " << builder.vertices.size() << "\n";
             return std::make_unique<Model>(device, builder);
         }
 
