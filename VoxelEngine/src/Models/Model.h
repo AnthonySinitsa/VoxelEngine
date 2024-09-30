@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../Buffer/Buffer.h"
 #include "../Device/Device.h"
 
 // libs
@@ -55,13 +56,11 @@ namespace vge{
 
         VgeDevice& vgeDevice;
 
-        VkBuffer vertexBuffer;
-        VkDeviceMemory vertexBufferMemory;
+        std::unique_ptr<VgeBuffer> vertexBuffer;
         uint32_t vertexCount;
 
         bool hasIndexBuffer = false;
-        VkBuffer indexBuffer;
-        VkDeviceMemory indexBufferMemory;
+        std::unique_ptr<VgeBuffer> indexBuffer;
         uint32_t indexCount;
     };
 } // namespace
