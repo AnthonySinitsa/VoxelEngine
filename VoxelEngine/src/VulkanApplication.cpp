@@ -75,6 +75,12 @@ namespace vge{
             // Render the rest of the game objects using Vulkan
             if(auto commandBuffer = vgeRenderer.beginFrame()){
                 int frameIndex = vgeRenderer.getFrameIndex();
+                FrameInfo frameInfo{
+                    frameIndex,
+                    frameTime,
+                    commandBuffer,
+                    camera
+                };
 
                 // update
                 GlobalUbo ubo{};
@@ -84,7 +90,7 @@ namespace vge{
 
                 // render
                 vgeRenderer.beginSwapChainRenderPass(commandBuffer);
-                renderSystem.renderGameObjects(commandBuffer, gameObjects, camera);
+                renderSystem.renderGameObjects(frameInfo, gameObjects);
                 vgeRenderer.endSwapChainRenderPass(commandBuffer);
                 vgeRenderer.endFrame();
             }
