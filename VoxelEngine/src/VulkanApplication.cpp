@@ -7,6 +7,7 @@
 #include "Input/Input.h"
 #include "Buffer/Buffer.h"
 #include <memory>
+#include <src/Descriptor/Descriptors.h>
 #include <src/Presentation/SwapChain.h>
 
 // libs
@@ -28,7 +29,14 @@ namespace vge{
         glm::vec3 lightDirection = glm::normalize(glm::vec3{1.f, -3.f, -1.f});
     };
 
-    VulkanApplication::VulkanApplication(){ loadGameObjects(); }
+    VulkanApplication::VulkanApplication(){
+        globalPool = VgeDescriptorPool::Builder(vgeDevice)
+            .setMaxSets(VgeSwapChain::MAX_FRAMES_IN_FLIGHT)
+            .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VgeSwapChain::MAX_FRAMES_IN_FLIGHT)
+            .build();
+
+        loadGameObjects();
+    }
 
     VulkanApplication::~VulkanApplication(){}
 
@@ -43,6 +51,18 @@ namespace vge{
                 VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT
             );
             uboBuffers[i]->map();
+        }
+
+        auto globalSetLayout = VgeDescriptorSetLayout::Builder(vgeDevice)
+            .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT)
+            .build();
+
+        std::vector<VkDescriptorSet> globalDescriptorSets(VgeSwapChain::MAX_FRAMES_IN_FLIGHT);
+        for(int i = 0; i < globalDescriptorSets.size(); i++){
+            auto bufferInfo = uboBuffers[i]->descriptorInfo();
+            VgeDescriptorWriter(*globalSetLayout, *globalPool)
+                .writeBuffer(0, &bufferInfo)
+                .build(globalDescriptorSets[i]);
         }
 
         RenderSystem renderSystem{vgeDevice, vgeRenderer.getSwapChainRenderPass()};
