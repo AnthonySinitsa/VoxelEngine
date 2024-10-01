@@ -65,9 +65,11 @@ namespace vge{
                 .build(globalDescriptorSets[i]);
         }
 
-        RenderSystem renderSystem{vgeDevice, vgeRenderer.getSwapChainRenderPass()};
+        RenderSystem renderSystem{
+            vgeDevice,
+            vgeRenderer.getSwapChainRenderPass(),
+            globalSetLayout->getDescriptorSetLayout()};
         Camera camera{};
-        camera.setViewTarget(glm::vec3(-1.f, -2.f, 2.f), glm::vec3(0.f, 0.f, 2.5f));
 
         auto viewerObject = GameObject::createGameObject();
         Input cameraController{vgeWindow.getGLFWwindow()};
@@ -102,7 +104,8 @@ namespace vge{
                     frameIndex,
                     frameTime,
                     commandBuffer,
-                    camera
+                    camera,
+                    globalDescriptorSets[frameIndex]
                 };
 
                 // update
