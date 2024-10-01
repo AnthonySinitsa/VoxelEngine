@@ -33,6 +33,8 @@ namespace vge {
             VgeDevice vgeDevice{vgeWindow};
             Renderer vgeRenderer{vgeWindow, vgeDevice};
 
+            // note: order of desclaration matters
+            std::unique_ptr<VgeDescriptorPool> globalPool{};
             std::vector<GameObject> gameObjects;
     };
 } // namespace
