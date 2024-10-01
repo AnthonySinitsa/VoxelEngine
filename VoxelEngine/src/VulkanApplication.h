@@ -4,6 +4,7 @@
 #include "Game/GameObject.h"
 #include "Rendering/Renderer.h"
 #include "Window.h"
+#include "Descriptor/Descriptors.h"
 
 // std
 #include <memory>
@@ -32,6 +33,8 @@ namespace vge {
             VgeDevice vgeDevice{vgeWindow};
             Renderer vgeRenderer{vgeWindow, vgeDevice};
 
+            // note: order of desclaration matters
+            std::unique_ptr<VgeDescriptorPool> globalPool{};
             std::vector<GameObject> gameObjects;
     };
 } // namespace

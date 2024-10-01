@@ -7,6 +7,7 @@
 #include "Input/Input.h"
 #include "Buffer/Buffer.h"
 #include <memory>
+#include <src/Descriptor/Descriptors.h>
 #include <src/Presentation/SwapChain.h>
 
 // libs
@@ -23,12 +24,20 @@
 
 namespace vge{
 
+    // Can pass as many fields into this struct
     struct GlobalUbo {
-        glm::mat4 projectionView{1.f};
-        glm::vec3 lightDirection = glm::normalize(glm::vec3{1.f, -3.f, -1.f});
+        alignas(16) glm::mat4 projectionView{1.f};
+        alignas(16) glm::vec3 lightDirection = glm::normalize(glm::vec3{1.f, -3.f, -1.f});
     };
 
-    VulkanApplication::VulkanApplication(){ loadGameObjects(); }
+    VulkanApplication::VulkanApplication(){
+        globalPool = VgeDescriptorPool::Builder(vgeDevice)
+            .setMaxSets(VgeSwapChain::MAX_FRAMES_IN_FLIGHT)
+            .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VgeSwapChain::MAX_FRAMES_IN_FLIGHT)
+            .build();
+
+        loadGameObjects();
+    }
 
     VulkanApplication::~VulkanApplication(){}
 
@@ -45,9 +54,23 @@ namespace vge{
             uboBuffers[i]->map();
         }
 
-        RenderSystem renderSystem{vgeDevice, vgeRenderer.getSwapChainRenderPass()};
+        auto globalSetLayout = VgeDescriptorSetLayout::Builder(vgeDevice)
+            .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT)
+            .build();
+
+        std::vector<VkDescriptorSet> globalDescriptorSets(VgeSwapChain::MAX_FRAMES_IN_FLIGHT);
+        for(int i = 0; i < globalDescriptorSets.size(); i++){
+            auto bufferInfo = uboBuffers[i]->descriptorInfo();
+            VgeDescriptorWriter(*globalSetLayout, *globalPool)
+                .writeBuffer(0, &bufferInfo)
+                .build(globalDescriptorSets[i]);
+        }
+
+        RenderSystem renderSystem{
+            vgeDevice,
+            vgeRenderer.getSwapChainRenderPass(),
+            globalSetLayout->getDescriptorSetLayout()};
         Camera camera{};
-        camera.setViewTarget(glm::vec3(-1.f, -2.f, 2.f), glm::vec3(0.f, 0.f, 2.5f));
 
         auto viewerObject = GameObject::createGameObject();
         Input cameraController{vgeWindow.getGLFWwindow()};
@@ -82,7 +105,8 @@ namespace vge{
                     frameIndex,
                     frameTime,
                     commandBuffer,
-                    camera
+                    camera,
+                    globalDescriptorSets[frameIndex]
                 };
 
                 // update

@@ -14,7 +14,7 @@ namespace vge {
     class RenderSystem {
 
         public:
-            RenderSystem(VgeDevice& device, VkRenderPass renderPass);
+            RenderSystem(VgeDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
             ~RenderSystem();
 
             RenderSystem(const RenderSystem &) = delete;
@@ -23,7 +23,7 @@ namespace vge {
             void renderGameObjects(FrameInfo &frameInfo, std::vector<GameObject> &gameObjects);
 
         private:
-            void createPipelineLayout();
+            void createPipelineLayout(VkDescriptorSetLayout globalSetLayout);
             void createPipeline(VkRenderPass renderPass);
 
             VgeDevice& vgeDevice;
