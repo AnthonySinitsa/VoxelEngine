@@ -4,6 +4,7 @@
 #include "Game/GameObject.h"
 #include "Rendering/Renderer.h"
 #include "Window.h"
+#include "Descriptor/Descriptors.h"
 
 // std
 #include <memory>
