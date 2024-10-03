@@ -26,8 +26,11 @@ namespace vge{
 
     // Can pass as many fields into this struct
     struct GlobalUbo {
-        alignas(16) glm::mat4 projectionView{1.f};
-        alignas(16) glm::vec3 lightDirection = glm::normalize(glm::vec3{1.f, -3.f, -1.f});
+        glm::mat4 projectionView{1.f};
+        // glm::vec3 lightDirection = glm::normalize(glm::vec3{1.f, -3.f, -1.f});
+        glm::vec4 ambientLightColor{1.f, 1.f, 1.f, .02f}; // w is intensity
+        glm::vec3 lightPosition{-1.f};
+        alignas(16) glm::vec4 lightColor{1.f}; // w is light intensity
     };
 
     VulkanApplication::VulkanApplication(){
@@ -73,6 +76,7 @@ namespace vge{
         Camera camera{};
 
         auto viewerObject = GameObject::createGameObject();
+        viewerObject.transform.translation.z = -2.5f;
         Input cameraController{vgeWindow.getGLFWwindow()};
 
         auto currentTime = std::chrono::high_resolution_clock::now();
@@ -129,13 +133,20 @@ namespace vge{
 
     void VulkanApplication::loadGameObjects(){
         std::shared_ptr<Model> vgeModel =
-            Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/viking_room.obj");
+            Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/smooth_vase.obj");
+        auto smoothVase = GameObject::createGameObject();
+        smoothVase.model = vgeModel;
+        smoothVase.transform.translation = {.0f, .0f, 0.f};
+        smoothVase.transform.scale = glm::vec3{3.f};
+        smoothVase.transform.rotation = glm::vec3{glm::radians(0.0f), 0.f, 0.f};
+        gameObjects.push_back(std::move(smoothVase));
 
-        auto gameObj = GameObject::createGameObject();
-        gameObj.model = vgeModel;
-        gameObj.transform.translation = {.0f, .0f, 2.5f};
-        gameObj.transform.scale = glm::vec3{1.f};
-        gameObj.transform.rotation = glm::vec3{glm::radians(180.0f), 0.f, 0.f};
-        gameObjects.push_back(std::move(gameObj));
+        vgeModel = Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/quad.obj");
+        auto quad = GameObject::createGameObject();
+        quad.model = vgeModel;
+        quad.transform.translation = {.0f, .0f, 0.f};
+        quad.transform.scale = glm::vec3{3.f};
+        quad.transform.rotation = glm::vec3{glm::radians(0.0f), 0.f, 0.f};
+        gameObjects.push_back(std::move(quad));
     }
 } // namespace
