@@ -8,7 +8,6 @@
 
 // std
 #include <memory>
-#include <vector>
 #include <vulkan/vulkan_core.h>
 
 namespace vge {
@@ -35,6 +34,6 @@ namespace vge {
 
             // note: order of desclaration matters
             std::unique_ptr<VgeDescriptorPool> globalPool{};
-            std::vector<GameObject> gameObjects;
+            GameObject::Map gameObjects;
     };
 } // namespace

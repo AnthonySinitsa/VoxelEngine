@@ -110,7 +110,8 @@ namespace vge{
                     frameTime,
                     commandBuffer,
                     camera,
-                    globalDescriptorSets[frameIndex]
+                    globalDescriptorSets[frameIndex],
+                    gameObjects
                 };
 
                 // update
@@ -121,7 +122,7 @@ namespace vge{
 
                 // render
                 vgeRenderer.beginSwapChainRenderPass(commandBuffer);
-                renderSystem.renderGameObjects(frameInfo, gameObjects);
+                renderSystem.renderGameObjects(frameInfo);
                 vgeRenderer.endSwapChainRenderPass(commandBuffer);
                 vgeRenderer.endFrame();
             }
@@ -138,14 +139,14 @@ namespace vge{
         smoothVase.model = vgeModel;
         smoothVase.transform.translation = {.0f, .0f, 0.f};
         smoothVase.transform.scale = glm::vec3{3.f};
-        gameObjects.push_back(std::move(smoothVase));
+        gameObjects.emplace(smoothVase.getId(), std::move(smoothVase));
 
         vgeModel = Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/quad.obj");
         auto quad = GameObject::createGameObject();
         quad.model = vgeModel;
         quad.transform.translation = {.0f, .0f, 0.f};
         quad.transform.scale = glm::vec3{3.f};
-        gameObjects.push_back(std::move(quad));
+        gameObjects.emplace(quad.getId(), std::move(quad));
 
         vgeModel = Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/Lowpoly_tree.obj");
         auto tree = GameObject::createGameObject();
@@ -153,6 +154,6 @@ namespace vge{
         tree.transform.translation = {5.0f, .0f, 0.f};
         tree.transform.scale = glm::vec3{1.f};
         tree.transform.rotation = glm::vec3{glm::radians(180.0f), 0.f, 0.f};
-        gameObjects.push_back(std::move(tree));
+        gameObjects.emplace(tree.getId(), std::move(tree));
     }
 } // namespace

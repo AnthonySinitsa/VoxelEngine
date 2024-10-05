@@ -69,7 +69,7 @@ namespace vge{
 
 
     void RenderSystem::renderGameObjects(
-        FrameInfo &frameInfo, std::vector<GameObject> &gameObjects) {
+        FrameInfo &frameInfo) {
         vgePipeline->bind(frameInfo.commandBuffer);
 
         vkCmdBindDescriptorSets(
@@ -81,7 +81,8 @@ namespace vge{
             0, nullptr
         );
 
-        for(auto& obj : gameObjects){
+        for(auto& kv : frameInfo.gameObjects){
+            auto& obj = kv.second;
             SimplePushConstantData push{};
             push.modelMatrix = obj.transform.mat4();
             push.normalMatrix = obj.transform.normalMatrix();

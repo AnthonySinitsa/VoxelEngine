@@ -2,12 +2,10 @@
 
 #include "../Graphics/Pipeline.h"
 #include "../Device/Device.h"
-#include "../Game/GameObject.h"
 #include "../FrameInfo.h"
 
 // std
 #include <memory>
-#include <vector>
 #include <vulkan/vulkan_core.h>
 
 namespace vge {
@@ -20,7 +18,7 @@ namespace vge {
             RenderSystem(const RenderSystem &) = delete;
             RenderSystem &operator=(const RenderSystem &) = delete;
 
-            void renderGameObjects(FrameInfo &frameInfo, std::vector<GameObject> &gameObjects);
+            void renderGameObjects(FrameInfo &frameInfo);
 
         private:
             void createPipelineLayout(VkDescriptorSetLayout globalSetLayout);

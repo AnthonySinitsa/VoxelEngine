@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Camera/Camera.h"
+#include "Game/GameObject.h"
 
 // lib
 #include <vulkan/vulkan.h>
@@ -13,5 +14,6 @@ namespace vge {
         VkCommandBuffer commandBuffer;
         Camera &camera;
         VkDescriptorSet globalDescriptorSet;
+        GameObject::Map &gameObjects;
     };
 } // namespace
