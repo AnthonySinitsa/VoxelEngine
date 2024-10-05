@@ -58,7 +58,7 @@ namespace vge{
         }
 
         auto globalSetLayout = VgeDescriptorSetLayout::Builder(vgeDevice)
-            .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT)
+            .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
             .build();
 
         std::vector<VkDescriptorSet> globalDescriptorSets(VgeSwapChain::MAX_FRAMES_IN_FLIGHT);
@@ -138,7 +138,6 @@ namespace vge{
         smoothVase.model = vgeModel;
         smoothVase.transform.translation = {.0f, .0f, 0.f};
         smoothVase.transform.scale = glm::vec3{3.f};
-        smoothVase.transform.rotation = glm::vec3{glm::radians(0.0f), 0.f, 0.f};
         gameObjects.push_back(std::move(smoothVase));
 
         vgeModel = Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/quad.obj");
@@ -146,7 +145,14 @@ namespace vge{
         quad.model = vgeModel;
         quad.transform.translation = {.0f, .0f, 0.f};
         quad.transform.scale = glm::vec3{3.f};
-        quad.transform.rotation = glm::vec3{glm::radians(0.0f), 0.f, 0.f};
         gameObjects.push_back(std::move(quad));
+
+        vgeModel = Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/Lowpoly_tree.obj");
+        auto tree = GameObject::createGameObject();
+        tree.model = vgeModel;
+        tree.transform.translation = {5.0f, .0f, 0.f};
+        tree.transform.scale = glm::vec3{1.f};
+        tree.transform.rotation = glm::vec3{glm::radians(180.0f), 0.f, 0.f};
+        gameObjects.push_back(std::move(tree));
     }
 } // namespace
