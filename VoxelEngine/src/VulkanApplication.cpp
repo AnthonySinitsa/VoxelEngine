@@ -2,7 +2,8 @@
 
 #include "Camera/Camera.h"
 #include "Game/GameObject.h"
-#include "Rendering/RenderSystem.h"
+#include "systems/RenderSystem.h"
+#include "systems/PointLightSystem.h"
 #include "Rendering/Renderer.h"
 #include "Input/Input.h"
 #include "Buffer/Buffer.h"
@@ -23,12 +24,6 @@
 #include <vulkan/vulkan_core.h>
 
 namespace vge{
-
-    // Can pass as many fields into this struct
-    struct GlobalUbo {
-        alignas(16) glm::mat4 projectionView{1.f};
-        alignas(16) glm::vec3 lightDirection = glm::normalize(glm::vec3{1.f, -3.f, -1.f});
-    };
 
     VulkanApplication::VulkanApplication(){
         globalPool = VgeDescriptorPool::Builder(vgeDevice)
@@ -55,7 +50,7 @@ namespace vge{
         }
 
         auto globalSetLayout = VgeDescriptorSetLayout::Builder(vgeDevice)
-            .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT)
+            .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
             .build();
 
         std::vector<VkDescriptorSet> globalDescriptorSets(VgeSwapChain::MAX_FRAMES_IN_FLIGHT);
@@ -70,9 +65,14 @@ namespace vge{
             vgeDevice,
             vgeRenderer.getSwapChainRenderPass(),
             globalSetLayout->getDescriptorSetLayout()};
+        PointLightSystem pointLightSystem{
+            vgeDevice,
+            vgeRenderer.getSwapChainRenderPass(),
+            globalSetLayout->getDescriptorSetLayout()};
         Camera camera{};
 
         auto viewerObject = GameObject::createGameObject();
+        viewerObject.transform.translation.z = -2.5f;
         Input cameraController{vgeWindow.getGLFWwindow()};
 
         auto currentTime = std::chrono::high_resolution_clock::now();
@@ -106,18 +106,22 @@ namespace vge{
                     frameTime,
                     commandBuffer,
                     camera,
-                    globalDescriptorSets[frameIndex]
+                    globalDescriptorSets[frameIndex],
+                    gameObjects
                 };
 
                 // update
                 GlobalUbo ubo{};
-                ubo.projectionView = camera.getProjection() * camera.getView();
+                ubo.projection = camera.getProjection();
+                ubo.view = camera.getView();
+                pointLightSystem.update(frameInfo, ubo);
                 uboBuffers[frameIndex]->writeToBuffer(&ubo);
                 uboBuffers[frameIndex]->flush();
 
                 // render
                 vgeRenderer.beginSwapChainRenderPass(commandBuffer);
-                renderSystem.renderGameObjects(frameInfo, gameObjects);
+                renderSystem.renderGameObjects(frameInfo);
+                pointLightSystem.render(frameInfo);
                 vgeRenderer.endSwapChainRenderPass(commandBuffer);
                 vgeRenderer.endFrame();
             }
@@ -129,13 +133,46 @@ namespace vge{
 
     void VulkanApplication::loadGameObjects(){
         std::shared_ptr<Model> vgeModel =
-            Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/viking_room.obj");
+            Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/smooth_vase.obj");
+        auto smoothVase = GameObject::createGameObject();
+        smoothVase.model = vgeModel;
+        smoothVase.transform.translation = {.0f, .0f, 0.f};
+        smoothVase.transform.scale = glm::vec3{3.f};
+        gameObjects.emplace(smoothVase.getId(), std::move(smoothVase));
 
-        auto gameObj = GameObject::createGameObject();
-        gameObj.model = vgeModel;
-        gameObj.transform.translation = {.0f, .0f, 2.5f};
-        gameObj.transform.scale = glm::vec3{1.f};
-        gameObj.transform.rotation = glm::vec3{glm::radians(180.0f), 0.f, 0.f};
-        gameObjects.push_back(std::move(gameObj));
+        vgeModel = Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/quad.obj");
+        auto quad = GameObject::createGameObject();
+        quad.model = vgeModel;
+        quad.transform.translation = {.0f, .0f, 0.f};
+        quad.transform.scale = glm::vec3{3.f};
+        gameObjects.emplace(quad.getId(), std::move(quad));
+
+        vgeModel = Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/Lowpoly_tree.obj");
+        auto tree = GameObject::createGameObject();
+        tree.model = vgeModel;
+        tree.transform.translation = {2.5f, .0f, 0.f};
+        tree.transform.scale = glm::vec3{.2f};
+        tree.transform.rotation = glm::vec3{glm::radians(180.0f), 0.f, 0.f};
+        gameObjects.emplace(tree.getId(), std::move(tree));
+
+        std::vector<glm::vec3> lightColors{
+            {1.f, .1f, .1f},
+            {.1f, .1f, 1.f},
+            {.1f, 1.f, .1f},
+            {1.f, 1.f, .1f},
+            {.1f, 1.f, 1.f},
+            {1.f, 1.f, 1.f}
+        };
+
+        for(int i = 0; i < lightColors.size(); i++){
+            auto pointLight = GameObject::makePointLight(0.2f);
+            pointLight.color = lightColors[i];
+            auto rotateLight = glm::rotate(
+                glm::mat4(1.f),
+                (i * glm::two_pi<float>()) / lightColors.size(),
+                {0.f, -1.f, 0.f});
+            pointLight.transform.translation = glm::vec3(rotateLight * glm::vec4(-1.f, -1.f, -1.f, 1.f));
+            gameObjects.emplace(pointLight.getId(), std::move(pointLight));
+        }
     }
 } // namespace

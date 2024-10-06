@@ -2,25 +2,24 @@
 
 #include "../Graphics/Pipeline.h"
 #include "../Device/Device.h"
-#include "../Game/GameObject.h"
 #include "../FrameInfo.h"
 
 // std
 #include <memory>
-#include <vector>
 #include <vulkan/vulkan_core.h>
 
 namespace vge {
-    class RenderSystem {
+    class PointLightSystem {
 
         public:
-            RenderSystem(VgeDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
-            ~RenderSystem();
+            PointLightSystem(VgeDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
+            ~PointLightSystem();
 
-            RenderSystem(const RenderSystem &) = delete;
-            RenderSystem &operator=(const RenderSystem &) = delete;
+            PointLightSystem(const PointLightSystem &) = delete;
+            PointLightSystem &operator=(const PointLightSystem &) = delete;
 
-            void renderGameObjects(FrameInfo &frameInfo, std::vector<GameObject> &gameObjects);
+            void update(FrameInfo &frameInfo, GlobalUbo &ubo);
+            void render(FrameInfo &frameInfo);
 
         private:
             void createPipelineLayout(VkDescriptorSetLayout globalSetLayout);
