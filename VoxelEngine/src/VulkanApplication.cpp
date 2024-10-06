@@ -3,6 +3,7 @@
 #include "Camera/Camera.h"
 #include "Game/GameObject.h"
 #include "systems/RenderSystem.h"
+#include "systems/PointLight.h"
 #include "Rendering/Renderer.h"
 #include "Input/Input.h"
 #include "Buffer/Buffer.h"
@@ -74,6 +75,10 @@ namespace vge{
             vgeDevice,
             vgeRenderer.getSwapChainRenderPass(),
             globalSetLayout->getDescriptorSetLayout()};
+        PointLight pointLight{
+            vgeDevice,
+            vgeRenderer.getSwapChainRenderPass(),
+            globalSetLayout->getDescriptorSetLayout()};
         Camera camera{};
 
         auto viewerObject = GameObject::createGameObject();
@@ -125,6 +130,7 @@ namespace vge{
                 // render
                 vgeRenderer.beginSwapChainRenderPass(commandBuffer);
                 renderSystem.renderGameObjects(frameInfo);
+                pointLight.render(frameInfo);
                 vgeRenderer.endSwapChainRenderPass(commandBuffer);
                 vgeRenderer.endFrame();
             }
