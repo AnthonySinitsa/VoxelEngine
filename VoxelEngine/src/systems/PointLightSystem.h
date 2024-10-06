@@ -9,15 +9,16 @@
 #include <vulkan/vulkan_core.h>
 
 namespace vge {
-    class PointLight {
+    class PointLightSystem {
 
         public:
-            PointLight(VgeDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
-            ~PointLight();
+            PointLightSystem(VgeDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
+            ~PointLightSystem();
 
-            PointLight(const PointLight &) = delete;
-            PointLight &operator=(const PointLight &) = delete;
+            PointLightSystem(const PointLightSystem &) = delete;
+            PointLightSystem &operator=(const PointLightSystem &) = delete;
 
+            void update(FrameInfo &frameInfo, GlobalUbo &ubo);
             void render(FrameInfo &frameInfo);
 
         private:
