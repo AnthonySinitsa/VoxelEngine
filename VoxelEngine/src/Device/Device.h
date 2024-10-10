@@ -3,7 +3,6 @@
 #include "../Window.h"
 
 // std lib headers
-#include <string>
 #include <vector>
 #include <vulkan/vulkan_core.h>
 
