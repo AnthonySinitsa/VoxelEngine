@@ -1,6 +1,6 @@
 # Windowing
 
-![Windowing](VoxelEngine/images/Windowing.png)
+![Windowing](/VoxelEngine/images/Windowing.png)
 
 1. GLFW Window
 

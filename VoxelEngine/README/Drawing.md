@@ -1,6 +1,6 @@
 # Drawing
 
-![Drawing](VoxelEngine/images/Drawing.png)
+![Drawing](/VoxelEngine/images/Drawing.png)
 
 1. Queue
 
