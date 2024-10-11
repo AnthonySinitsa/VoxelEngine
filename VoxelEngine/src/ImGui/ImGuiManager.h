@@ -1,16 +1,38 @@
-// #pragma once
+#pragma once
 
-// #include <vulkan/vulkan.h>
-// #include <GLFW/glfw3.h>
+#include "../Device/Device.h"
+#include "../Window.h"
 
-// class ImGuiManager {
-// public:
-//     void Init(GLFWwindow* window, VkInstance instance, VkDevice device, VkPhysicalDevice physicalDevice, VkQueue graphicsQueue, VkQueue presentQueue, VkRenderPass renderPass);
-//     void BeginFrame();
-//     void Render();
-//     void Shutdown();
+// libs
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_vulkan.h>
 
-// private:
-//     VkDescriptorPool descriptorPool;
-//     uint32_t swapChainImageCount;
-// };
+namespace vge {
+
+    static void check_vk_result(VkResult err) {
+        if(err == 0) return;
+        fprintf(stderr, "[vulkan] Error: VkResult = %d\n", err);
+        if(err < 0) abort();
+    }
+
+    class VgeImgui {
+        public:
+            VgeImgui(Window &window, VgeDevice &device, VkRenderPass renderPass, uint32_t imageCount);
+            ~VgeImgui();
+
+            void newFrame();
+
+            void render(VkCommandBuffer commandBuffer);
+
+            bool show_demo_window = true;
+            bool show_another_window = false;
+            ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+            void runExample();
+
+        private:
+            VgeDevice &vgeDevice;
+
+            VkDescriptorPool descriptorPool;
+    };
+} // namespace

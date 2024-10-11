@@ -5,6 +5,7 @@
 #include "Rendering/Renderer.h"
 #include "Window.h"
 #include "Descriptor/Descriptors.h"
+#include "ImGui/ImGuiManager.h"
 
 // std
 #include <memory>
@@ -35,5 +36,8 @@ namespace vge {
             // note: order of desclaration matters
             std::unique_ptr<VgeDescriptorPool> globalPool{};
             GameObject::Map gameObjects;
+
+            // ImGui manager
+            std::unique_ptr<VgeImgui> vgeImgui{};
     };
 } // namespace
