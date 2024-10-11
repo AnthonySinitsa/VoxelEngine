@@ -71,11 +71,12 @@ namespace vge {
         init_info.DescriptorPool = descriptorPool;
         // todo, should prob get around to integrate memory allocator library such
         // as vulkan memory allocator(VMA)
-        init_info.Allocator = nullptr;
+        init_info.Allocator = VK_NULL_HANDLE;
         init_info.MinImageCount = 2;
         init_info.ImageCount = imageCount;
         init_info.CheckVkResultFn = check_vk_result;
         init_info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
+        init_info.RenderPass = renderPass;
 
         if (!ImGui_ImplVulkan_Init(&init_info)) {
             throw std::runtime_error("Failed to initialize ImGui Vulkan implementation!!!");
@@ -86,7 +87,6 @@ namespace vge {
         auto commandBuffer = device.beginSingleTimeCommands();
         ImGui_ImplVulkan_CreateFontsTexture();
         device.endSingleTimeCommands(commandBuffer);
-        // AAAAAAAAAAAAAAAAAAAAAAaa
         ImGui_ImplVulkan_DestroyFontsTexture();
     }
 

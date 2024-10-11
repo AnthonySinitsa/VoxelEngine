@@ -26,12 +26,22 @@
 namespace vge{
 
     VulkanApplication::VulkanApplication(){
+        // Initialize global descriptor pool
         globalPool = VgeDescriptorPool::Builder(vgeDevice)
             .setMaxSets(VgeSwapChain::MAX_FRAMES_IN_FLIGHT)
             .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VgeSwapChain::MAX_FRAMES_IN_FLIGHT)
             .build();
 
+        // Load game objects
         loadGameObjects();
+
+        // Initialize ImGui
+        vgeImgui = std::make_unique<VgeImgui>(
+            vgeWindow,
+            vgeDevice,
+            vgeRenderer.getSwapChainRenderPass(),
+            VgeSwapChain::MAX_FRAMES_IN_FLIGHT
+        );
     }
 
     VulkanApplication::~VulkanApplication(){}
@@ -98,6 +108,12 @@ namespace vge{
             float aspect = vgeRenderer.getAspectRatio();
             camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 1000.f); // FYI: 10.f is the clipping plane
 
+            // Start new ImGui frame
+            vgeImgui->newFrame();
+
+            // Render ImGui example window
+            vgeImgui->runExample();
+
             // Render the rest of the game objects using Vulkan
             if(auto commandBuffer = vgeRenderer.beginFrame()){
                 int frameIndex = vgeRenderer.getFrameIndex();
@@ -119,11 +135,20 @@ namespace vge{
                 uboBuffers[frameIndex]->writeToBuffer(&ubo);
                 uboBuffers[frameIndex]->flush();
 
-                // render
+                // Begin swapchain render pass
                 vgeRenderer.beginSwapChainRenderPass(commandBuffer);
+
+                // Render game objects
                 renderSystem.renderGameObjects(frameInfo);
                 pointLightSystem.render(frameInfo);
+
+                // Render ImGui
+                vgeImgui->render(commandBuffer);
+
+                // End swapchain render pass
                 vgeRenderer.endSwapChainRenderPass(commandBuffer);
+
+                // End frame
                 vgeRenderer.endFrame();
             }
         }
