@@ -19,12 +19,13 @@ namespace vge{
                 int lookRight = GLFW_KEY_RIGHT;
                 int lookUp = GLFW_KEY_UP;
                 int lookDown = GLFW_KEY_DOWN;
+                // int toggleCursor = GLFW_KEY_TAB;
             };
 
             Input(GLFWwindow* window){
                 glfwSetWindowUserPointer(window, this);
                 glfwSetCursorPosCallback(window, mousePosCallback);
-                glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+                // setCursorMode(CursorMode::Disabled);
             }
 
             bool isEscapePressed(GLFWwindow* window){

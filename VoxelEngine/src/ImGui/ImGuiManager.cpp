@@ -92,9 +92,9 @@ namespace vge {
 
 
     VgeImgui::~VgeImgui(){
-        vkDestroyDescriptorPool(vgeDevice.device(), descriptorPool, nullptr);
         ImGui_ImplVulkan_Shutdown();
         ImGui_ImplGlfw_Shutdown();
+        vkDestroyDescriptorPool(vgeDevice.device(), descriptorPool, nullptr);
         ImGui::DestroyContext();
     }
 
