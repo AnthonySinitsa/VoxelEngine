@@ -19,6 +19,7 @@ namespace vge{
                 int lookRight = GLFW_KEY_RIGHT;
                 int lookUp = GLFW_KEY_UP;
                 int lookDown = GLFW_KEY_DOWN;
+                int unlockMouse = GLFW_KEY_E;
             };
 
             bool isEscapePressed(GLFWwindow* window){
@@ -26,8 +27,12 @@ namespace vge{
             }
 
             void moveInPlaneXZ(GLFWwindow* window, float dt, GameObject& gameObject);
-
             void mouseMove(GLFWwindow* window, GameObject& gameObject);
+
+            // Function to toggle mouse lock state
+            void toggleMouseLock(GLFWwindow* window);
+            void update(GLFWwindow* window);
+            bool isMouseLocked() const { return mouseLocked; }
 
             KeyMappings keys{};
             float moveSpeed{3.f};
@@ -35,9 +40,11 @@ namespace vge{
             float mouseSensitivity{0.1f};
 
         private:
-            // Variables to track prvious mouse position
+            // Variables to track previous mouse position
             double lastMouseX = 0.0;
             double lastMouseY = 0.0;
             bool firstMouseMove = true; // Helps initialize last position
+            bool mouseLocked = true; // Start with mouse locked
+            bool unlockKeyPressed = false;
     };
 } // namespace

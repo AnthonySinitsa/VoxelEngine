@@ -40,11 +40,35 @@ namespace vge{
     }
 
 
+    // Toggle mouse lock state(called when "e" is pressed)
+    void Input::toggleMouseLock(GLFWwindow* window) {
+        mouseLocked = !mouseLocked;
+        if (mouseLocked) {
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        } else {
+            glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        }
+    }
+
+
+    void Input::update(GLFWwindow* window){
+        int state = glfwGetKey(window, keys.unlockMouse);
+        if(state == GLFW_PRESS){
+            if(!unlockKeyPressed){
+                toggleMouseLock(window);
+                unlockKeyPressed = true;
+            }
+        } else if (state == GLFW_RELEASE){
+            unlockKeyPressed = false;
+        }
+    }
+
+
+    // Update mouse movement (only if mouse is locked)
     void Input::mouseMove(GLFWwindow* window, GameObject& gameObject) {
-        // Enable raw mouse input
-        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-        if (glfwRawMouseMotionSupported()) {
-            glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+        if(!mouseLocked){
+            // Mouse if unlocked, so we don't move camera
+            return;
         }
 
         // Get current mouse position
