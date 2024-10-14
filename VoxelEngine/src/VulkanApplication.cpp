@@ -83,17 +83,12 @@ namespace vge{
 
         auto viewerObject = GameObject::createGameObject();
         viewerObject.transform.translation.z = -2.5f;
-        Input cameraController{vgeWindow.getGLFWwindow()};
+        Input input{};
 
         auto currentTime = std::chrono::high_resolution_clock::now();
 
         while(!vgeWindow.shouldClose()){
             glfwPollEvents();
-
-            if(cameraController.isEscapePressed(vgeWindow.getGLFWwindow())){
-                glfwSetWindowShouldClose(vgeWindow.getGLFWwindow(), GLFW_TRUE);
-                continue;
-            }
 
             auto newTime = std::chrono::high_resolution_clock::now();
             float frameTime =
@@ -101,7 +96,7 @@ namespace vge{
             currentTime = newTime;
 
             // Update camera
-            cameraController.moveInPlaneXZ(vgeWindow.getGLFWwindow(), frameTime, viewerObject);
+            input.moveInPlaneXZ(vgeWindow.getGLFWwindow(), frameTime, viewerObject);
             camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
 
             // Set camera perspective projection
