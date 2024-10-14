@@ -14,10 +14,6 @@ namespace vge{
         if(glfwGetKey(window, keys.lookUp) == GLFW_PRESS)rotate.x += 1.f;
         if(glfwGetKey(window, keys.lookDown) == GLFW_PRESS)rotate.x -= 1.f;
 
-        // Apply mouse rotation
-        rotate.x += mouseDelta.y;
-        rotate.y += mouseDelta.x;
-
         if(glm::dot(rotate, rotate) > std::numeric_limits<float>::epsilon()){
             gameObject.transform.rotation  += lookSpeed * dt * glm::normalize(rotate);
         }
@@ -42,34 +38,5 @@ namespace vge{
         if(glm::dot(moveDir, moveDir) > std::numeric_limits<float>::epsilon()){
             gameObject.transform.translation  += moveSpeed * dt * glm::normalize(moveDir);
         }
-
-        // Reset mouse delta
-        mouseDelta = glm::vec2{0.0f};
-    }
-
-
-    void Input::mousePosCallback(GLFWwindow* window, double xpos, double ypos){
-        auto input = reinterpret_cast<Input*>(glfwGetWindowUserPointer(window));
-        input->mouseCallback(xpos, ypos);
-    }
-
-
-    void Input::mouseCallback(double xpos, double ypos){
-        if (firstMouse) {
-            lastX = xpos;
-            lastY = ypos;
-            firstMouse = false;
-        }
-
-        float xoffset = xpos - lastX;
-        float yoffset = lastY - ypos; // Reversed since y-coordinates range from bottom to top
-        lastX = xpos;
-        lastY = ypos;
-
-        xoffset *= mouseSensitivity;
-        yoffset *= mouseSensitivity;
-
-        mouseDelta.x += xoffset;
-        mouseDelta.y += yoffset;
     }
 } // namespace

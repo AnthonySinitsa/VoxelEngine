@@ -19,13 +19,14 @@ namespace vge{
                 int lookRight = GLFW_KEY_RIGHT;
                 int lookUp = GLFW_KEY_UP;
                 int lookDown = GLFW_KEY_DOWN;
+                // int toggleCursor = GLFW_KEY_TAB;
             };
 
-            Input(GLFWwindow* window){
-                glfwSetWindowUserPointer(window, this);
-                glfwSetCursorPosCallback(window, mousePosCallback);
-                glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-            }
+            // Input(GLFWwindow* window){
+            //     glfwSetWindowUserPointer(window, this);
+            //     glfwSetCursorPosCallback(window, mousePosCallback);
+            //     // setCursorMode(CursorMode::Disabled);
+            // }
 
             bool isEscapePressed(GLFWwindow* window){
                 return glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS;
@@ -38,13 +39,13 @@ namespace vge{
             float lookSpeed{1.5f};
             float mouseSensitivity{0.1f};
 
-        private:
-            static void mousePosCallback(GLFWwindow* window, double xpos, double ypos);
-            void mouseCallback(double xpos, double ypos);
+        // private:
+        //     static void mousePosCallback(GLFWwindow* window, double xpos, double ypos);
+        //     void mouseCallback(double xpos, double ypos);
 
-            glm::vec2 mouseDelta{0.f};
-            bool firstMouse = true;
-            float lastX = 0.f;
-            float lastY = 0.f;
+        //     glm::vec2 mouseDelta{0.f};
+        //     bool firstMouse = true;
+        //     float lastX = 0.f;
+        //     float lastY = 0.f;
     };
 } // namespace
