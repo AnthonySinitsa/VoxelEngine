@@ -95,20 +95,18 @@ namespace vge{
                 std::chrono::duration<float, std::chrono::seconds::period>(newTime - currentTime).count();
             currentTime = newTime;
 
-            // Update camera
-            input.moveInPlaneXZ(vgeWindow.getGLFWwindow(), frameTime, viewerObject);
+            input.update(vgeWindow.getGLFWwindow()); // Toggle mouse lock/unlock
+            input.moveInPlaneXZ(vgeWindow.getGLFWwindow(), frameTime, viewerObject); // Update camera
             input.mouseMove(vgeWindow.getGLFWwindow(), viewerObject);
-            camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
+
+            camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation); // Update camera view matrix
 
             // Set camera perspective projection
             float aspect = vgeRenderer.getAspectRatio();
             camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 1000.f); // FYI: 10.f is the clipping plane
 
-            // Start new ImGui frame
-            vgeImgui->newFrame();
-
-            // Render ImGui example window
-            vgeImgui->runExample();
+            vgeImgui->newFrame(); // Start new ImGui frame
+            vgeImgui->runExample(); // Render ImGui example window
 
             // Render the rest of the game objects using Vulkan
             if(auto commandBuffer = vgeRenderer.beginFrame()){
@@ -131,21 +129,14 @@ namespace vge{
                 uboBuffers[frameIndex]->writeToBuffer(&ubo);
                 uboBuffers[frameIndex]->flush();
 
-                // Begin swapchain render pass
-                vgeRenderer.beginSwapChainRenderPass(commandBuffer);
+                vgeRenderer.beginSwapChainRenderPass(commandBuffer); // Begin swapchain render pass
 
-                // Render game objects
-                renderSystem.renderGameObjects(frameInfo);
+                renderSystem.renderGameObjects(frameInfo); // Render game objects
                 pointLightSystem.render(frameInfo);
 
-                // Render ImGui
-                vgeImgui->render(commandBuffer);
-
-                // End swapchain render pass
-                vgeRenderer.endSwapChainRenderPass(commandBuffer);
-
-                // End frame
-                vgeRenderer.endFrame();
+                vgeImgui->render(commandBuffer); // Render ImGui
+                vgeRenderer.endSwapChainRenderPass(commandBuffer); // End swapchain render pass
+                vgeRenderer.endFrame(); // End frame
             }
         }
 
