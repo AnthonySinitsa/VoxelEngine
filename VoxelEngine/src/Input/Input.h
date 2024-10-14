@@ -19,14 +19,7 @@ namespace vge{
                 int lookRight = GLFW_KEY_RIGHT;
                 int lookUp = GLFW_KEY_UP;
                 int lookDown = GLFW_KEY_DOWN;
-                // int toggleCursor = GLFW_KEY_TAB;
             };
-
-            // Input(GLFWwindow* window){
-            //     glfwSetWindowUserPointer(window, this);
-            //     glfwSetCursorPosCallback(window, mousePosCallback);
-            //     // setCursorMode(CursorMode::Disabled);
-            // }
 
             bool isEscapePressed(GLFWwindow* window){
                 return glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS;
@@ -34,18 +27,17 @@ namespace vge{
 
             void moveInPlaneXZ(GLFWwindow* window, float dt, GameObject& gameObject);
 
+            void mouseMove(GLFWwindow* window, GameObject& gameObject);
+
             KeyMappings keys{};
             float moveSpeed{3.f};
             float lookSpeed{1.5f};
             float mouseSensitivity{0.1f};
 
-        // private:
-        //     static void mousePosCallback(GLFWwindow* window, double xpos, double ypos);
-        //     void mouseCallback(double xpos, double ypos);
-
-        //     glm::vec2 mouseDelta{0.f};
-        //     bool firstMouse = true;
-        //     float lastX = 0.f;
-        //     float lastY = 0.f;
+        private:
+            // Variables to track prvious mouse position
+            double lastMouseX = 0.0;
+            double lastMouseY = 0.0;
+            bool firstMouseMove = true; // Helps initialize last position
     };
 } // namespace

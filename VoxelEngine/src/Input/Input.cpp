@@ -2,7 +2,6 @@
 
 // std
 #include <glm/gtc/constants.hpp>
-#include <limits>
 #include <GLFW/glfw3.h>
 
 namespace vge{
@@ -38,5 +37,41 @@ namespace vge{
         if(glm::dot(moveDir, moveDir) > std::numeric_limits<float>::epsilon()){
             gameObject.transform.translation  += moveSpeed * dt * glm::normalize(moveDir);
         }
+    }
+
+
+    void Input::mouseMove(GLFWwindow* window, GameObject& gameObject) {
+        // Enable raw mouse input
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        if (glfwRawMouseMotionSupported()) {
+            glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+        }
+
+        // Get current mouse position
+        double mouseX, mouseY;
+        glfwGetCursorPos(window, &mouseX, &mouseY);
+
+        // On the first frame, set the lastMouseX/Y to the current position
+        if (firstMouseMove) {
+            lastMouseX = mouseX;
+            lastMouseY = mouseY;
+            firstMouseMove = false;
+        }
+
+        // Calculate the delta (difference) in mouse position
+        float deltaX = static_cast<float>(mouseX - lastMouseX);
+        float deltaY = static_cast<float>(mouseY - lastMouseY);
+
+        // Update last mouse position
+        lastMouseX = mouseX;
+        lastMouseY = mouseY;
+
+        // Sensitivity and rotation (adjust sensitivity as needed)
+        const float mouseSensitivity = 0.001f;
+        gameObject.transform.rotation.y += deltaX * mouseSensitivity; // Yaw (horizontal)
+        gameObject.transform.rotation.x -= deltaY * mouseSensitivity; // Pitch (vertical)
+
+        // Limit pitch values to avoid flipping the camera
+        gameObject.transform.rotation.x = glm::clamp(gameObject.transform.rotation.x, -1.5f, 1.5f);
     }
 } // namespace

@@ -97,6 +97,7 @@ namespace vge{
 
             // Update camera
             input.moveInPlaneXZ(vgeWindow.getGLFWwindow(), frameTime, viewerObject);
+            input.mouseMove(vgeWindow.getGLFWwindow(), viewerObject);
             camera.setViewYXZ(viewerObject.transform.translation, viewerObject.transform.rotation);
 
             // Set camera perspective projection
