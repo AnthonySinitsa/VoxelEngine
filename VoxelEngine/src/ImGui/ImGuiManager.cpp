@@ -13,6 +13,7 @@
 // std
 #include <stdexcept>
 #include <vulkan/vulkan_core.h>
+#include <fstream>
 
 namespace vge {
 
@@ -89,10 +90,13 @@ namespace vge {
         ImGui_ImplVulkan_CreateFontsTexture();
         device.endSingleTimeCommands(commandBuffer);
         ImGui_ImplVulkan_DestroyFontsTexture();
+
+        loadSettings();
     }
 
 
     VgeImgui::~VgeImgui(){
+        saveSettings();
         ImGui_ImplVulkan_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         vkDestroyDescriptorPool(vgeDevice.device(), descriptorPool, nullptr);
@@ -107,13 +111,31 @@ namespace vge {
     }
 
 
-    // this tells imgui that we're done setting up the current frame,
-    // then gets the draw data from imgui and uses it to record to the provided
-    // command buffer the necessary draw commands
     void VgeImgui::render(VkCommandBuffer commandBuffer) {
+        // this tells imgui that we're done setting up the current frame,
+        // then gets the draw data from imgui and uses it to record to the provided
+        // command buffer the necessary draw commands
         ImGui::Render();
         ImDrawData *drawdata = ImGui::GetDrawData();
         ImGui_ImplVulkan_RenderDrawData(drawdata, commandBuffer);
+    }
+
+
+    void VgeImgui::saveSettings() {
+        std::ofstream outFile(settingsFilePath);
+        if (outFile.is_open()) {
+            outFile << clear_color.x << " " << clear_color.y << " " << clear_color.z << " " << clear_color.w;
+            outFile.close();
+        }
+    }
+
+    void VgeImgui::loadSettings() {
+        std::ifstream inFile(settingsFilePath);
+        if (inFile.is_open()) {
+            inFile >> clear_color.x >> clear_color.y >> clear_color.z >> clear_color.w;
+            inFile.close();
+            vgeRenderer.setBackgroundColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+        }
     }
 
 
@@ -124,38 +146,31 @@ namespace vge {
             static float f = 0.0f;
             static int counter = 0;
 
-            ImGui::Begin("World, James World");// create a window called "" and append into it.
+            ImGui::Begin("World, James World");
 
-            ImGui::Text(
-                "This is some useful text. AI poo"
-            ); // display some text(you  can use format string too)
+            ImGui::Text("This is some useful text. AI poo");
 
-            ImGui::Checkbox(
-                "demo WIIINDOW",
-                &show_demo_window
-            ); // edit bools storing our window open/close state
+            ImGui::Checkbox("demo WIIINDOW", &show_demo_window); // edit bools storing our window open/close state
             ImGui::Checkbox("Another Window HERHERHERH", &show_another_window);
 
             ImGui::SliderFloat("float", &f, 0.0f, 1.0f); // edit 1 float using slider from 0.0f to 1.0f
-            ImGui::ColorEdit3("clear color", (float *)&clear_color); // edit 3 floats representing a color
+            if(ImGui::ColorEdit3("clear color", (float *)&clear_color)){
+                vgeRenderer.setBackgroundColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+            }
 
-            if(ImGui::Button("Button")) // Buttons return  true when clicked(most widgets return  tru when edited/activated)
+            if(ImGui::Button("Button"))
                 counter++;
             ImGui::SameLine();
             ImGui::Text("counter = %d", counter);
 
-            static float color[4] = {0.01f, 0.01f, 0.01f, 1.0f};
-            if (ImGui::ColorEdit4("Background Color", color)) {
-                vgeRenderer.setBackgroundColor(color[0], color[1], color[2], color[3]);
-            }
-
-            ImGui::Text(
-                "Application average %.3f ms/frame (%.1f FPS)",
+            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
                 1000.0f / ImGui::GetIO().Framerate,
                 ImGui::GetIO().Framerate
             );
+
             ImGui::End();
         }
+
 
 
         // 3. Show another simple window
