@@ -122,7 +122,8 @@ namespace vge{
         renderPassInfo.renderArea.extent = vgeSwapChain->getSwapChainExtent();
 
         std::array<VkClearValue, 2> clearValues{};
-        clearValues[0].color = {0.01f, 0.01f, 0.01f, 1.0f};
+        // background color
+        clearValues[0].color = {backgroundColor[0], backgroundColor[1], backgroundColor[2], backgroundColor[3]};
         clearValues[1].depthStencil = {1.0f, 0};
         renderPassInfo.clearValueCount = static_cast<uint32_t>(clearValues.size());
         renderPassInfo.pClearValues = clearValues.data();

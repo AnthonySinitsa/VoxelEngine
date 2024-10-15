@@ -9,6 +9,7 @@
 #include <vector>
 #include <cassert>
 #include <vulkan/vulkan_core.h>
+#include <array>
 
 namespace vge {
     class Renderer {
@@ -39,6 +40,10 @@ namespace vge {
             void beginSwapChainRenderPass(VkCommandBuffer commandBuffer);
             void endSwapChainRenderPass(VkCommandBuffer commandBuffer);
 
+            void setBackgroundColor(float r, float g, float b, float a) {
+                backgroundColor = {r, g, b, a};
+            }
+
         private:
             void createCommandBuffers();
             void freeCommandBuffers();
@@ -52,5 +57,7 @@ namespace vge {
             uint32_t currentImageIndex;
             int currentFrameIndex{0};
             bool isFrameStarted{false};
+
+            std::array<float, 4> backgroundColor{0.01f, 0.01f, 0.01f, 1.0f};
     };
 } // namespace

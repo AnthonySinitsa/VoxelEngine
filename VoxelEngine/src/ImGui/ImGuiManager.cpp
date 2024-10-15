@@ -5,19 +5,21 @@
 
 // libs
 #include <cstdint>
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_vulkan.h>
+#include "external/ImGuiDocking/imgui.h"
+#include "external/ImGuiDocking/backends/imgui_impl_glfw.h"
+#include "external/ImGuiDocking/backends/imgui_impl_vulkan.h"
+#include "src/Rendering/Renderer.h"
 
 // std
 #include <stdexcept>
 #include <vulkan/vulkan_core.h>
+#include <fstream>
 
 namespace vge {
 
     VgeImgui::VgeImgui(
-        Window &window, VgeDevice &device, VkRenderPass renderPass, uint32_t imageCount
-    ) : vgeDevice{device}{
+        Window &window, VgeDevice &device, Renderer &renderer, VkRenderPass renderPass, uint32_t imageCount
+    ) : vgeDevice{device}, vgeRenderer{renderer}{
         // Set up descriptor pool stored on this instance
         VkDescriptorPoolSize pool_sizes[] = {
             {VK_DESCRIPTOR_TYPE_SAMPLER, 1000},
@@ -88,10 +90,13 @@ namespace vge {
         ImGui_ImplVulkan_CreateFontsTexture();
         device.endSingleTimeCommands(commandBuffer);
         ImGui_ImplVulkan_DestroyFontsTexture();
+
+        loadSettings();
     }
 
 
     VgeImgui::~VgeImgui(){
+        saveSettings();
         ImGui_ImplVulkan_Shutdown();
         ImGui_ImplGlfw_Shutdown();
         vkDestroyDescriptorPool(vgeDevice.device(), descriptorPool, nullptr);
@@ -106,67 +111,79 @@ namespace vge {
     }
 
 
-    // this tells imgui that we're done setting up the current frame,
-    // then gets the draw data from imgui and uses it to record to the provided
-    // command buffer the necessary draw commands
     void VgeImgui::render(VkCommandBuffer commandBuffer) {
+        // this tells imgui that we're done setting up the current frame,
+        // then gets the draw data from imgui and uses it to record to the provided
+        // command buffer the necessary draw commands
         ImGui::Render();
         ImDrawData *drawdata = ImGui::GetDrawData();
         ImGui_ImplVulkan_RenderDrawData(drawdata, commandBuffer);
     }
 
 
+    void VgeImgui::saveSettings() {
+        std::ofstream outFile(settingsFilePath);
+        if (outFile.is_open()) {
+            outFile << clear_color.x << " " << clear_color.y << " " << clear_color.z << " " << clear_color.w;
+            outFile.close();
+        }
+    }
+
+    void VgeImgui::loadSettings() {
+        std::ifstream inFile(settingsFilePath);
+        if (inFile.is_open()) {
+            inFile >> clear_color.x >> clear_color.y >> clear_color.z >> clear_color.w;
+            inFile.close();
+            vgeRenderer.setBackgroundColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+        }
+    }
+
+
     void VgeImgui::runExample(){
-        // 1. Show big demo window(most of the sample code is in ImGui::ShowDemoWindow()!
-        // Can browse its code to learn more about Dear ImGui!).
         if(show_demo_window) ImGui::ShowDemoWindow(&show_demo_window);
 
-        // 2. Show simple window that we create ourselves. we use  a begin/end pair to created
-        // a named window
         {
             static float f = 0.0f;
             static int counter = 0;
 
-            ImGui::Begin("World, James World");// create a window called "" and append into it.
+            ImGui::Begin("World, James World");
 
-            ImGui::Text(
-                "This is some useful text. AI poo"
-            ); // display some text(you  can use format string too)
+            ImGui::Text("This is some useful text. AI poo");
 
-            ImGui::Checkbox(
-                "demo WIIINDOW",
-                &show_demo_window
-            ); // edit bools storing our window open/close state
+            ImGui::Checkbox("demo WIIINDOW", &show_demo_window); // edit bools storing our window open/close state
             ImGui::Checkbox("Another Window HERHERHERH", &show_another_window);
 
             ImGui::SliderFloat("float", &f, 0.0f, 1.0f); // edit 1 float using slider from 0.0f to 1.0f
-            ImGui::ColorEdit3("clear color", (float *)&clear_color); // edit 3 floats representing a color
+            if(ImGui::ColorEdit3("clear color", (float *)&clear_color)){
+                vgeRenderer.setBackgroundColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+            }
 
-            if(ImGui::Button("Button")) // Buttons return  true when clicked(most widgets return  tru when edited/activated)
+            if(ImGui::Button("Button"))
                 counter++;
             ImGui::SameLine();
             ImGui::Text("counter = %d", counter);
 
-            ImGui::Text(
-                "Application average %.3f ms/frame (%.1f FPS)",
+            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
                 1000.0f / ImGui::GetIO().Framerate,
                 ImGui::GetIO().Framerate
             );
+
             ImGui::End();
         }
+
 
 
         // 3. Show another simple window
         if(show_another_window){
             ImGui::Begin(
                 "Another Window YARHHRH",
-                &show_another_window // Pass a pointer to our bool variable(the window will have
-                                      // closing button that will clear the bool when clicked)
+                &show_another_window
             );
 
             ImGui::Text("Hello from another window!!!");
             if(ImGui::Button("Close Me")) show_another_window = false;
             ImGui::End();
         }
+
     }
 } // namespace

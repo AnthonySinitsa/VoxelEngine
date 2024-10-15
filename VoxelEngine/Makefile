@@ -3,11 +3,11 @@ CFLAGS = -std=c++20 -O2
 LDFLAGS = -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
 # Paths to ImGui
-IMGUI_DIR = /home/po/Projects/ExternalLibs/imgui
+IMGUI_DIR = ./external/ImGuiDocking
 IMGUI_BACKENDS_DIR = $(IMGUI_DIR)/backends
 
 # Path to tinyobjloader
-TINYOBJ_PATH = /home/po/Projects/ExternalLibs/tinyobjloader
+TINYOBJ_PATH = external/tinyobjloader
 
 # ImGui source files
 IMGUI_SRC = $(IMGUI_DIR)/imgui.cpp \
