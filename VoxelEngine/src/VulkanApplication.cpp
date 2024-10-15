@@ -39,6 +39,7 @@ namespace vge{
         vgeImgui = std::make_unique<VgeImgui>(
             vgeWindow,
             vgeDevice,
+            vgeRenderer,
             vgeRenderer.getSwapChainRenderPass(),
             VgeSwapChain::MAX_FRAMES_IN_FLIGHT
         );

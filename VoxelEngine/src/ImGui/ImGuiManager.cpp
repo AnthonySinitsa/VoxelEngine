@@ -8,6 +8,7 @@
 #include "external/ImGuiDocking/imgui.h"
 #include "external/ImGuiDocking/backends/imgui_impl_glfw.h"
 #include "external/ImGuiDocking/backends/imgui_impl_vulkan.h"
+#include "src/Rendering/Renderer.h"
 
 // std
 #include <stdexcept>
@@ -16,8 +17,8 @@
 namespace vge {
 
     VgeImgui::VgeImgui(
-        Window &window, VgeDevice &device, VkRenderPass renderPass, uint32_t imageCount
-    ) : vgeDevice{device}{
+        Window &window, VgeDevice &device, Renderer &renderer, VkRenderPass renderPass, uint32_t imageCount
+    ) : vgeDevice{device}, vgeRenderer{renderer}{
         // Set up descriptor pool stored on this instance
         VkDescriptorPoolSize pool_sizes[] = {
             {VK_DESCRIPTOR_TYPE_SAMPLER, 1000},
@@ -143,6 +144,11 @@ namespace vge {
             ImGui::SameLine();
             ImGui::Text("counter = %d", counter);
 
+            static float color[4] = {0.01f, 0.01f, 0.01f, 1.0f};
+            if (ImGui::ColorEdit4("Background Color", color)) {
+                vgeRenderer.setBackgroundColor(color[0], color[1], color[2], color[3]);
+            }
+
             ImGui::Text(
                 "Application average %.3f ms/frame (%.1f FPS)",
                 1000.0f / ImGui::GetIO().Framerate,
@@ -163,5 +169,6 @@ namespace vge {
             if(ImGui::Button("Close Me")) show_another_window = false;
             ImGui::End();
         }
+
     }
 } // namespace
