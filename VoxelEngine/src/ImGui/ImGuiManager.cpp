@@ -49,12 +49,10 @@ namespace vge {
         ImGui::CreateContext();
         ImGuiIO &io = ImGui::GetIO();
         (void)io;
-        // io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-        // io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+        io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 
         // Setup Dear ImGui style
         ImGui::StyleColorsDark();
-        // ImGui::StyleColorsClassic();
 
         // Setup Platform/Renderer backends
         // Initialize imgui for vulkan
@@ -71,8 +69,6 @@ namespace vge {
 
         init_info.PipelineCache = VK_NULL_HANDLE;
         init_info.DescriptorPool = descriptorPool;
-        // todo, should prob get around to integrate memory allocator library such
-        // as vulkan memory allocator(VMA)
         init_info.Allocator = VK_NULL_HANDLE;
         init_info.MinImageCount = 2;
         init_info.ImageCount = imageCount;
