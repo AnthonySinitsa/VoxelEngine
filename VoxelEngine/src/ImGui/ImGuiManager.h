@@ -4,9 +4,7 @@
 #include "../Window.h"
 
 // libs
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_vulkan.h>
+#include "external/ImGuiDocking/imgui.h"
 
 namespace vge {
 
@@ -29,6 +27,8 @@ namespace vge {
             bool show_another_window = false;
             ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
             void runExample();
+            void RenderUI();
+            void ShowExampleAppDockSpace();
 
         private:
             VgeDevice &vgeDevice;

@@ -107,6 +107,7 @@ namespace vge{
 
             vgeImgui->newFrame(); // Start new ImGui frame
             vgeImgui->runExample(); // Render ImGui example window
+            // vgeImgui->RenderUI();
 
             // Render the rest of the game objects using Vulkan
             if(auto commandBuffer = vgeRenderer.beginFrame()){
