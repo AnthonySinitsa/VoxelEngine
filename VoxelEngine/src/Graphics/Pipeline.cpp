@@ -15,14 +15,42 @@ namespace vge{
         const std::string& vertFilepath,
         const std::string& fragFilepath,
         const PipelineConfigInfo& configInfo
-    ) : vgeDevice{device} {
+    ) : vgeDevice{device},
+    vertShaderModule{VK_NULL_HANDLE},
+    fragShaderModule{VK_NULL_HANDLE},
+    graphicsPipeline{VK_NULL_HANDLE},
+    computePipeline{VK_NULL_HANDLE} {
         createGraphicsPipeline(vertFilepath, fragFilepath, configInfo);
     }
 
+    // Constructor for compute pipeline
+    Pipeline::Pipeline(
+        VgeDevice &device,
+        const std::string& compFilepath,
+        const PipelineConfigInfo& configInfo
+    ) : vgeDevice{device},
+    compShaderModule{VK_NULL_HANDLE},
+    graphicsPipeline{VK_NULL_HANDLE},
+    computePipeline{VK_NULL_HANDLE} {
+        createComputePipeline(compFilepath, configInfo);
+    }
+
     Pipeline::~Pipeline(){
-        vkDestroyShaderModule(vgeDevice.device(), vertShaderModule, nullptr);
-        vkDestroyShaderModule(vgeDevice.device(), fragShaderModule, nullptr);
-        vkDestroyPipeline(vgeDevice.device(), graphicsPipeline, nullptr);
+        if (vertShaderModule != VK_NULL_HANDLE) {
+            vkDestroyShaderModule(vgeDevice.device(), vertShaderModule, nullptr);
+        }
+        if (fragShaderModule != VK_NULL_HANDLE) {
+            vkDestroyShaderModule(vgeDevice.device(), fragShaderModule, nullptr);
+        }
+        if (compShaderModule != VK_NULL_HANDLE) {
+            vkDestroyShaderModule(vgeDevice.device(), compShaderModule, nullptr);
+        }
+        if (graphicsPipeline != VK_NULL_HANDLE) {
+            vkDestroyPipeline(vgeDevice.device(), graphicsPipeline, nullptr);
+        }
+        if (computePipeline != VK_NULL_HANDLE) {
+            vkDestroyPipeline(vgeDevice.device(), computePipeline, nullptr);
+        }
     }
 
 
@@ -113,6 +141,33 @@ namespace vge{
     }
 
 
+    void Pipeline::createComputePipeline(
+        const std::string& compFilepath,
+        const PipelineConfigInfo& configInfo
+    ) {
+        auto compCode = readFile(compFilepath);
+
+        createShaderModule(compCode, &compShaderModule);
+
+        VkPipelineShaderStageCreateInfo shaderStage{};
+        shaderStage.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+        shaderStage.stage = VK_SHADER_STAGE_COMPUTE_BIT;
+        shaderStage.module = compShaderModule;
+        shaderStage.pName = "main";
+
+        VkComputePipelineCreateInfo pipelineInfo{};
+        pipelineInfo.sType = VK_STRUCTURE_TYPE_COMPUTE_PIPELINE_CREATE_INFO;
+        pipelineInfo.stage = shaderStage;
+        pipelineInfo.layout = configInfo.pipelineLayout;
+        pipelineInfo.basePipelineHandle = VK_NULL_HANDLE;
+        pipelineInfo.basePipelineIndex = -1;
+
+        if(vkCreateComputePipelines(vgeDevice.device(), VK_NULL_HANDLE, 1, &pipelineInfo, nullptr, &computePipeline) != VK_SUCCESS){
+            throw std::runtime_error("Failed to create compute pipeline!!!");
+        }
+    }
+
+
     void Pipeline::createShaderModule(const std::vector<char>& code, VkShaderModule *shaderModule){
         VkShaderModuleCreateInfo createInfo{};
         createInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
@@ -125,8 +180,9 @@ namespace vge{
     }
 
 
-    void Pipeline::bind(VkCommandBuffer commandBuffer){
-        vkCmdBindPipeline(commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
+    void Pipeline::bind(VkCommandBuffer commandBuffer, VkPipelineBindPoint bindPoint){
+        vkCmdBindPipeline(commandBuffer, bindPoint,
+           bindPoint == VK_PIPELINE_BIND_POINT_GRAPHICS ? graphicsPipeline : computePipeline);
     }
 
 
