@@ -18,6 +18,7 @@ namespace vge{
     ) : vgeDevice{device},
     vertShaderModule{VK_NULL_HANDLE},
     fragShaderModule{VK_NULL_HANDLE},
+    compShaderModule{VK_NULL_HANDLE},
     graphicsPipeline{VK_NULL_HANDLE},
     computePipeline{VK_NULL_HANDLE} {
         createGraphicsPipeline(vertFilepath, fragFilepath, configInfo);
@@ -29,6 +30,8 @@ namespace vge{
         const std::string& compFilepath,
         const PipelineConfigInfo& configInfo
     ) : vgeDevice{device},
+    vertShaderModule{VK_NULL_HANDLE},
+    fragShaderModule{VK_NULL_HANDLE},
     compShaderModule{VK_NULL_HANDLE},
     graphicsPipeline{VK_NULL_HANDLE},
     computePipeline{VK_NULL_HANDLE} {
@@ -38,18 +41,23 @@ namespace vge{
     Pipeline::~Pipeline(){
         if (vertShaderModule != VK_NULL_HANDLE) {
             vkDestroyShaderModule(vgeDevice.device(), vertShaderModule, nullptr);
+            vertShaderModule = VK_NULL_HANDLE;
         }
         if (fragShaderModule != VK_NULL_HANDLE) {
             vkDestroyShaderModule(vgeDevice.device(), fragShaderModule, nullptr);
+            fragShaderModule = VK_NULL_HANDLE;
         }
         if (compShaderModule != VK_NULL_HANDLE) {
             vkDestroyShaderModule(vgeDevice.device(), compShaderModule, nullptr);
+            compShaderModule = VK_NULL_HANDLE;
         }
         if (graphicsPipeline != VK_NULL_HANDLE) {
             vkDestroyPipeline(vgeDevice.device(), graphicsPipeline, nullptr);
+            graphicsPipeline = VK_NULL_HANDLE;
         }
         if (computePipeline != VK_NULL_HANDLE) {
             vkDestroyPipeline(vgeDevice.device(), computePipeline, nullptr);
+            computePipeline = VK_NULL_HANDLE;
         }
     }
 
