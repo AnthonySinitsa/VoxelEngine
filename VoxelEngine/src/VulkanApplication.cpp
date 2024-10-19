@@ -173,7 +173,7 @@ namespace vge{
 
     void VulkanApplication::loadGameObjects(){
         std::shared_ptr<Model> vgeModel =
-            Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/Lowpoly_tree.obj");
+            Model::createModelFromFile(vgeDevice, "src/3dModels/Lowpoly_tree.obj");
         auto tree = GameObject::createGameObject();
         tree.model = vgeModel;
         tree.transform.translation = {2.5f, .0f, 0.f};
