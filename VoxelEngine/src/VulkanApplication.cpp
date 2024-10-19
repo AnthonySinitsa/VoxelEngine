@@ -173,21 +173,7 @@ namespace vge{
 
     void VulkanApplication::loadGameObjects(){
         std::shared_ptr<Model> vgeModel =
-            Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/smooth_vase.obj");
-        auto smoothVase = GameObject::createGameObject();
-        smoothVase.model = vgeModel;
-        smoothVase.transform.translation = {.0f, .0f, 0.f};
-        smoothVase.transform.scale = glm::vec3{3.f};
-        gameObjects.emplace(smoothVase.getId(), std::move(smoothVase));
-
-        vgeModel = Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/quad.obj");
-        auto quad = GameObject::createGameObject();
-        quad.model = vgeModel;
-        quad.transform.translation = {.0f, .0f, 0.f};
-        quad.transform.scale = glm::vec3{3.f};
-        gameObjects.emplace(quad.getId(), std::move(quad));
-
-        vgeModel = Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/Lowpoly_tree.obj");
+            Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/Lowpoly_tree.obj");
         auto tree = GameObject::createGameObject();
         tree.model = vgeModel;
         tree.transform.translation = {2.5f, .0f, 0.f};
