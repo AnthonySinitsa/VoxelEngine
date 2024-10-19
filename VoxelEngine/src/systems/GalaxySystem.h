@@ -4,7 +4,6 @@
 #include "../Graphics/Pipeline.h"
 #include "../FrameInfo.h"
 #include "../Buffer/Buffer.h"
-#include "../Models/Model.h"
 
 #include <vulkan/vulkan.h>
 #include <memory>
@@ -14,10 +13,14 @@ namespace vge {
 
     struct Star {
         glm::vec2 position;
-        // float size;
         glm::vec3 color;
         glm::vec3 normal;
         glm::vec2 uv;
+    };
+
+    struct SimplePushConstantData {
+        glm::mat4 modelMatrix{1.f};
+        glm::mat4 normalMatrix{1.f};
     };
 
     class GalaxySystem {
@@ -33,7 +36,9 @@ namespace vge {
         void render(FrameInfo& frameInfo);
 
     private:
-        void createPipelineLayout(VkDescriptorSetLayout globalSetLayout);
+        VkDescriptorSetLayout globalSetLayout;
+
+        void createPipelineLayout();
         void createPipelines(VkRenderPass renderPass);
         void createStarBuffer();
 

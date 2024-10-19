@@ -7,8 +7,8 @@
 namespace vge {
 
     GalaxySystem::GalaxySystem(VgeDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout)
-        : vgeDevice{device} {
-        createPipelineLayout(globalSetLayout);
+        : vgeDevice{device}, globalSetLayout{globalSetLayout} {
+        createPipelineLayout();
         createPipelines(renderPass);
         createStarBuffer();
     }
@@ -17,11 +17,11 @@ namespace vge {
         vkDestroyPipelineLayout(vgeDevice.device(), pipelineLayout, nullptr);
     }
 
-    void GalaxySystem::createPipelineLayout(VkDescriptorSetLayout globalSetLayout) {
+    void GalaxySystem::createPipelineLayout() {
         VkPushConstantRange pushConstantRange{};
         pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_COMPUTE_BIT;
         pushConstantRange.offset = 0;
-        pushConstantRange.size = sizeof(glm::mat4);
+        pushConstantRange.size = sizeof(SimplePushConstantData);
 
         std::vector<VkDescriptorSetLayout> descriptorSetLayouts{globalSetLayout};
 
@@ -70,7 +70,6 @@ namespace vge {
         stars.resize(10);
         for (int i = 0; i < 10; i++) {
             stars[i].position = glm::vec2(i * 0.2f - 0.9f, 0.0f);
-            // stars[i].size = 0.05f;
             stars[i].color = {1.0f, 1.0f, 1.0f};
             stars[i].normal = {0.0f, 0.0f, 1.0f};
             stars[i].uv = {0.0f, 0.0f};
@@ -121,9 +120,32 @@ namespace vge {
         );
     }
 
-    void GalaxySystem::render(FrameInfo &frameInfo) {
-        // Now bind the graphics pipeline and draw
+    void GalaxySystem::render(FrameInfo& frameInfo) {
         graphicsPipeline->bind(frameInfo.commandBuffer);
+
+        vkCmdBindDescriptorSets(
+            frameInfo.commandBuffer,
+            VK_PIPELINE_BIND_POINT_GRAPHICS,
+            pipelineLayout,
+            0,
+            1,
+            &frameInfo.globalDescriptorSet,
+            0,
+            nullptr
+        );
+
+        SimplePushConstantData push{};
+        push.modelMatrix = glm::mat4(1.0f);
+        push.normalMatrix = glm::mat4(1.0f);
+
+        vkCmdPushConstants(
+            frameInfo.commandBuffer,
+            pipelineLayout,
+            VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_COMPUTE_BIT,
+            0,
+            sizeof(SimplePushConstantData),
+            &push
+        );
 
         VkBuffer buffers[] = {starBuffer->getBuffer()};
         VkDeviceSize offsets[] = {0};
