@@ -4,6 +4,7 @@
 #include "../Graphics/Pipeline.h"
 #include "../FrameInfo.h"
 #include "../Buffer/Buffer.h"
+#include "../Models/Model.h"
 
 #include <vulkan/vulkan.h>
 #include <memory>
@@ -13,7 +14,10 @@ namespace vge {
 
     struct Star {
         glm::vec2 position;
-        float size;
+        // float size;
+        glm::vec3 color;
+        glm::vec3 normal;
+        glm::vec2 uv;
     };
 
     class GalaxySystem {

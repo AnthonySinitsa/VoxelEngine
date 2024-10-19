@@ -2,6 +2,7 @@
 
 #include <cassert>
 #include <stdexcept>
+#include <vulkan/vulkan_core.h>
 
 namespace vge {
 
@@ -44,6 +45,11 @@ namespace vge {
         pipelineConfig.renderPass = renderPass;
         pipelineConfig.pipelineLayout = pipelineLayout;
 
+        pipelineConfig.bindingDescriptions = Model::Vertex::getBindingDescriptions();
+        pipelineConfig.attributeDescriptions = Model::Vertex::getAttributeDescriptions();
+
+        pipelineConfig.inputAssemblyInfo.topology = VK_PRIMITIVE_TOPOLOGY_POINT_LIST;
+
         graphicsPipeline = std::make_unique<Pipeline>(
             vgeDevice,
             "shaders/galaxy_vertex.vert.spv",
@@ -64,7 +70,10 @@ namespace vge {
         stars.resize(10);
         for (int i = 0; i < 10; i++) {
             stars[i].position = glm::vec2(i * 0.2f - 0.9f, 0.0f);
-            stars[i].size = 0.05f;
+            // stars[i].size = 0.05f;
+            stars[i].color = {1.0f, 1.0f, 1.0f};
+            stars[i].normal = {0.0f, 0.0f, 1.0f};
+            stars[i].uv = {0.0f, 0.0f};
         }
 
         VkDeviceSize bufferSize = sizeof(Star) * stars.size();
