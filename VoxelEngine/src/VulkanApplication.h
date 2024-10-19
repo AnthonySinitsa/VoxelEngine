@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Descriptor/Descriptors.h"
 #include "ImGui/ImGuiManager.h"
+#include "systems/GalaxySystem.h"
 
 // std
 #include <memory>
@@ -28,6 +29,8 @@ namespace vge {
 
         private:
             void loadGameObjects();
+            void createDescriptorSetLayout();
+            void createGalaxySystem();
 
             Window vgeWindow{WIDTH, HEIGHT, "AAAAAAAAAA"};
             VgeDevice vgeDevice{vgeWindow};
@@ -35,9 +38,10 @@ namespace vge {
 
             // note: order of desclaration matters
             std::unique_ptr<VgeDescriptorPool> globalPool{};
+            std::unique_ptr<VgeDescriptorSetLayout> globalSetLayout{};
             GameObject::Map gameObjects;
 
-            // ImGui manager
             std::unique_ptr<VgeImgui> vgeImgui{};
+            std::unique_ptr<GalaxySystem> galaxySystem;
     };
 } // namespace

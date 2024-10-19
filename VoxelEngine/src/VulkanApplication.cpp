@@ -10,6 +10,7 @@
 #include <memory>
 #include <src/Descriptor/Descriptors.h>
 #include <src/Presentation/SwapChain.h>
+#include <src/systems/GalaxySystem.h>
 
 // libs
 #define GLM_FORCE_RADIANS
@@ -32,6 +33,9 @@ namespace vge{
             .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VgeSwapChain::MAX_FRAMES_IN_FLIGHT)
             .build();
 
+        createDescriptorSetLayout();
+        createGalaxySystem();
+
         // Load game objects
         loadGameObjects();
 
@@ -47,6 +51,21 @@ namespace vge{
 
     VulkanApplication::~VulkanApplication(){}
 
+
+    void VulkanApplication::createDescriptorSetLayout() {
+        globalSetLayout = VgeDescriptorSetLayout::Builder(vgeDevice)
+            .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
+            .build();
+    }
+
+    void VulkanApplication::createGalaxySystem() {
+        galaxySystem = std::make_unique<GalaxySystem>(
+            vgeDevice,
+            vgeRenderer.getSwapChainRenderPass(),
+            globalSetLayout->getDescriptorSetLayout()
+        );
+    }
+
     void VulkanApplication::run(){
         std::vector<std::unique_ptr<VgeBuffer>> uboBuffers(VgeSwapChain::MAX_FRAMES_IN_FLIGHT);
         for(int i = 0; i < uboBuffers.size(); i++){
@@ -60,6 +79,7 @@ namespace vge{
             uboBuffers[i]->map();
         }
 
+        // MAYBE DELETE ME
         auto globalSetLayout = VgeDescriptorSetLayout::Builder(vgeDevice)
             .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
             .build();
@@ -106,8 +126,6 @@ namespace vge{
             float aspect = vgeRenderer.getAspectRatio();
             camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 1000.f); // FYI: 10.f is the clipping plane
 
-            vgeImgui->newFrame(); // Start new ImGui frame
-            vgeImgui->runExample(); // Render ImGui example window
 
             // Render the rest of the game objects using Vulkan
             if(auto commandBuffer = vgeRenderer.beginFrame()){
@@ -130,12 +148,20 @@ namespace vge{
                 uboBuffers[frameIndex]->writeToBuffer(&ubo);
                 uboBuffers[frameIndex]->flush();
 
+                // Compute pass (outside of render apss)
+                galaxySystem->update(frameInfo);
+                galaxySystem->computeStars(frameInfo);
+
                 vgeRenderer.beginSwapChainRenderPass(commandBuffer); // Begin swapchain render pass
 
                 renderSystem.renderGameObjects(frameInfo); // Render game objects
                 pointLightSystem.render(frameInfo);
+                galaxySystem->render(frameInfo);
 
+                vgeImgui->newFrame(); // Start new ImGui frame
+                vgeImgui->runExample(); // Render ImGui example window
                 vgeImgui->render(commandBuffer); // Render ImGui
+
                 vgeRenderer.endSwapChainRenderPass(commandBuffer); // End swapchain render pass
                 vgeRenderer.endFrame(); // End frame
             }
