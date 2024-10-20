@@ -4,6 +4,7 @@
 #include "../Graphics/Pipeline.h"
 #include "../FrameInfo.h"
 #include "../Buffer/Buffer.h"
+#include "../Descriptor/Descriptors.h"
 
 #include <vulkan/vulkan.h>
 #include <memory>
@@ -41,15 +42,18 @@ namespace vge {
         void createPipelineLayout();
         void createPipelines(VkRenderPass renderPass);
         void createStarBuffer();
+        void createDescriptorSetLayout();
+        void createDescriptorSet();
 
         VgeDevice& vgeDevice;
-
         std::unique_ptr<Pipeline> graphicsPipeline;
         std::unique_ptr<Pipeline> computePipeline;
         VkPipelineLayout pipelineLayout;
-
         std::vector<Star> stars;
         std::unique_ptr<VgeBuffer> starBuffer;
+
+        std::unique_ptr<VgeDescriptorSetLayout> descriptorSetLayout;
+        VkDescriptorSet descriptorSet;
     };
 
 } // namespace

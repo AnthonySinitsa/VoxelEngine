@@ -8,14 +8,68 @@ namespace vge {
 
     GalaxySystem::GalaxySystem(VgeDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout)
         : vgeDevice{device}, globalSetLayout{globalSetLayout} {
+        createDescriptorSetLayout();
         createPipelineLayout();
         createPipelines(renderPass);
         createStarBuffer();
+        createDescriptorSet();
     }
 
     GalaxySystem::~GalaxySystem() {
         vkDestroyPipelineLayout(vgeDevice.device(), pipelineLayout, nullptr);
+        vkDestroyDescriptorSetLayout(vgeDevice.device(), descriptorSetLayout->getDescriptorSetLayout(), nullptr);
     }
+
+
+    void GalaxySystem::createDescriptorSetLayout() {
+        VgeDescriptorSetLayout::Builder builder(vgeDevice);
+        builder.addBinding(0, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT | VK_SHADER_STAGE_VERTEX_BIT);
+        descriptorSetLayout = builder.build();
+    }
+
+    void GalaxySystem::createDescriptorSet() {
+        VkDescriptorPoolCreateInfo poolInfo{};
+        poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+        poolInfo.maxSets = 1;
+        poolInfo.poolSizeCount = 1;
+        VkDescriptorPoolSize poolSize{};
+        poolSize.type = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+        poolSize.descriptorCount = 1;
+        poolInfo.pPoolSizes = &poolSize;
+
+        VkDescriptorPool descPool;
+        if (vkCreateDescriptorPool(vgeDevice.device(), &poolInfo, nullptr, &descPool) != VK_SUCCESS) {
+            throw std::runtime_error("Failed to create descriptor pool!");
+        }
+
+        VkDescriptorSetAllocateInfo allocInfo{};
+        allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+        allocInfo.descriptorPool = descPool;
+        allocInfo.descriptorSetCount = 1;
+        VkDescriptorSetLayout layout = descriptorSetLayout->getDescriptorSetLayout();
+        allocInfo.pSetLayouts = &layout;
+
+        if (vkAllocateDescriptorSets(vgeDevice.device(), &allocInfo, &descriptorSet) != VK_SUCCESS) {
+            throw std::runtime_error("Failed to allocate descriptor set!");
+        }
+
+        VkDescriptorBufferInfo bufferInfo{};
+        bufferInfo.buffer = starBuffer->getBuffer();
+        bufferInfo.offset = 0;
+        bufferInfo.range = sizeof(Star) * stars.size();
+
+        VkWriteDescriptorSet descriptorWrite{};
+        descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+        descriptorWrite.dstSet = descriptorSet;
+        descriptorWrite.dstBinding = 0;
+        descriptorWrite.dstArrayElement = 0;
+        descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+        descriptorWrite.descriptorCount = 1;
+        descriptorWrite.pBufferInfo = &bufferInfo;
+
+        vkUpdateDescriptorSets(vgeDevice.device(), 1, &descriptorWrite, 0, nullptr);
+    }
+
 
     void GalaxySystem::createPipelineLayout() {
         VkPushConstantRange pushConstantRange{};
@@ -23,7 +77,7 @@ namespace vge {
         pushConstantRange.offset = 0;
         pushConstantRange.size = sizeof(SimplePushConstantData);
 
-        std::vector<VkDescriptorSetLayout> descriptorSetLayouts{globalSetLayout};
+        std::vector<VkDescriptorSetLayout> descriptorSetLayouts{globalSetLayout, descriptorSetLayout->getDescriptorSetLayout()};
 
         VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
         pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
@@ -96,6 +150,28 @@ namespace vge {
     void GalaxySystem::computeStars(FrameInfo& frameInfo) {
         // Bind the compute pipeline and dispatch
         computePipeline->bind(frameInfo.commandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE);
+
+        vkCmdBindDescriptorSets(
+            frameInfo.commandBuffer,
+            VK_PIPELINE_BIND_POINT_COMPUTE,
+            pipelineLayout,
+            0,
+            1,
+            &frameInfo.globalDescriptorSet,
+            0,
+            nullptr
+        );
+        vkCmdBindDescriptorSets(
+            frameInfo.commandBuffer,
+            VK_PIPELINE_BIND_POINT_COMPUTE,
+            pipelineLayout,
+            1,
+            1,
+            &descriptorSet,
+            0,
+            nullptr
+        );
+
         vkCmdDispatch(frameInfo.commandBuffer, 1, 1, 1);
 
         // Add a memory barrier to ensure compute shader writes are visible
@@ -130,6 +206,16 @@ namespace vge {
             0,
             1,
             &frameInfo.globalDescriptorSet,
+            0,
+            nullptr
+        );
+        vkCmdBindDescriptorSets(
+            frameInfo.commandBuffer,
+            VK_PIPELINE_BIND_POINT_GRAPHICS,
+            pipelineLayout,
+            1,
+            1,
+            &descriptorSet,
             0,
             nullptr
         );
