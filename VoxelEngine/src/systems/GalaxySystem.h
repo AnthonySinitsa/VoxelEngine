@@ -4,7 +4,6 @@
 #include "../Graphics/Pipeline.h"
 #include "../FrameInfo.h"
 #include "../Buffer/Buffer.h"
-#include "../Descriptor/Descriptors.h"
 
 #include <vulkan/vulkan.h>
 #include <memory>
