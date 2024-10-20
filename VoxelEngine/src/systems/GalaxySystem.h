@@ -52,8 +52,9 @@ namespace vge {
         std::vector<Star> stars;
         std::unique_ptr<VgeBuffer> starBuffer;
 
-        std::unique_ptr<VgeDescriptorSetLayout> descriptorSetLayout;
-        VkDescriptorSet descriptorSet;
+        VkDescriptorSetLayout descriptorSetLayout = VK_NULL_HANDLE;
+        VkDescriptorPool descriptorPool = VK_NULL_HANDLE;
+        VkDescriptorSet descriptorSet = VK_NULL_HANDLE;
     };
 
 } // namespace

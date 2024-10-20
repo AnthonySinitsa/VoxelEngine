@@ -2,12 +2,13 @@
 
 #include <cassert>
 #include <stdexcept>
+#include <array>
 #include <vulkan/vulkan_core.h>
 
 namespace vge {
 
     GalaxySystem::GalaxySystem(VgeDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout)
-        : vgeDevice{device}, globalSetLayout{globalSetLayout} {
+        : vgeDevice{device}, globalSetLayout{globalSetLayout}, descriptorPool{VK_NULL_HANDLE}, descriptorSet{VK_NULL_HANDLE} {
         createDescriptorSetLayout();
         createPipelineLayout();
         createPipelines(renderPass);
@@ -16,38 +17,57 @@ namespace vge {
     }
 
     GalaxySystem::~GalaxySystem() {
-        vkDestroyPipelineLayout(vgeDevice.device(), pipelineLayout, nullptr);
-        vkDestroyDescriptorSetLayout(vgeDevice.device(), descriptorSetLayout->getDescriptorSetLayout(), nullptr);
+        if (pipelineLayout != VK_NULL_HANDLE) {
+            vkDestroyPipelineLayout(vgeDevice.device(), pipelineLayout, nullptr);
+        }
+
+        if (descriptorSetLayout != VK_NULL_HANDLE) {
+            vkDestroyDescriptorSetLayout(vgeDevice.device(), descriptorSetLayout, nullptr);
+        }
+
+        if (descriptorPool != VK_NULL_HANDLE) {
+            vkDestroyDescriptorPool(vgeDevice.device(), descriptorPool, nullptr);
+        }
     }
 
 
     void GalaxySystem::createDescriptorSetLayout() {
-        VgeDescriptorSetLayout::Builder builder(vgeDevice);
-        builder.addBinding(0, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT | VK_SHADER_STAGE_VERTEX_BIT);
-        descriptorSetLayout = builder.build();
+        VkDescriptorSetLayoutBinding layoutBinding{};
+        layoutBinding.binding = 0;
+        layoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+        layoutBinding.descriptorCount = 1;
+        layoutBinding.stageFlags = VK_SHADER_STAGE_COMPUTE_BIT | VK_SHADER_STAGE_VERTEX_BIT;
+
+        VkDescriptorSetLayoutCreateInfo layoutInfo{};
+        layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+        layoutInfo.bindingCount = 1;
+        layoutInfo.pBindings = &layoutBinding;
+
+        if (vkCreateDescriptorSetLayout(vgeDevice.device(), &layoutInfo, nullptr, &descriptorSetLayout) != VK_SUCCESS) {
+            throw std::runtime_error("Failed to create descriptor set layout!");
+        }
     }
 
     void GalaxySystem::createDescriptorSet() {
-        VkDescriptorPoolCreateInfo poolInfo{};
-        poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-        poolInfo.maxSets = 1;
-        poolInfo.poolSizeCount = 1;
         VkDescriptorPoolSize poolSize{};
         poolSize.type = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
         poolSize.descriptorCount = 1;
-        poolInfo.pPoolSizes = &poolSize;
 
-        VkDescriptorPool descPool;
-        if (vkCreateDescriptorPool(vgeDevice.device(), &poolInfo, nullptr, &descPool) != VK_SUCCESS) {
+        VkDescriptorPoolCreateInfo poolInfo{};
+        poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+        poolInfo.poolSizeCount = 1;
+        poolInfo.pPoolSizes = &poolSize;
+        poolInfo.maxSets = 1;
+
+        if (vkCreateDescriptorPool(vgeDevice.device(), &poolInfo, nullptr, &descriptorPool) != VK_SUCCESS) {
             throw std::runtime_error("Failed to create descriptor pool!");
         }
 
         VkDescriptorSetAllocateInfo allocInfo{};
         allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-        allocInfo.descriptorPool = descPool;
+        allocInfo.descriptorPool = descriptorPool;
         allocInfo.descriptorSetCount = 1;
-        VkDescriptorSetLayout layout = descriptorSetLayout->getDescriptorSetLayout();
-        allocInfo.pSetLayouts = &layout;
+        allocInfo.pSetLayouts = &descriptorSetLayout;
 
         if (vkAllocateDescriptorSets(vgeDevice.device(), &allocInfo, &descriptorSet) != VK_SUCCESS) {
             throw std::runtime_error("Failed to allocate descriptor set!");
@@ -77,7 +97,7 @@ namespace vge {
         pushConstantRange.offset = 0;
         pushConstantRange.size = sizeof(SimplePushConstantData);
 
-        std::vector<VkDescriptorSetLayout> descriptorSetLayouts{globalSetLayout, descriptorSetLayout->getDescriptorSetLayout()};
+        std::array<VkDescriptorSetLayout, 2> descriptorSetLayouts = {globalSetLayout, descriptorSetLayout};
 
         VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
         pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
