@@ -10,6 +10,7 @@
 #include <memory>
 #include <src/Descriptor/Descriptors.h>
 #include <src/Presentation/SwapChain.h>
+#include <src/systems/GalaxySystem.h>
 
 // libs
 #define GLM_FORCE_RADIANS
@@ -32,6 +33,9 @@ namespace vge{
             .addPoolSize(VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VgeSwapChain::MAX_FRAMES_IN_FLIGHT)
             .build();
 
+        createDescriptorSetLayout();
+        createGalaxySystem();
+
         // Load game objects
         loadGameObjects();
 
@@ -47,6 +51,21 @@ namespace vge{
 
     VulkanApplication::~VulkanApplication(){}
 
+
+    void VulkanApplication::createDescriptorSetLayout() {
+        globalSetLayout = VgeDescriptorSetLayout::Builder(vgeDevice)
+            .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
+            .build();
+    }
+
+    void VulkanApplication::createGalaxySystem() {
+        galaxySystem = std::make_unique<GalaxySystem>(
+            vgeDevice,
+            vgeRenderer.getSwapChainRenderPass(),
+            globalSetLayout->getDescriptorSetLayout()
+        );
+    }
+
     void VulkanApplication::run(){
         std::vector<std::unique_ptr<VgeBuffer>> uboBuffers(VgeSwapChain::MAX_FRAMES_IN_FLIGHT);
         for(int i = 0; i < uboBuffers.size(); i++){
@@ -60,6 +79,7 @@ namespace vge{
             uboBuffers[i]->map();
         }
 
+        // MAYBE DELETE ME
         auto globalSetLayout = VgeDescriptorSetLayout::Builder(vgeDevice)
             .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
             .build();
@@ -106,8 +126,6 @@ namespace vge{
             float aspect = vgeRenderer.getAspectRatio();
             camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 1000.f); // FYI: 10.f is the clipping plane
 
-            vgeImgui->newFrame(); // Start new ImGui frame
-            vgeImgui->runExample(); // Render ImGui example window
 
             // Render the rest of the game objects using Vulkan
             if(auto commandBuffer = vgeRenderer.beginFrame()){
@@ -130,12 +148,20 @@ namespace vge{
                 uboBuffers[frameIndex]->writeToBuffer(&ubo);
                 uboBuffers[frameIndex]->flush();
 
+                // Compute pass (outside of render apss)
+                galaxySystem->update(frameInfo);
+                galaxySystem->computeStars(frameInfo);
+
                 vgeRenderer.beginSwapChainRenderPass(commandBuffer); // Begin swapchain render pass
 
                 renderSystem.renderGameObjects(frameInfo); // Render game objects
                 pointLightSystem.render(frameInfo);
+                galaxySystem->render(frameInfo);
 
+                vgeImgui->newFrame(); // Start new ImGui frame
+                vgeImgui->runExample(); // Render ImGui example window
                 vgeImgui->render(commandBuffer); // Render ImGui
+
                 vgeRenderer.endSwapChainRenderPass(commandBuffer); // End swapchain render pass
                 vgeRenderer.endFrame(); // End frame
             }
@@ -147,46 +173,12 @@ namespace vge{
 
     void VulkanApplication::loadGameObjects(){
         std::shared_ptr<Model> vgeModel =
-            Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/smooth_vase.obj");
-        auto smoothVase = GameObject::createGameObject();
-        smoothVase.model = vgeModel;
-        smoothVase.transform.translation = {.0f, .0f, 0.f};
-        smoothVase.transform.scale = glm::vec3{3.f};
-        gameObjects.emplace(smoothVase.getId(), std::move(smoothVase));
-
-        vgeModel = Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/quad.obj");
-        auto quad = GameObject::createGameObject();
-        quad.model = vgeModel;
-        quad.transform.translation = {.0f, .0f, 0.f};
-        quad.transform.scale = glm::vec3{3.f};
-        gameObjects.emplace(quad.getId(), std::move(quad));
-
-        vgeModel = Model::createModelFromFile(vgeDevice, "/home/po/Projects/VoxelEngine/VoxelEngine/src/3dModels/Lowpoly_tree.obj");
+            Model::createModelFromFile(vgeDevice, "src/3dModels/Lowpoly_tree.obj");
         auto tree = GameObject::createGameObject();
         tree.model = vgeModel;
         tree.transform.translation = {2.5f, .0f, 0.f};
         tree.transform.scale = glm::vec3{.2f};
         tree.transform.rotation = glm::vec3{glm::radians(180.0f), 0.f, 0.f};
         gameObjects.emplace(tree.getId(), std::move(tree));
-
-        std::vector<glm::vec3> lightColors{
-            {1.f, .1f, .1f},
-            {.1f, .1f, 1.f},
-            {.1f, 1.f, .1f},
-            {1.f, 1.f, .1f},
-            {.1f, 1.f, 1.f},
-            {1.f, 1.f, 1.f}
-        };
-
-        for(int i = 0; i < lightColors.size(); i++){
-            auto pointLight = GameObject::makePointLight(0.2f);
-            pointLight.color = lightColors[i];
-            auto rotateLight = glm::rotate(
-                glm::mat4(1.f),
-                (i * glm::two_pi<float>()) / lightColors.size(),
-                {0.f, -1.f, 0.f});
-            pointLight.transform.translation = glm::vec3(rotateLight * glm::vec4(-1.f, -1.f, -1.f, 1.f));
-            gameObjects.emplace(pointLight.getId(), std::move(pointLight));
-        }
     }
 } // namespace
