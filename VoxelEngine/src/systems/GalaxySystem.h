@@ -35,6 +35,9 @@ namespace vge {
         void computeStars(FrameInfo& frameInfo);
         void render(FrameInfo& frameInfo);
 
+        static std::vector<VkVertexInputBindingDescription> getBindingDescriptions();
+        static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions();
+
     private:
         VkDescriptorSetLayout globalSetLayout;
 

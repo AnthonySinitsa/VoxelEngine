@@ -31,6 +31,41 @@ namespace vge {
     }
 
 
+    std::vector<VkVertexInputBindingDescription> GalaxySystem::getBindingDescriptions() {
+        std::vector<VkVertexInputBindingDescription> bindingDescriptions(1);
+        bindingDescriptions[0].binding = 0;
+        bindingDescriptions[0].stride = sizeof(Star);
+        bindingDescriptions[0].inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+        return bindingDescriptions;
+    }
+
+    std::vector<VkVertexInputAttributeDescription> GalaxySystem::getAttributeDescriptions() {
+        std::vector<VkVertexInputAttributeDescription> attributeDescriptions(4);
+
+        attributeDescriptions[0].binding = 0;
+        attributeDescriptions[0].location = 0;
+        attributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
+        attributeDescriptions[0].offset = offsetof(Star, position);
+
+        attributeDescriptions[1].binding = 0;
+        attributeDescriptions[1].location = 1;
+        attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
+        attributeDescriptions[1].offset = offsetof(Star, color);
+
+        attributeDescriptions[2].binding = 0;
+        attributeDescriptions[2].location = 2;
+        attributeDescriptions[2].format = VK_FORMAT_R32G32B32_SFLOAT;
+        attributeDescriptions[2].offset = offsetof(Star, normal);
+
+        attributeDescriptions[3].binding = 0;
+        attributeDescriptions[3].location = 3;
+        attributeDescriptions[3].format = VK_FORMAT_R32G32_SFLOAT;
+        attributeDescriptions[3].offset = offsetof(Star, uv);
+
+        return attributeDescriptions;
+    }
+
+
     void GalaxySystem::createDescriptorSetLayout() {
         VkDescriptorSetLayoutBinding layoutBinding{};
         layoutBinding.binding = 0;
@@ -119,8 +154,8 @@ namespace vge {
         pipelineConfig.renderPass = renderPass;
         pipelineConfig.pipelineLayout = pipelineLayout;
 
-        pipelineConfig.bindingDescriptions = Model::Vertex::getBindingDescriptions();
-        pipelineConfig.attributeDescriptions = Model::Vertex::getAttributeDescriptions();
+        pipelineConfig.bindingDescriptions = getBindingDescriptions();
+        pipelineConfig.attributeDescriptions = getAttributeDescriptions();
 
         pipelineConfig.inputAssemblyInfo.topology = VK_PRIMITIVE_TOPOLOGY_POINT_LIST;
 
