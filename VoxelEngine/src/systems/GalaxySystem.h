@@ -8,6 +8,7 @@
 #include <vulkan/vulkan.h>
 #include <memory>
 #include <vector>
+#include <vulkan/vulkan_core.h>
 
 namespace vge {
 
@@ -48,15 +49,25 @@ namespace vge {
         void createDescriptorSet();
 
         VgeDevice& vgeDevice;
+
+        // Graphics and compute pipelines
         std::unique_ptr<Pipeline> graphicsPipeline;
         std::unique_ptr<Pipeline> computePipeline;
-        VkPipelineLayout pipelineLayout;
-        std::vector<Star> stars;
-        std::unique_ptr<VgeBuffer> starBuffer;
 
-        VkDescriptorSetLayout descriptorSetLayout = VK_NULL_HANDLE;
+        // Separate pipeline layouts for graphics and compute
+        VkPipelineLayout graphicsPipelineLayout = VK_NULL_HANDLE;
+        VkPipelineLayout computePipelineLayout = VK_NULL_HANDLE;
+
+        // Descriptor set layouts for graphics and compute
+        VkDescriptorSetLayout graphicsDescriptorSetLayout = VK_NULL_HANDLE;
+        VkDescriptorSetLayout computeDescriptorSetLayout = VK_NULL_HANDLE;
+
+        // Descriptor set and pool
         VkDescriptorPool descriptorPool = VK_NULL_HANDLE;
         VkDescriptorSet descriptorSet = VK_NULL_HANDLE;
+
+        std::vector<Star> stars;
+        std::unique_ptr<VgeBuffer> starBuffer;
     };
 
 } // namespace
