@@ -8,33 +8,54 @@
 namespace vge {
 
     GalaxySystem::GalaxySystem(VgeDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout)
-        : vgeDevice{device}, globalSetLayout{globalSetLayout}, descriptorPool{VK_NULL_HANDLE}, descriptorSet{VK_NULL_HANDLE} {
-        createDescriptorSetLayout();
-        createPipelineLayout();
-        createPipelines(renderPass);
-        createStarBuffer();
-        createDescriptorSet();
+        : vgeDevice{device}, globalSetLayout{globalSetLayout} {
+            // Create separate descriptor set layouts for graphics and compute
+            createGraphicsDescriptorSetLayout();
+            createComputeDescriptorSetLayout();
+
+            // Create the pipeline layouts for both graphics and compute
+            createPipelineLayout();
+
+            // Create the graphics and compute pipelines
+            createPipelines(renderPass);
+
+            // Allocate and initialize the star buffer
+            createStarBuffer();
+
+            // Create descriptor sets for both graphics and compute pipelines
+            createGraphicsDescriptorSet();
+            createComputeDescriptorSet();
     }
 
     GalaxySystem::~GalaxySystem() {
+        // Destroy the graphics pipeline layout
         if (graphicsPipelineLayout != VK_NULL_HANDLE) {
             vkDestroyPipelineLayout(vgeDevice.device(), graphicsPipelineLayout, nullptr);
         }
 
+        // Destroy the compute pipeline layout
         if (computePipelineLayout != VK_NULL_HANDLE) {
             vkDestroyPipelineLayout(vgeDevice.device(), computePipelineLayout, nullptr);
         }
 
+        // Destroy the graphics descriptor set layout
         if (graphicsDescriptorSetLayout != VK_NULL_HANDLE) {
             vkDestroyDescriptorSetLayout(vgeDevice.device(), graphicsDescriptorSetLayout, nullptr);
         }
 
+        // Destroy the compute descriptor set layout
         if (computeDescriptorSetLayout != VK_NULL_HANDLE) {
             vkDestroyDescriptorSetLayout(vgeDevice.device(), computeDescriptorSetLayout, nullptr);
         }
 
-        if (descriptorPool != VK_NULL_HANDLE) {
-            vkDestroyDescriptorPool(vgeDevice.device(), descriptorPool, nullptr);
+        // Destroy the graphics descriptor pool
+        if (graphicsDescriptorPool != VK_NULL_HANDLE) {
+            vkDestroyDescriptorPool(vgeDevice.device(), graphicsDescriptorPool, nullptr);
+        }
+
+        // Destroy the compute descriptor pool
+        if (computeDescriptorPool != VK_NULL_HANDLE) {
+            vkDestroyDescriptorPool(vgeDevice.device(), computeDescriptorPool, nullptr);
         }
     }
 
@@ -74,25 +95,7 @@ namespace vge {
     }
 
 
-    void GalaxySystem::createDescriptorSetLayout() {
-        // For the compute pipeline
-        VkDescriptorSetLayoutBinding layoutBindingCompute{};
-        layoutBindingCompute.binding = 0;
-        layoutBindingCompute.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
-        layoutBindingCompute.descriptorCount = 1;
-        layoutBindingCompute.stageFlags = VK_SHADER_STAGE_COMPUTE_BIT;  // Only compute stage
-        layoutBindingCompute.pImmutableSamplers = nullptr; // Optional
-
-        VkDescriptorSetLayoutCreateInfo layoutInfoCompute{};
-        layoutInfoCompute.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-        layoutInfoCompute.bindingCount = 1;
-        layoutInfoCompute.pBindings = &layoutBindingCompute;
-
-        if (vkCreateDescriptorSetLayout(vgeDevice.device(), &layoutInfoCompute, nullptr, &computeDescriptorSetLayout) != VK_SUCCESS) {
-            throw std::runtime_error("Failed to create descriptor set layout for compute!");
-        }
-
-        // For graphics stages (vertex, fragment)
+    void GalaxySystem::createGraphicsDescriptorSetLayout() {
         VkDescriptorSetLayoutBinding layoutBindingGraphics{};
         layoutBindingGraphics.binding = 0;
         layoutBindingGraphics.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
@@ -109,71 +112,109 @@ namespace vge {
         }
     }
 
-    void GalaxySystem::createDescriptorSet() {
+    void GalaxySystem::createComputeDescriptorSetLayout() {
+        VkDescriptorSetLayoutBinding layoutBindingCompute{};
+        layoutBindingCompute.binding = 0;
+        layoutBindingCompute.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+        layoutBindingCompute.descriptorCount = 1;
+        layoutBindingCompute.stageFlags = VK_SHADER_STAGE_COMPUTE_BIT;  // Only compute stage
+        layoutBindingCompute.pImmutableSamplers = nullptr;
+
+        VkDescriptorSetLayoutCreateInfo layoutInfoCompute{};
+        layoutInfoCompute.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+        layoutInfoCompute.bindingCount = 1;
+        layoutInfoCompute.pBindings = &layoutBindingCompute;
+
+        if (vkCreateDescriptorSetLayout(vgeDevice.device(), &layoutInfoCompute, nullptr, &computeDescriptorSetLayout) != VK_SUCCESS) {
+            throw std::runtime_error("Failed to create descriptor set layout for compute!");
+        }
+    }
+
+
+    void GalaxySystem::createGraphicsDescriptorSet() {
         VkDescriptorPoolSize poolSize{};
         poolSize.type = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
-        poolSize.descriptorCount = 2;
+        poolSize.descriptorCount = 1;
 
         VkDescriptorPoolCreateInfo poolInfo{};
         poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
         poolInfo.poolSizeCount = 1;
         poolInfo.pPoolSizes = &poolSize;
-        poolInfo.maxSets = 2;
+        poolInfo.maxSets = 1;
 
-        if (vkCreateDescriptorPool(vgeDevice.device(), &poolInfo, nullptr, &descriptorPool) != VK_SUCCESS) {
-            throw std::runtime_error("Failed to create descriptor pool!");
+        if (vkCreateDescriptorPool(vgeDevice.device(), &poolInfo, nullptr, &graphicsDescriptorPool) != VK_SUCCESS) {
+            throw std::runtime_error("Failed to create graphics descriptor pool!");
         }
 
-        // Descriptor set for the compute pipeline
-        VkDescriptorSetAllocateInfo allocInfoCompute{};
-        allocInfoCompute.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-        allocInfoCompute.descriptorPool = descriptorPool;
-        allocInfoCompute.descriptorSetCount = 1;
-        allocInfoCompute.pSetLayouts = &computeDescriptorSetLayout;
-        if (vkAllocateDescriptorSets(vgeDevice.device(), &allocInfoCompute, &computeDescriptorSet) != VK_SUCCESS) {
-            throw std::runtime_error("Failed to allocate descriptor set for compute!");
+        VkDescriptorSetAllocateInfo allocInfo{};
+        allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+        allocInfo.descriptorPool = graphicsDescriptorPool;
+        allocInfo.descriptorSetCount = 1;
+        allocInfo.pSetLayouts = &graphicsDescriptorSetLayout;
+
+        if (vkAllocateDescriptorSets(vgeDevice.device(), &allocInfo, &graphicsDescriptorSet) != VK_SUCCESS) {
+            throw std::runtime_error("Failed to allocate graphics descriptor set!");
         }
 
-        // Descriptor set for the graphisc pipeline
-        VkDescriptorSetAllocateInfo allocInfoGraphics{};
-        allocInfoGraphics.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-        allocInfoGraphics.descriptorPool = descriptorPool;
-        allocInfoGraphics.descriptorSetCount = 1;
-        allocInfoGraphics.pSetLayouts = &graphicsDescriptorSetLayout;
-        if (vkAllocateDescriptorSets(vgeDevice.device(), &allocInfoGraphics, &graphicsDescriptorSet) != VK_SUCCESS) {
-            throw std::runtime_error("Failed to allocate descriptor set for graphics!");
-        }
-
-        // Descriptor buffer info common to both graphics and compute
         VkDescriptorBufferInfo bufferInfo{};
         bufferInfo.buffer = starBuffer->getBuffer();
         bufferInfo.offset = 0;
         bufferInfo.range = sizeof(Star) * stars.size();
 
-        // Write descriptor for compute pipeline
-        VkWriteDescriptorSet descriptorWriteCompute{};
-        descriptorWriteCompute.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-        descriptorWriteCompute.dstSet = computeDescriptorSet;
-        descriptorWriteCompute.dstBinding = 0;
-        descriptorWriteCompute.dstArrayElement = 0;
-        descriptorWriteCompute.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
-        descriptorWriteCompute.descriptorCount = 1;
-        descriptorWriteCompute.pBufferInfo = &bufferInfo;
+        VkWriteDescriptorSet descriptorWrite{};
+        descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+        descriptorWrite.dstSet = graphicsDescriptorSet;
+        descriptorWrite.dstBinding = 0;
+        descriptorWrite.dstArrayElement = 0;
+        descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+        descriptorWrite.descriptorCount = 1;
+        descriptorWrite.pBufferInfo = &bufferInfo;
 
-        // Write descriptor for graphics pipeline
-        VkWriteDescriptorSet descriptorWriteGraphics{};
-        descriptorWriteGraphics.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-        descriptorWriteGraphics.dstSet = graphicsDescriptorSet;
-        descriptorWriteGraphics.dstBinding = 0;
-        descriptorWriteGraphics.dstArrayElement = 0;
-        descriptorWriteGraphics.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
-        descriptorWriteGraphics.descriptorCount = 1;
-        descriptorWriteGraphics.pBufferInfo = &bufferInfo;
-
-        // Update descriptor sets for both pipelines
-        std::array<VkWriteDescriptorSet, 2> descriptorWrites = {descriptorWriteCompute, descriptorWriteGraphics};
-        vkUpdateDescriptorSets(vgeDevice.device(), static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
+        vkUpdateDescriptorSets(vgeDevice.device(), 1, &descriptorWrite, 0, nullptr);
     }
+
+    void GalaxySystem::createComputeDescriptorSet() {
+        VkDescriptorPoolSize poolSize{};
+        poolSize.type = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+        poolSize.descriptorCount = 1;
+
+        VkDescriptorPoolCreateInfo poolInfo{};
+        poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+        poolInfo.poolSizeCount = 1;
+        poolInfo.pPoolSizes = &poolSize;
+        poolInfo.maxSets = 1;
+
+        if (vkCreateDescriptorPool(vgeDevice.device(), &poolInfo, nullptr, &computeDescriptorPool) != VK_SUCCESS) {
+            throw std::runtime_error("Failed to create compute descriptor pool!");
+        }
+
+        VkDescriptorSetAllocateInfo allocInfo{};
+        allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+        allocInfo.descriptorPool = computeDescriptorPool;
+        allocInfo.descriptorSetCount = 1;
+        allocInfo.pSetLayouts = &computeDescriptorSetLayout;
+
+        if (vkAllocateDescriptorSets(vgeDevice.device(), &allocInfo, &computeDescriptorSet) != VK_SUCCESS) {
+            throw std::runtime_error("Failed to allocate compute descriptor set!");
+        }
+
+        VkDescriptorBufferInfo bufferInfo{};
+        bufferInfo.buffer = starBuffer->getBuffer();
+        bufferInfo.offset = 0;
+        bufferInfo.range = sizeof(Star) * stars.size();
+
+        VkWriteDescriptorSet descriptorWrite{};
+        descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+        descriptorWrite.dstSet = computeDescriptorSet;
+        descriptorWrite.dstBinding = 0;
+        descriptorWrite.dstArrayElement = 0;
+        descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+        descriptorWrite.descriptorCount = 1;
+        descriptorWrite.pBufferInfo = &bufferInfo;
+
+        vkUpdateDescriptorSets(vgeDevice.device(), 1, &descriptorWrite, 0, nullptr);
+    }
+
 
 
     void GalaxySystem::createPipelineLayout() {
@@ -287,7 +328,7 @@ namespace vge {
             computePipelineLayout,
             1,
             1,
-            &descriptorSet,
+            &computeDescriptorSet,
             0,
             nullptr
         );
@@ -335,7 +376,7 @@ namespace vge {
             graphicsPipelineLayout,
             1,
             1,
-            &descriptorSet,
+            &graphicsDescriptorSet,
             0,
             nullptr
         );

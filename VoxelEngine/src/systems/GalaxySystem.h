@@ -45,8 +45,11 @@ namespace vge {
         void createPipelineLayout();
         void createPipelines(VkRenderPass renderPass);
         void createStarBuffer();
-        void createDescriptorSetLayout();
-        void createDescriptorSet();
+
+        void createGraphicsDescriptorSetLayout();
+        void createComputeDescriptorSetLayout();
+        void createGraphicsDescriptorSet();
+        void createComputeDescriptorSet();
 
         VgeDevice& vgeDevice;
 
@@ -63,8 +66,10 @@ namespace vge {
         VkDescriptorSetLayout computeDescriptorSetLayout = VK_NULL_HANDLE;
 
         // Descriptor set and pool
-        VkDescriptorPool descriptorPool = VK_NULL_HANDLE;
-        VkDescriptorSet descriptorSet = VK_NULL_HANDLE;
+        VkDescriptorPool graphicsDescriptorPool = VK_NULL_HANDLE;
+        VkDescriptorPool computeDescriptorPool = VK_NULL_HANDLE;
+        VkDescriptorSet graphicsDescriptorSet = VK_NULL_HANDLE;
+        VkDescriptorSet computeDescriptorSet = VK_NULL_HANDLE;
 
         std::vector<Star> stars;
         std::unique_ptr<VgeBuffer> starBuffer;
