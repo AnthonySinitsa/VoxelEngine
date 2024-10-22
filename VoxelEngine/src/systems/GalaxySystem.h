@@ -8,6 +8,7 @@
 #include <vulkan/vulkan.h>
 #include <memory>
 #include <vector>
+#include <vulkan/vulkan_core.h>
 
 namespace vge {
 
@@ -44,19 +45,34 @@ namespace vge {
         void createPipelineLayout();
         void createPipelines(VkRenderPass renderPass);
         void createStarBuffer();
-        void createDescriptorSetLayout();
-        void createDescriptorSet();
+
+        void createGraphicsDescriptorSetLayout();
+        void createComputeDescriptorSetLayout();
+        void createGraphicsDescriptorSet();
+        void createComputeDescriptorSet();
 
         VgeDevice& vgeDevice;
+
+        // Graphics and compute pipelines
         std::unique_ptr<Pipeline> graphicsPipeline;
         std::unique_ptr<Pipeline> computePipeline;
-        VkPipelineLayout pipelineLayout;
+
+        // Separate pipeline layouts for graphics and compute
+        VkPipelineLayout graphicsPipelineLayout = VK_NULL_HANDLE;
+        VkPipelineLayout computePipelineLayout = VK_NULL_HANDLE;
+
+        // Descriptor set layouts for graphics and compute
+        VkDescriptorSetLayout graphicsDescriptorSetLayout = VK_NULL_HANDLE;
+        VkDescriptorSetLayout computeDescriptorSetLayout = VK_NULL_HANDLE;
+
+        // Descriptor set and pool
+        VkDescriptorPool graphicsDescriptorPool = VK_NULL_HANDLE;
+        VkDescriptorPool computeDescriptorPool = VK_NULL_HANDLE;
+        VkDescriptorSet graphicsDescriptorSet = VK_NULL_HANDLE;
+        VkDescriptorSet computeDescriptorSet = VK_NULL_HANDLE;
+
         std::vector<Star> stars;
         std::unique_ptr<VgeBuffer> starBuffer;
-
-        VkDescriptorSetLayout descriptorSetLayout = VK_NULL_HANDLE;
-        VkDescriptorPool descriptorPool = VK_NULL_HANDLE;
-        VkDescriptorSet descriptorSet = VK_NULL_HANDLE;
     };
 
 } // namespace

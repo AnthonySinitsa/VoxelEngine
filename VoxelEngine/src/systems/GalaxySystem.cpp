@@ -8,25 +8,54 @@
 namespace vge {
 
     GalaxySystem::GalaxySystem(VgeDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout)
-        : vgeDevice{device}, globalSetLayout{globalSetLayout}, descriptorPool{VK_NULL_HANDLE}, descriptorSet{VK_NULL_HANDLE} {
-        createDescriptorSetLayout();
-        createPipelineLayout();
-        createPipelines(renderPass);
-        createStarBuffer();
-        createDescriptorSet();
+        : vgeDevice{device}, globalSetLayout{globalSetLayout} {
+            // Create separate descriptor set layouts for graphics and compute
+            createGraphicsDescriptorSetLayout();
+            createComputeDescriptorSetLayout();
+
+            // Create the pipeline layouts for both graphics and compute
+            createPipelineLayout();
+
+            // Create the graphics and compute pipelines
+            createPipelines(renderPass);
+
+            // Allocate and initialize the star buffer
+            createStarBuffer();
+
+            // Create descriptor sets for both graphics and compute pipelines
+            createGraphicsDescriptorSet();
+            createComputeDescriptorSet();
     }
 
     GalaxySystem::~GalaxySystem() {
-        if (pipelineLayout != VK_NULL_HANDLE) {
-            vkDestroyPipelineLayout(vgeDevice.device(), pipelineLayout, nullptr);
+        // Destroy the graphics pipeline layout
+        if (graphicsPipelineLayout != VK_NULL_HANDLE) {
+            vkDestroyPipelineLayout(vgeDevice.device(), graphicsPipelineLayout, nullptr);
         }
 
-        if (descriptorSetLayout != VK_NULL_HANDLE) {
-            vkDestroyDescriptorSetLayout(vgeDevice.device(), descriptorSetLayout, nullptr);
+        // Destroy the compute pipeline layout
+        if (computePipelineLayout != VK_NULL_HANDLE) {
+            vkDestroyPipelineLayout(vgeDevice.device(), computePipelineLayout, nullptr);
         }
 
-        if (descriptorPool != VK_NULL_HANDLE) {
-            vkDestroyDescriptorPool(vgeDevice.device(), descriptorPool, nullptr);
+        // Destroy the graphics descriptor set layout
+        if (graphicsDescriptorSetLayout != VK_NULL_HANDLE) {
+            vkDestroyDescriptorSetLayout(vgeDevice.device(), graphicsDescriptorSetLayout, nullptr);
+        }
+
+        // Destroy the compute descriptor set layout
+        if (computeDescriptorSetLayout != VK_NULL_HANDLE) {
+            vkDestroyDescriptorSetLayout(vgeDevice.device(), computeDescriptorSetLayout, nullptr);
+        }
+
+        // Destroy the graphics descriptor pool
+        if (graphicsDescriptorPool != VK_NULL_HANDLE) {
+            vkDestroyDescriptorPool(vgeDevice.device(), graphicsDescriptorPool, nullptr);
+        }
+
+        // Destroy the compute descriptor pool
+        if (computeDescriptorPool != VK_NULL_HANDLE) {
+            vkDestroyDescriptorPool(vgeDevice.device(), computeDescriptorPool, nullptr);
         }
     }
 
@@ -66,24 +95,43 @@ namespace vge {
     }
 
 
-    void GalaxySystem::createDescriptorSetLayout() {
-        VkDescriptorSetLayoutBinding layoutBinding{};
-        layoutBinding.binding = 0;
-        layoutBinding.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
-        layoutBinding.descriptorCount = 1;
-        layoutBinding.stageFlags = VK_SHADER_STAGE_COMPUTE_BIT | VK_SHADER_STAGE_VERTEX_BIT;
+    void GalaxySystem::createGraphicsDescriptorSetLayout() {
+        VkDescriptorSetLayoutBinding layoutBindingGraphics{};
+        layoutBindingGraphics.binding = 0;
+        layoutBindingGraphics.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+        layoutBindingGraphics.descriptorCount = 1;
+        layoutBindingGraphics.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT;
 
-        VkDescriptorSetLayoutCreateInfo layoutInfo{};
-        layoutInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-        layoutInfo.bindingCount = 1;
-        layoutInfo.pBindings = &layoutBinding;
+        VkDescriptorSetLayoutCreateInfo layoutInfoGraphics{};
+        layoutInfoGraphics.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+        layoutInfoGraphics.bindingCount = 1;
+        layoutInfoGraphics.pBindings = &layoutBindingGraphics;
 
-        if (vkCreateDescriptorSetLayout(vgeDevice.device(), &layoutInfo, nullptr, &descriptorSetLayout) != VK_SUCCESS) {
-            throw std::runtime_error("Failed to create descriptor set layout!");
+        if (vkCreateDescriptorSetLayout(vgeDevice.device(), &layoutInfoGraphics, nullptr, &graphicsDescriptorSetLayout) != VK_SUCCESS) {
+            throw std::runtime_error("Failed to create descriptor set layout for graphics!");
         }
     }
 
-    void GalaxySystem::createDescriptorSet() {
+    void GalaxySystem::createComputeDescriptorSetLayout() {
+        VkDescriptorSetLayoutBinding layoutBindingCompute{};
+        layoutBindingCompute.binding = 0;
+        layoutBindingCompute.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+        layoutBindingCompute.descriptorCount = 1;
+        layoutBindingCompute.stageFlags = VK_SHADER_STAGE_COMPUTE_BIT;  // Only compute stage
+        layoutBindingCompute.pImmutableSamplers = nullptr;
+
+        VkDescriptorSetLayoutCreateInfo layoutInfoCompute{};
+        layoutInfoCompute.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
+        layoutInfoCompute.bindingCount = 1;
+        layoutInfoCompute.pBindings = &layoutBindingCompute;
+
+        if (vkCreateDescriptorSetLayout(vgeDevice.device(), &layoutInfoCompute, nullptr, &computeDescriptorSetLayout) != VK_SUCCESS) {
+            throw std::runtime_error("Failed to create descriptor set layout for compute!");
+        }
+    }
+
+
+    void GalaxySystem::createGraphicsDescriptorSet() {
         VkDescriptorPoolSize poolSize{};
         poolSize.type = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
         poolSize.descriptorCount = 1;
@@ -94,18 +142,18 @@ namespace vge {
         poolInfo.pPoolSizes = &poolSize;
         poolInfo.maxSets = 1;
 
-        if (vkCreateDescriptorPool(vgeDevice.device(), &poolInfo, nullptr, &descriptorPool) != VK_SUCCESS) {
-            throw std::runtime_error("Failed to create descriptor pool!");
+        if (vkCreateDescriptorPool(vgeDevice.device(), &poolInfo, nullptr, &graphicsDescriptorPool) != VK_SUCCESS) {
+            throw std::runtime_error("Failed to create graphics descriptor pool!");
         }
 
         VkDescriptorSetAllocateInfo allocInfo{};
         allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-        allocInfo.descriptorPool = descriptorPool;
+        allocInfo.descriptorPool = graphicsDescriptorPool;
         allocInfo.descriptorSetCount = 1;
-        allocInfo.pSetLayouts = &descriptorSetLayout;
+        allocInfo.pSetLayouts = &graphicsDescriptorSetLayout;
 
-        if (vkAllocateDescriptorSets(vgeDevice.device(), &allocInfo, &descriptorSet) != VK_SUCCESS) {
-            throw std::runtime_error("Failed to allocate descriptor set!");
+        if (vkAllocateDescriptorSets(vgeDevice.device(), &allocInfo, &graphicsDescriptorSet) != VK_SUCCESS) {
+            throw std::runtime_error("Failed to allocate graphics descriptor set!");
         }
 
         VkDescriptorBufferInfo bufferInfo{};
@@ -115,7 +163,49 @@ namespace vge {
 
         VkWriteDescriptorSet descriptorWrite{};
         descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-        descriptorWrite.dstSet = descriptorSet;
+        descriptorWrite.dstSet = graphicsDescriptorSet;
+        descriptorWrite.dstBinding = 0;
+        descriptorWrite.dstArrayElement = 0;
+        descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+        descriptorWrite.descriptorCount = 1;
+        descriptorWrite.pBufferInfo = &bufferInfo;
+
+        vkUpdateDescriptorSets(vgeDevice.device(), 1, &descriptorWrite, 0, nullptr);
+    }
+
+    void GalaxySystem::createComputeDescriptorSet() {
+        VkDescriptorPoolSize poolSize{};
+        poolSize.type = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+        poolSize.descriptorCount = 1;
+
+        VkDescriptorPoolCreateInfo poolInfo{};
+        poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
+        poolInfo.poolSizeCount = 1;
+        poolInfo.pPoolSizes = &poolSize;
+        poolInfo.maxSets = 1;
+
+        if (vkCreateDescriptorPool(vgeDevice.device(), &poolInfo, nullptr, &computeDescriptorPool) != VK_SUCCESS) {
+            throw std::runtime_error("Failed to create compute descriptor pool!");
+        }
+
+        VkDescriptorSetAllocateInfo allocInfo{};
+        allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+        allocInfo.descriptorPool = computeDescriptorPool;
+        allocInfo.descriptorSetCount = 1;
+        allocInfo.pSetLayouts = &computeDescriptorSetLayout;
+
+        if (vkAllocateDescriptorSets(vgeDevice.device(), &allocInfo, &computeDescriptorSet) != VK_SUCCESS) {
+            throw std::runtime_error("Failed to allocate compute descriptor set!");
+        }
+
+        VkDescriptorBufferInfo bufferInfo{};
+        bufferInfo.buffer = starBuffer->getBuffer();
+        bufferInfo.offset = 0;
+        bufferInfo.range = sizeof(Star) * stars.size();
+
+        VkWriteDescriptorSet descriptorWrite{};
+        descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+        descriptorWrite.dstSet = computeDescriptorSet;
         descriptorWrite.dstBinding = 0;
         descriptorWrite.dstArrayElement = 0;
         descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
@@ -126,33 +216,49 @@ namespace vge {
     }
 
 
+
     void GalaxySystem::createPipelineLayout() {
         VkPushConstantRange pushConstantRange{};
         pushConstantRange.stageFlags = VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_COMPUTE_BIT;
         pushConstantRange.offset = 0;
         pushConstantRange.size = sizeof(SimplePushConstantData);
 
-        std::array<VkDescriptorSetLayout, 2> descriptorSetLayouts = {globalSetLayout, descriptorSetLayout};
+        // Use two different layouts for graphics and compute pipelines
+        std::array<VkDescriptorSetLayout, 2> graphicsSetLayouts = {globalSetLayout, graphicsDescriptorSetLayout};
+        std::array<VkDescriptorSetLayout, 2> computeSetLayouts = {globalSetLayout, computeDescriptorSetLayout};
 
-        VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
-        pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
-        pipelineLayoutInfo.setLayoutCount = static_cast<uint32_t>(descriptorSetLayouts.size());
-        pipelineLayoutInfo.pSetLayouts = descriptorSetLayouts.data();
-        pipelineLayoutInfo.pushConstantRangeCount = 1;
-        pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
+        // For graphics pipeline layout
+        VkPipelineLayoutCreateInfo graphicsPipelineLayoutInfo{};
+        graphicsPipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
+        graphicsPipelineLayoutInfo.setLayoutCount = static_cast<uint32_t>(graphicsSetLayouts.size());
+        graphicsPipelineLayoutInfo.pSetLayouts = graphicsSetLayouts.data();
+        graphicsPipelineLayoutInfo.pushConstantRangeCount = 1;
+        graphicsPipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
 
-        if (vkCreatePipelineLayout(vgeDevice.device(), &pipelineLayoutInfo, nullptr, &pipelineLayout) != VK_SUCCESS) {
-            throw std::runtime_error("failed to create pipeline layout!");
+        if (vkCreatePipelineLayout(vgeDevice.device(), &graphicsPipelineLayoutInfo, nullptr, &graphicsPipelineLayout) != VK_SUCCESS) {
+            throw std::runtime_error("Failed to create pipeline layout for graphics!");
+        }
+
+        // For compute pipeline layout
+        VkPipelineLayoutCreateInfo computePipelineLayoutInfo{};
+        computePipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
+        computePipelineLayoutInfo.setLayoutCount = static_cast<uint32_t>(computeSetLayouts.size());
+        computePipelineLayoutInfo.pSetLayouts = computeSetLayouts.data();
+        computePipelineLayoutInfo.pushConstantRangeCount = 1;
+        computePipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
+
+        if (vkCreatePipelineLayout(vgeDevice.device(), &computePipelineLayoutInfo, nullptr, &computePipelineLayout) != VK_SUCCESS) {
+            throw std::runtime_error("Failed to create pipeline layout for compute!");
         }
     }
 
     void GalaxySystem::createPipelines(VkRenderPass renderPass) {
-        assert(pipelineLayout != nullptr && "Cannot create pipeline before pipeline layout");
+        assert(graphicsPipelineLayout != nullptr && "Cannot create pipeline before pipeline layout");
 
         PipelineConfigInfo pipelineConfig{};
         Pipeline::defaultPipelineConfigInfo(pipelineConfig);
         pipelineConfig.renderPass = renderPass;
-        pipelineConfig.pipelineLayout = pipelineLayout;
+        pipelineConfig.pipelineLayout = graphicsPipelineLayout;
 
         pipelineConfig.bindingDescriptions = getBindingDescriptions();
         pipelineConfig.attributeDescriptions = getAttributeDescriptions();
@@ -167,7 +273,7 @@ namespace vge {
         );
 
         PipelineConfigInfo computePipelineConfig{};
-        computePipelineConfig.pipelineLayout = pipelineLayout;
+        computePipelineConfig.pipelineLayout = computePipelineLayout;
         computePipeline = std::make_unique<Pipeline>(
             vgeDevice,
             "shaders/galaxy_compute.comp.spv",
@@ -209,7 +315,7 @@ namespace vge {
         vkCmdBindDescriptorSets(
             frameInfo.commandBuffer,
             VK_PIPELINE_BIND_POINT_COMPUTE,
-            pipelineLayout,
+            computePipelineLayout,
             0,
             1,
             &frameInfo.globalDescriptorSet,
@@ -219,10 +325,10 @@ namespace vge {
         vkCmdBindDescriptorSets(
             frameInfo.commandBuffer,
             VK_PIPELINE_BIND_POINT_COMPUTE,
-            pipelineLayout,
+            computePipelineLayout,
             1,
             1,
-            &descriptorSet,
+            &computeDescriptorSet,
             0,
             nullptr
         );
@@ -257,7 +363,7 @@ namespace vge {
         vkCmdBindDescriptorSets(
             frameInfo.commandBuffer,
             VK_PIPELINE_BIND_POINT_GRAPHICS,
-            pipelineLayout,
+            graphicsPipelineLayout,
             0,
             1,
             &frameInfo.globalDescriptorSet,
@@ -267,10 +373,10 @@ namespace vge {
         vkCmdBindDescriptorSets(
             frameInfo.commandBuffer,
             VK_PIPELINE_BIND_POINT_GRAPHICS,
-            pipelineLayout,
+            graphicsPipelineLayout,
             1,
             1,
-            &descriptorSet,
+            &graphicsDescriptorSet,
             0,
             nullptr
         );
@@ -281,7 +387,7 @@ namespace vge {
 
         vkCmdPushConstants(
             frameInfo.commandBuffer,
-            pipelineLayout,
+            graphicsPipelineLayout,
             VK_SHADER_STAGE_VERTEX_BIT | VK_SHADER_STAGE_FRAGMENT_BIT | VK_SHADER_STAGE_COMPUTE_BIT,
             0,
             sizeof(SimplePushConstantData),
