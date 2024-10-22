@@ -112,43 +112,67 @@ namespace vge {
     void GalaxySystem::createDescriptorSet() {
         VkDescriptorPoolSize poolSize{};
         poolSize.type = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
-        poolSize.descriptorCount = 1;
+        poolSize.descriptorCount = 2;
 
         VkDescriptorPoolCreateInfo poolInfo{};
         poolInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
         poolInfo.poolSizeCount = 1;
         poolInfo.pPoolSizes = &poolSize;
-        poolInfo.maxSets = 1;
+        poolInfo.maxSets = 2;
 
         if (vkCreateDescriptorPool(vgeDevice.device(), &poolInfo, nullptr, &descriptorPool) != VK_SUCCESS) {
             throw std::runtime_error("Failed to create descriptor pool!");
         }
 
-        VkDescriptorSetAllocateInfo allocInfo{};
-        allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-        allocInfo.descriptorPool = descriptorPool;
-        allocInfo.descriptorSetCount = 1;
-        allocInfo.pSetLayouts = &computeDescriptorSetLayout;
-
-        if (vkAllocateDescriptorSets(vgeDevice.device(), &allocInfo, &descriptorSet) != VK_SUCCESS) {
-            throw std::runtime_error("Failed to allocate descriptor set!");
+        // Descriptor set for the compute pipeline
+        VkDescriptorSetAllocateInfo allocInfoCompute{};
+        allocInfoCompute.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+        allocInfoCompute.descriptorPool = descriptorPool;
+        allocInfoCompute.descriptorSetCount = 1;
+        allocInfoCompute.pSetLayouts = &computeDescriptorSetLayout;
+        if (vkAllocateDescriptorSets(vgeDevice.device(), &allocInfoCompute, &computeDescriptorSet) != VK_SUCCESS) {
+            throw std::runtime_error("Failed to allocate descriptor set for compute!");
         }
 
+        // Descriptor set for the graphisc pipeline
+        VkDescriptorSetAllocateInfo allocInfoGraphics{};
+        allocInfoGraphics.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
+        allocInfoGraphics.descriptorPool = descriptorPool;
+        allocInfoGraphics.descriptorSetCount = 1;
+        allocInfoGraphics.pSetLayouts = &graphicsDescriptorSetLayout;
+        if (vkAllocateDescriptorSets(vgeDevice.device(), &allocInfoGraphics, &graphicsDescriptorSet) != VK_SUCCESS) {
+            throw std::runtime_error("Failed to allocate descriptor set for graphics!");
+        }
+
+        // Descriptor buffer info common to both graphics and compute
         VkDescriptorBufferInfo bufferInfo{};
         bufferInfo.buffer = starBuffer->getBuffer();
         bufferInfo.offset = 0;
         bufferInfo.range = sizeof(Star) * stars.size();
 
-        VkWriteDescriptorSet descriptorWrite{};
-        descriptorWrite.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-        descriptorWrite.dstSet = descriptorSet;
-        descriptorWrite.dstBinding = 0;
-        descriptorWrite.dstArrayElement = 0;
-        descriptorWrite.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
-        descriptorWrite.descriptorCount = 1;
-        descriptorWrite.pBufferInfo = &bufferInfo;
+        // Write descriptor for compute pipeline
+        VkWriteDescriptorSet descriptorWriteCompute{};
+        descriptorWriteCompute.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+        descriptorWriteCompute.dstSet = computeDescriptorSet;
+        descriptorWriteCompute.dstBinding = 0;
+        descriptorWriteCompute.dstArrayElement = 0;
+        descriptorWriteCompute.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+        descriptorWriteCompute.descriptorCount = 1;
+        descriptorWriteCompute.pBufferInfo = &bufferInfo;
 
-        vkUpdateDescriptorSets(vgeDevice.device(), 1, &descriptorWrite, 0, nullptr);
+        // Write descriptor for graphics pipeline
+        VkWriteDescriptorSet descriptorWriteGraphics{};
+        descriptorWriteGraphics.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+        descriptorWriteGraphics.dstSet = graphicsDescriptorSet;
+        descriptorWriteGraphics.dstBinding = 0;
+        descriptorWriteGraphics.dstArrayElement = 0;
+        descriptorWriteGraphics.descriptorType = VK_DESCRIPTOR_TYPE_STORAGE_BUFFER;
+        descriptorWriteGraphics.descriptorCount = 1;
+        descriptorWriteGraphics.pBufferInfo = &bufferInfo;
+
+        // Update descriptor sets for both pipelines
+        std::array<VkWriteDescriptorSet, 2> descriptorWrites = {descriptorWriteCompute, descriptorWriteGraphics};
+        vkUpdateDescriptorSets(vgeDevice.device(), static_cast<uint32_t>(descriptorWrites.size()), descriptorWrites.data(), 0, nullptr);
     }
 
 
