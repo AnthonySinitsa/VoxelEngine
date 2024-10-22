@@ -9,7 +9,16 @@ struct Star {
     vec2 uv;
 };
 
-layout(std430, binding = 0) buffer StarBuffer {
+// Global UBO (set = 0)
+layout(set = 0, binding = 0) uniform GlobalUbo {
+    mat4 projection;
+    mat4 view;
+    mat4 invView;
+    vec4 ambientLightColor;
+} ubo;
+
+// Star buffer (set = 1)
+layout(set = 1, binding = 0) buffer StarBuffer {
     Star stars[];
 };
 
@@ -17,7 +26,6 @@ void main() {
     uint gid = gl_GlobalInvocationID.x;
     if (gid < stars.length()) {
         // Here you can modify star properties
-        // For example:
-        stars[gid].position.x += 0.1; // Slowly move stars to the right
+        stars[gid].position.x += 0.001; // Slowly move stars to the right
     }
 }
