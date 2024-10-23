@@ -1,6 +1,6 @@
 #version 450
 
-layout(local_size_x = 10, local_size_y = 1, local_size_z = 1) in;
+layout(local_size_x = 256, local_size_y = 1, local_size_z = 1) in;
 
 struct Star {
     vec2 position;
@@ -23,9 +23,10 @@ layout(set = 1, binding = 0) buffer StarBuffer {
 };
 
 void main() {
-    uint gid = gl_GlobalInvocationID.x;
-    if (gid < stars.length()) {
+    uint index = gl_GlobalInvocationID.x;
+    if (index < stars.length()) {
         // Here you can modify star properties
-        stars[gid].position.x += 0.001; // Slowly move stars to the right
+        stars[index].position.x += 0.001; // Slowly move stars to the right
+        stars[index].color = vec3(float(index) / float(stars.length()), 0.0, 1.0);
     }
 }

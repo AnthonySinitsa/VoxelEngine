@@ -1,6 +1,7 @@
 #include "GalaxySystem.h"
 
 #include <cassert>
+#include <cstdint>
 #include <stdexcept>
 #include <array>
 #include <vulkan/vulkan_core.h>
@@ -296,7 +297,7 @@ namespace vge {
             vgeDevice,
             sizeof(Star),
             stars.size(),
-            VK_BUFFER_USAGE_STORAGE_BUFFER_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT,
+            VK_BUFFER_USAGE_STORAGE_BUFFER_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT,
             VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT
         );
 
@@ -309,6 +310,28 @@ namespace vge {
     }
 
     void GalaxySystem::computeStars(FrameInfo& frameInfo) {
+        // Pre-compute barrier to ensure previous vertex shader reads are complete
+        VkBufferMemoryBarrier preComputeBarrier{};
+        preComputeBarrier.sType = VK_STRUCTURE_TYPE_BUFFER_MEMORY_BARRIER;
+        preComputeBarrier.srcAccessMask = VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
+        preComputeBarrier.dstAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
+        preComputeBarrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+        preComputeBarrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+        preComputeBarrier.buffer = starBuffer->getBuffer();
+        preComputeBarrier.offset = 0;
+        preComputeBarrier.size = VK_WHOLE_SIZE;
+
+        vkCmdPipelineBarrier(
+            frameInfo.commandBuffer,
+            VK_PIPELINE_STAGE_VERTEX_INPUT_BIT,
+            VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT,
+            0,
+            0, nullptr,
+            1, &preComputeBarrier,
+            0, nullptr
+        );
+
+
         // Bind the compute pipeline and dispatch
         computePipeline->bind(frameInfo.commandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE);
 
@@ -333,18 +356,22 @@ namespace vge {
             nullptr
         );
 
-        vkCmdDispatch(frameInfo.commandBuffer, 1, 1, 1);
+        uint32_t workgroupSize = 256;
+        uint32_t numWorkgroups = (stars.size() + workgroupSize - 1) / workgroupSize;
 
-        // Add a memory barrier to ensure compute shader writes are visible
-        VkBufferMemoryBarrier bufferBarrier{};
-        bufferBarrier.sType = VK_STRUCTURE_TYPE_BUFFER_MEMORY_BARRIER;
-        bufferBarrier.srcAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
-        bufferBarrier.dstAccessMask = VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
-        bufferBarrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-        bufferBarrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-        bufferBarrier.buffer = starBuffer->getBuffer();
-        bufferBarrier.offset = 0;
-        bufferBarrier.size = VK_WHOLE_SIZE;
+        // Dispatch compute shader
+        vkCmdDispatch(frameInfo.commandBuffer, numWorkgroups, 1, 1);
+
+        // Post-compute barrier to ensure compute shader writes are visible
+        VkBufferMemoryBarrier postComputeBarrier{};
+        postComputeBarrier.sType = VK_STRUCTURE_TYPE_BUFFER_MEMORY_BARRIER;
+        postComputeBarrier.srcAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
+        postComputeBarrier.dstAccessMask = VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
+        postComputeBarrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+        postComputeBarrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
+        postComputeBarrier.buffer = starBuffer->getBuffer();
+        postComputeBarrier.offset = 0;
+        postComputeBarrier.size = VK_WHOLE_SIZE;
 
         vkCmdPipelineBarrier(
             frameInfo.commandBuffer,
@@ -352,7 +379,7 @@ namespace vge {
             VK_PIPELINE_STAGE_VERTEX_INPUT_BIT,
             0,
             0, nullptr,
-            1, &bufferBarrier,
+            1, &postComputeBarrier,
             0, nullptr
         );
     }
@@ -400,5 +427,4 @@ namespace vge {
 
         vkCmdDraw(frameInfo.commandBuffer, static_cast<uint32_t>(stars.size()), 1, 0, 0);
     }
-
 } // namespace
