@@ -25,7 +25,12 @@ SRC_FILES = $(shell find $(SRC_DIR) -name "*.cpp")
 INCLUDES = -I$(IMGUI_DIR) -I$(IMGUI_BACKENDS_DIR) -I$(TINYOBJ_PATH)
 
 SHADER_SCRIPT = compile.sh
-SHADER_FILES = shaders/vertex_shader.vert shaders/fragment_shader.frag
+SHADER_FILES = shaders/vertex_shader.vert \
+               shaders/fragment_shader.frag \
+               shaders/galaxy_vertex.vert \
+               shaders/galaxy_fragment.frag \
+               shaders/point_light_vertex.vert \
+               shaders/point_light_fragment.frag
 
 # Main build target
 VoxelOutput: $(SRC_FILES) $(IMGUI_SRC)
@@ -42,6 +47,11 @@ test: shaders VoxelOutput
 
 clean:
 	rm -f VoxelOutput
+	rm -f shaders/*.spv
 
 shaders/vertex_shader.vert.spv: shaders/vertex_shader.vert
 shaders/fragment_shader.frag.spv: shaders/fragment_shader.frag
+shaders/galaxy_vertex.vert.spv: shaders/galaxy_vertex.vert
+shaders/galaxy_fragment.frag.spv: shaders/galaxy_fragment.frag
+shaders/point_light_vertex.vert.spv: shaders/point_light_vertex.vert
+shaders/point_light_fragment.frag.spv: shaders/point_light_fragment.frag

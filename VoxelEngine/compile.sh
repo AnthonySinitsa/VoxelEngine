@@ -9,4 +9,4 @@
 # galaxy
 /usr/bin/glslc shaders/galaxy_vertex.vert -o shaders/galaxy_vertex.vert.spv
 /usr/bin/glslc shaders/galaxy_fragment.frag -o shaders/galaxy_fragment.frag.spv
-/usr/bin/glslc shaders/galaxy_compute.comp -o shaders/galaxy_compute.comp.spv
+# /usr/bin/glslc shaders/galaxy_compute.comp -o shaders/galaxy_compute.comp.spv

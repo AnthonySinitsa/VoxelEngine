@@ -148,10 +148,6 @@ namespace vge{
                 uboBuffers[frameIndex]->writeToBuffer(&ubo);
                 uboBuffers[frameIndex]->flush();
 
-                // Compute pass (outside of render apss)
-                galaxySystem->update(frameInfo);
-                galaxySystem->computeStars(frameInfo);
-
                 vgeRenderer.beginSwapChainRenderPass(commandBuffer); // Begin swapchain render pass
 
                 renderSystem.renderGameObjects(frameInfo); // Render game objects

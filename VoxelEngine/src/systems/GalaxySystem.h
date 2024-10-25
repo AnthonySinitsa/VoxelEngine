@@ -8,20 +8,19 @@
 #include <vulkan/vulkan.h>
 #include <memory>
 #include <vector>
-#include <vulkan/vulkan_core.h>
 
 namespace vge {
 
     struct Star {
-        glm::vec2 position;
-        glm::vec3 color;
-        glm::vec3 normal;
-        glm::vec2 uv;
+        glm::vec3 position;  // 3D position
+        glm::vec3 color;     // RGB color
+        float size;          // Point size
     };
 
     struct SimplePushConstantData {
         glm::mat4 modelMatrix{1.f};
         glm::mat4 normalMatrix{1.f};
+        float time;
     };
 
     class GalaxySystem {
@@ -32,47 +31,25 @@ namespace vge {
         GalaxySystem(const GalaxySystem&) = delete;
         GalaxySystem& operator=(const GalaxySystem&) = delete;
 
-        void update(FrameInfo& frameInfo);
-        void computeStars(FrameInfo& frameInfo);
         void render(FrameInfo& frameInfo);
 
+    private:
+        float totalTime = 0.0f;
+
+        void createPipelineLayout();
+        void createPipeline(VkRenderPass renderPass);
+        void createStarBuffer();
+
+        // Helper functions
         static std::vector<VkVertexInputBindingDescription> getBindingDescriptions();
         static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions();
 
-    private:
-        VkDescriptorSetLayout globalSetLayout;
-
-        void createPipelineLayout();
-        void createPipelines(VkRenderPass renderPass);
-        void createStarBuffer();
-
-        void createGraphicsDescriptorSetLayout();
-        void createComputeDescriptorSetLayout();
-        void createGraphicsDescriptorSet();
-        void createComputeDescriptorSet();
-
         VgeDevice& vgeDevice;
-
-        // Graphics and compute pipelines
-        std::unique_ptr<Pipeline> graphicsPipeline;
-        std::unique_ptr<Pipeline> computePipeline;
-
-        // Separate pipeline layouts for graphics and compute
-        VkPipelineLayout graphicsPipelineLayout = VK_NULL_HANDLE;
-        VkPipelineLayout computePipelineLayout = VK_NULL_HANDLE;
-
-        // Descriptor set layouts for graphics and compute
-        VkDescriptorSetLayout graphicsDescriptorSetLayout = VK_NULL_HANDLE;
-        VkDescriptorSetLayout computeDescriptorSetLayout = VK_NULL_HANDLE;
-
-        // Descriptor set and pool
-        VkDescriptorPool graphicsDescriptorPool = VK_NULL_HANDLE;
-        VkDescriptorPool computeDescriptorPool = VK_NULL_HANDLE;
-        VkDescriptorSet graphicsDescriptorSet = VK_NULL_HANDLE;
-        VkDescriptorSet computeDescriptorSet = VK_NULL_HANDLE;
+        std::unique_ptr<Pipeline> pipeline;
+        VkPipelineLayout pipelineLayout;
+        VkDescriptorSetLayout globalSetLayout;
 
         std::vector<Star> stars;
         std::unique_ptr<VgeBuffer> starBuffer;
     };
-
-} // namespace
+} // namespace vge
