@@ -86,6 +86,8 @@ namespace vge {
     void GalaxySystem::render(FrameInfo& frameInfo) {
         pipeline->bind(frameInfo.commandBuffer);
 
+        totalTime += frameInfo.frameTime;
+
         vkCmdBindDescriptorSets(
             frameInfo.commandBuffer,
             VK_PIPELINE_BIND_POINT_GRAPHICS,
@@ -100,6 +102,7 @@ namespace vge {
         SimplePushConstantData push{};
         push.modelMatrix = glm::mat4(1.0f);
         push.normalMatrix = glm::mat4(1.0f);
+        push.time = totalTime;
 
         vkCmdPushConstants(
             frameInfo.commandBuffer,

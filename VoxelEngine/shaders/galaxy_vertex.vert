@@ -9,6 +9,7 @@ layout(location = 0) out vec3 fragColor;
 layout(push_constant) uniform Push {
     mat4 modelMatrix;
     mat4 normalMatrix;
+    float time;
 } push;
 
 layout(set = 0, binding = 0) uniform GlobalUbo {
@@ -19,15 +20,31 @@ layout(set = 0, binding = 0) uniform GlobalUbo {
 } ubo;
 
 void main() {
-    vec4 positionWorld = push.modelMatrix * vec4(inPosition, 1.0);
-    gl_Position = ubo.projection * ubo.view * positionWorld;
+    // Calculate initial angle based on star index
+    float baseAngle = (inPosition.x + 4.5) / 9.0 * 2.0 * 3.14159;
+
+    // Apply rotation based on time
+    float rotationSpeed = 1.0; // One full rotation per second
+    float angle = baseAngle + push.time * rotationSpeed;
+
+    // Set radius of circle
+    float radius = 2.0;
+
+    // Calculate rotated position
+    vec3 rotatedPosition = vec3(
+            radius * cos(angle), // X coordinate
+            radius * sin(angle), // Y coordinate
+            0.0 // Z coordinate
+        );
+
+    vec4 worldPosition = push.modelMatrix * vec4(rotatedPosition, 1.0);
+    gl_Position = ubo.projection * ubo.view * worldPosition;
     gl_PointSize = inSize;
 
-    // Calculate color based on position
-    float t = (inPosition.x + 4.5) / 9.0; // Normalize x position to 0-1 range
+    // Color based on angle
     fragColor = vec3(
-            1.0 - t, // Red decreases from left to right
-            sin(t * 3.14159), // Green peaks in middle
-            t // Blue increases from left to right
+            cos(angle) * 0.5 + 0.5, // Red
+            sin(angle) * 0.5 + 0.5, // Green
+            sin(angle + 3.14159) * 0.5 + 0.5 // Blue
         );
 }

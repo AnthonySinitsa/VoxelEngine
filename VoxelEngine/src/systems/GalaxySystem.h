@@ -20,6 +20,7 @@ namespace vge {
     struct SimplePushConstantData {
         glm::mat4 modelMatrix{1.f};
         glm::mat4 normalMatrix{1.f};
+        float time;
     };
 
     class GalaxySystem {
@@ -33,6 +34,8 @@ namespace vge {
         void render(FrameInfo& frameInfo);
 
     private:
+        float totalTime = 0.0f;
+
         void createPipelineLayout();
         void createPipeline(VkRenderPass renderPass);
         void createStarBuffer();
