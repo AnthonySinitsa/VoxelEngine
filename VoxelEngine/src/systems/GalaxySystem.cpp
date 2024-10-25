@@ -1,4 +1,3 @@
-// GalaxySystem.cpp
 #include "GalaxySystem.h"
 
 #include <stdexcept>

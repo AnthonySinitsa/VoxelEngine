@@ -22,5 +22,12 @@ void main() {
     vec4 positionWorld = push.modelMatrix * vec4(inPosition, 1.0);
     gl_Position = ubo.projection * ubo.view * positionWorld;
     gl_PointSize = inSize;
-    fragColor = inColor;
+
+    // Calculate color based on position
+    float t = (inPosition.x + 4.5) / 9.0; // Normalize x position to 0-1 range
+    fragColor = vec3(
+            1.0 - t, // Red decreases from left to right
+            sin(t * 3.14159), // Green peaks in middle
+            t // Blue increases from left to right
+        );
 }
