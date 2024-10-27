@@ -1,7 +1,6 @@
 #include "GalaxySystem.h"
 
 #include <stdexcept>
-#include <random>
 
 namespace vge {
 
