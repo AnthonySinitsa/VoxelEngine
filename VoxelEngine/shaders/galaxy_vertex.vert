@@ -36,8 +36,6 @@ void main() {
     vec4 worldPosition = push.modelMatrix * vec4(rotatedPosition, 1.0);
     gl_Position = ubo.projection * ubo.view * worldPosition;
 
-    // Calculate size based on time and position
-    float basePulseSize = 20.0;
-    float pulseIntensity = sin(push.time * 2.0) * 0.3 + 1.0; // Pulsing effect
-    gl_PointSize = basePulseSize * pulseIntensity;
+    // Static point size
+    gl_PointSize = 20.0;
 }
