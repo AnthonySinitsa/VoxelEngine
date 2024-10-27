@@ -20,6 +20,8 @@ IMGUI_SRC = $(IMGUI_DIR)/imgui.cpp \
 
 SRC_DIR = src
 SRC_FILES = $(shell find $(SRC_DIR) -name "*.cpp")
+OBJ_DIR = obj
+OBJ_FILES = $(patsubst %.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES)) $(patsubst %.cpp,$(OBJ_DIR)/%.o,$(IMGUI_SRC))
 
 # Include directories
 INCLUDES = -I$(IMGUI_DIR) -I$(IMGUI_BACKENDS_DIR) -I$(TINYOBJ_PATH)
@@ -33,8 +35,13 @@ SHADER_FILES = shaders/vertex_shader.vert \
                shaders/point_light_fragment.frag
 
 # Main build target
-VoxelOutput: $(SRC_FILES) $(IMGUI_SRC)
-	g++ $(CFLAGS) $(INCLUDES) -o VoxelOutput $(SRC_FILES) $(IMGUI_SRC) $(LDFLAGS)
+VoxelOutput: $(OBJ_FILES)
+	g++ $(CFLAGS) -o VoxelOutput $(OBJ_FILES) $(LDFLAGS)
+
+# Rule to compile each source file into an object file in the obj directory
+$(OBJ_DIR)/%.o: %.cpp
+	mkdir -p $(@D)  # Ensure the obj directory exists
+	g++ $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 .PHONY: test clean shaders
 
@@ -48,7 +55,9 @@ test: shaders VoxelOutput
 clean:
 	rm -f VoxelOutput
 	rm -f shaders/*.spv
+	rm -rf $(OBJ_DIR)
 
+# Shader compilation rules
 shaders/vertex_shader.vert.spv: shaders/vertex_shader.vert
 shaders/fragment_shader.frag.spv: shaders/fragment_shader.frag
 shaders/galaxy_vertex.vert.spv: shaders/galaxy_vertex.vert
