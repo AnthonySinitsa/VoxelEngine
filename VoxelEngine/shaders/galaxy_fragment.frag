@@ -16,12 +16,8 @@ void main() {
     // Soft circle edge
     float alpha = 1.0 - smoothstep(0.45, 0.5, dist);
 
-    // Calculate color based on time and position
-    vec3 baseColor = vec3(
-            sin(push.time) * 0.5 + 0.5,
-            cos(push.time * 0.7) * 0.5 + 0.5,
-            sin(push.time * 1.3) * 0.5 + 0.5
-        );
+    // Calculate base color
+    vec3 baseColor = vec3(0.8, 0.85, 1.0);
 
     // Add shimmer effect
     float shimmer = sin(push.time * 10.0 + dist * 20.0) * 0.1 + 0.9;

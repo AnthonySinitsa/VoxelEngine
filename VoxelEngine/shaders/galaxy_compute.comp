@@ -1,0 +1,64 @@
+#version 450
+
+layout(local_size_x = 256, local_size_y = 1, local_size_z = 1) in;
+
+struct Star {
+    vec3 position;
+    vec3 velocity;
+};
+
+layout(push_constant) uniform Push {
+    float deltaTime;
+    float totalTime;
+    int numStars;
+} push;
+
+layout(std430, binding = 0) readonly buffer StarBufferIn {
+    Star starsIn[];
+};
+
+layout(std430, binding = 1) buffer StarBufferOut {
+    Star starsOut[];
+};
+
+// Constants for simulation
+const float G = 1.0; // Gravitational constant
+const float CENTER_MASS = 100000.0; // Mass of central black hole
+const float SOFTENING = 0.001; // Prevents division by zero
+
+void main() {
+    uint index = gl_GlobalInvocationID.x;
+
+    if (index >= push.numStars) {
+        return;
+    }
+
+    Star starIn = starsIn[index];
+    Star starOut;
+
+    // Calculate gravitational force from central black hole
+    vec3 toCenter = -starIn.position; // Vector pointing to center (0,0,0)
+    float distanceSquared = dot(toCenter, toCenter) + SOFTENING;
+    float distance = sqrt(distanceSquared);
+
+    // Calculate gravitational force
+    vec3 forceDir = normalize(toCenter);
+    float forceMagnitude = G * CENTER_MASS / distanceSquared;
+    vec3 force = forceDir * forceMagnitude;
+
+    // Update velocity using gravitational force
+    starOut.velocity = starIn.velocity + force * push.deltaTime;
+
+    // Update position using velocity
+    starOut.position = starIn.position + starOut.velocity * push.deltaTime;
+
+    // Optional: Add some turbulence/chaos to make it more interesting
+    float turbulence = sin(push.totalTime * 0.5 + distance * 0.1) * 0.1;
+    starOut.position += vec3(
+            sin(push.totalTime + index) * turbulence,
+            cos(push.totalTime * 0.7 + index) * turbulence,
+            sin(push.totalTime * 1.3 + index) * turbulence
+        );
+
+    starsOut[index] = starOut;
+}

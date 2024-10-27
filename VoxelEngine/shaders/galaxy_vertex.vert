@@ -16,27 +16,11 @@ layout(set = 0, binding = 0) uniform GlobalUbo {
 } ubo;
 
 void main() {
-    // Calculate initial angle based on vertex position
-    float baseAngle = atan(inPosition.y, inPosition.x);
-    float radius = length(inPosition.xy);
+    vec4 worldPosition = push.modelMatrix * vec4(inPosition, 1.0);
+    gl_Position = ubo.projection * ubo.view * worldPosition;
 
-    // Apply rotation based on time
-    float rotationSpeed = 1.0;
-    float angle = baseAngle + push.time * rotationSpeed;
-
-    // Calculate rotated position
-    vec3 rotatedPosition = vec3(
-            radius * cos(angle),
-            0.0,
-            radius * sin(angle)
-        );
-
-    vec4 worldPosition = push.modelMatrix * vec4(rotatedPosition, 1.0);
-    vec4 viewPosition = ubo.view * worldPosition;
-    gl_Position = ubo.projection * viewPosition;
-
-    // Calculaet perspective-correct point size
+    // Calculate perspective-correct point size
     float baseSize = 200.0f;
-    // Static point size
+    vec4 viewPosition = ubo.view * worldPosition;
     gl_PointSize = baseSize / viewPosition.z;
 }
