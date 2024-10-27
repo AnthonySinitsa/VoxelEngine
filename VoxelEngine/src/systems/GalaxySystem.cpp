@@ -165,24 +165,23 @@ namespace vge {
 
     void GalaxySystem::initStars() {
         std::vector<Star> initialStars(NUM_STARS);
-        std::default_random_engine rng{std::random_device{}()};
-        std::normal_distribution<float> dist{0.0f, 50.0f};
 
-        for (auto& star : initialStars) {
-            // Generate stars in a disk-like galaxy formation
-            float radius = std::abs(dist(rng));
-            float angle = std::uniform_real_distribution<float>{0, 2 * 3.14159f}(rng);
+        // Place stars in a circle
+        float radius = 2.0f;  // Fixed radius for the circle
+        for (int i = 0; i < NUM_STARS; i++) {
+            float angle = (float)i / NUM_STARS * 2.0f * glm::pi<float>();
 
-            star.position = glm::vec3(
-                radius * std::cos(angle),
-                std::normal_distribution<float>{0.0f, 2.0f}(rng),  // Thinner in Y axis
-                radius * std::sin(angle)
+            // Position stars in a perfect circle on the XZ plane
+            initialStars[i].position = glm::vec3(
+                radius * std::cos(angle),  // X coordinate
+                0.0f,                      // Y coordinate (flat on XZ plane)
+                radius * std::sin(angle)   // Z coordinate
             );
 
-            // Initialize with orbital velocities
-            float orbitalSpeed = 1.0f / std::sqrt(radius + 1.0f);  // Keplerian-like orbital velocity
-            star.velocity = glm::vec3(
-                -std::sin(angle) * orbitalSpeed,
+            // Calculate orbital velocity for stable circular orbit
+            float orbitalSpeed = 1.0f;  // Fixed orbital speed
+            initialStars[i].velocity = glm::vec3(
+                -std::sin(angle) * orbitalSpeed,  // Perpendicular to position
                 0.0f,
                 std::cos(angle) * orbitalSpeed
             );
