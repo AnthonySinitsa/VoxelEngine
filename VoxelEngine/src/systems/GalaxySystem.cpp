@@ -14,19 +14,12 @@ namespace vge {
                     .build();
 
                 createComputeDescriptorSetLayout();
-
                 createStarBuffer();
-
                 createComputeDescriptorSets();
-
                 createComputePipelineLayout();
-
                 createComputePipeline();
-
                 createPipelineLayout();
-
                 createPipeline(renderPass);
-
                 initStars();
 
             } catch (const std::exception& e) {
