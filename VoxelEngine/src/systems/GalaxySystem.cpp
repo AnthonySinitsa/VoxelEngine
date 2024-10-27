@@ -62,13 +62,13 @@ namespace vge {
 
         // Initialize stars in a simple line formation
         for (int i = 0; i < 10; i++) {
+            float angle = (float)i / 10.0f * 2.0f * glm::pi<float>();
+            float radius = 2.0f;
             stars[i].position = glm::vec3(
-                i * 1.0f - 5.0f,  // X position: -5 to 5
-                0.0f,             // Y position: all in same plane
-                0.0f              // Z position: all at same depth
+                radius * cos(angle), // X
+                radius * sin(angle), // Y
+                0.0f                 // Z
             );
-            stars[i].color = glm::vec3(1.0f);  // White color
-            stars[i].size = 10.0f;             // Uniform size
         }
 
         starBuffer = std::make_unique<VgeBuffer>(
@@ -129,22 +129,12 @@ namespace vge {
     }
 
     std::vector<VkVertexInputAttributeDescription> GalaxySystem::getAttributeDescriptions() {
-        std::vector<VkVertexInputAttributeDescription> attributeDescriptions(3);
+        std::vector<VkVertexInputAttributeDescription> attributeDescriptions(1);
 
         attributeDescriptions[0].binding = 0;
         attributeDescriptions[0].location = 0;
         attributeDescriptions[0].format = VK_FORMAT_R32G32B32_SFLOAT;
         attributeDescriptions[0].offset = offsetof(Star, position);
-
-        attributeDescriptions[1].binding = 0;
-        attributeDescriptions[1].location = 1;
-        attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
-        attributeDescriptions[1].offset = offsetof(Star, color);
-
-        attributeDescriptions[2].binding = 0;
-        attributeDescriptions[2].location = 2;
-        attributeDescriptions[2].format = VK_FORMAT_R32_SFLOAT;
-        attributeDescriptions[2].offset = offsetof(Star, size);
 
         return attributeDescriptions;
     }

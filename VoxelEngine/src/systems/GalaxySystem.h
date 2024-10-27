@@ -13,8 +13,6 @@ namespace vge {
 
     struct Star {
         glm::vec3 position;  // 3D position
-        glm::vec3 color;     // RGB color
-        float size;          // Point size
     };
 
     struct SimplePushConstantData {
