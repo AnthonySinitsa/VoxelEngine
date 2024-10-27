@@ -2,8 +2,6 @@
 
 layout(location = 0) in vec3 inPosition;
 
-layout(location = 0) out vec3 fragColor;
-
 layout(push_constant) uniform Push {
     mat4 modelMatrix;
     mat4 normalMatrix;
@@ -34,8 +32,11 @@ void main() {
         );
 
     vec4 worldPosition = push.modelMatrix * vec4(rotatedPosition, 1.0);
-    gl_Position = ubo.projection * ubo.view * worldPosition;
+    vec4 viewPosition = ubo.view * worldPosition;
+    gl_Position = ubo.projection * viewPosition;
 
+    // Calculaet perspective-correct point size
+    float baseSize = 200.0f;
     // Static point size
-    gl_PointSize = 20.0;
+    gl_PointSize = baseSize / viewPosition.z;
 }
