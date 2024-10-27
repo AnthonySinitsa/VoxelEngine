@@ -37,7 +37,7 @@ namespace vge{
         createGalaxySystem();
 
         // Load game objects
-        loadGameObjects();
+        // loadGameObjects();
 
         // Initialize ImGui
         vgeImgui = std::make_unique<VgeImgui>(
@@ -167,14 +167,14 @@ namespace vge{
     }
 
 
-    void VulkanApplication::loadGameObjects(){
-        std::shared_ptr<Model> vgeModel =
-            Model::createModelFromFile(vgeDevice, "src/3dModels/Lowpoly_tree.obj");
-        auto tree = GameObject::createGameObject();
-        tree.model = vgeModel;
-        tree.transform.translation = {2.5f, .0f, 0.f};
-        tree.transform.scale = glm::vec3{.2f};
-        tree.transform.rotation = glm::vec3{glm::radians(180.0f), 0.f, 0.f};
-        gameObjects.emplace(tree.getId(), std::move(tree));
-    }
+    // void VulkanApplication::loadGameObjects(){
+    //     std::shared_ptr<Model> vgeModel =
+    //         Model::createModelFromFile(vgeDevice, "src/3dModels/Lowpoly_tree.obj");
+    //     auto tree = GameObject::createGameObject();
+    //     tree.model = vgeModel;
+    //     tree.transform.translation = {.0f, .0f, 0.f};
+    //     tree.transform.scale = glm::vec3{.2f};
+    //     tree.transform.rotation = glm::vec3{glm::radians(180.0f), 0.f, 0.f};
+    //     gameObjects.emplace(tree.getId(), std::move(tree));
+    // }
 } // namespace

@@ -20,7 +20,7 @@ void main() {
     gl_Position = ubo.projection * ubo.view * worldPosition;
 
     // Calculate perspective-correct point size
-    float baseSize = 200.0f;
+    float baseSize = 20.0f;
     vec4 viewPosition = ubo.view * worldPosition;
     gl_PointSize = baseSize / viewPosition.z;
 }
