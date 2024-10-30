@@ -31,28 +31,28 @@ void main() {
     Star starIn = starsIn[index];
     Star starOut;
 
-    // Get current position and normalize it to get direction from center
-    vec3 position = starIn.position;
-    float radius = length(position.xz); // Get distance from center
+    // Calculate base rotation speed (one full rotation per 5 seconds)
+    const float ROTATION_SPEED = 0.9; // 2π/5 ≈ 1.26, but we'll use a slower speed
 
-    // Calculate angular velocity (rotation speed)
-    float angularSpeed = 0.005; // Adjust this value to change rotation speed
+    // Instead of using deltaTime directly for the angle, use it to progress through the circle
+    float angle = push.totalTime * ROTATION_SPEED;
 
-    // Calculate new position using rotation matrix
-    float angle = angularSpeed * push.deltaTime;
-    float cosAngle = cos(angle);
-    float sinAngle = sin(angle);
+    // Get current radius (distance from center)
+    float radius = length(starIn.position.xz);
 
-    // Rotate position around Y axis
+    // Calculate new position directly using sine and cosine
     starOut.position = vec3(
-            position.x * cosAngle - position.z * sinAngle,
-            position.y,
-            position.x * sinAngle + position.z * cosAngle
+            radius * cos(angle),
+            starIn.position.y,
+            radius * sin(angle)
         );
 
-    // Calculate tangential velocity
-    vec3 toCenter = normalize(vec3(-position.z, 0.0, position.x));
-    starOut.velocity = toCenter * angularSpeed * radius;
+    // Calculate velocity as the tangent to the circle
+    starOut.velocity = vec3(
+            -radius * sin(angle) * ROTATION_SPEED,
+            0.0,
+            radius * cos(angle) * ROTATION_SPEED
+        );
 
     starsOut[index] = starOut;
 }

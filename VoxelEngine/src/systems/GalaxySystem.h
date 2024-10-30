@@ -32,7 +32,7 @@ namespace vge {
 
     class GalaxySystem {
     public:
-        static constexpr int NUM_STARS = 100;
+        static constexpr int NUM_STARS = 10;
         static constexpr int WORKGROUP_SIZE = 256;
 
         GalaxySystem(VgeDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);

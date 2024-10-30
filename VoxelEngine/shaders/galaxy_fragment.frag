@@ -16,14 +16,11 @@ void main() {
     // Soft circle edge
     float alpha = 1.0 - smoothstep(0.45, 0.5, dist);
 
-    // Calculate base color
+    // Set base color - bright white/blue
     vec3 baseColor = vec3(0.8, 0.85, 1.0);
 
-    // Add shimmer effect
-    float shimmer = sin(push.time * 10.0 + dist * 20.0) * 0.1 + 0.9;
-
     // Add glow effect based on distance from center
-    vec3 glowColor = mix(baseColor * 1.5, baseColor * shimmer, dist * 2.0);
+    vec3 glowColor = mix(baseColor * 1.5, baseColor, dist * 2.0);
 
     // Discard pixels outside the circle
     if (dist > 0.5) {
