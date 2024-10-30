@@ -21,6 +21,8 @@ layout(std430, binding = 1) buffer StarBufferOut {
     Star starsOut[];
 };
 
+const float PI = 3.14159265359;
+
 void main() {
     uint index = gl_GlobalInvocationID.x;
 
@@ -28,31 +30,31 @@ void main() {
         return;
     }
 
-    Star starIn = starsIn[index];
-    Star starOut;
+    // Each star gets a unique phase offset based on its index
+    float phaseOffset = (float(index) / float(push.numStars)) * 2.0 * PI;
 
-    // Calculate base rotation speed (one full rotation per 5 seconds)
-    const float ROTATION_SPEED = 0.9; // 2π/5 ≈ 1.26, but we'll use a slower speed
+    // Use a fixed rotation speed
+    const float ROTATION_SPEED = 0.2; // Adjust this to control speed
 
-    // Instead of using deltaTime directly for the angle, use it to progress through the circle
-    float angle = push.totalTime * ROTATION_SPEED;
+    // Calculate the current angle including phase offset
+    float currentAngle = (push.totalTime * ROTATION_SPEED) + phaseOffset;
 
-    // Get current radius (distance from center)
-    float radius = length(starIn.position.xz);
-
-    // Calculate new position directly using sine and cosine
-    starOut.position = vec3(
-            radius * cos(angle),
-            starIn.position.y,
-            radius * sin(angle)
+    // Calculate position on circle
+    const float radius = 2.0; // Fixed radius for all stars
+    vec3 newPosition = vec3(
+            radius * cos(currentAngle),
+            0.0, // Keep all stars in XZ plane
+            radius * sin(currentAngle)
         );
 
-    // Calculate velocity as the tangent to the circle
-    starOut.velocity = vec3(
-            -radius * sin(angle) * ROTATION_SPEED,
+    // Calculate tangential velocity
+    vec3 newVelocity = vec3(
+            -radius * sin(currentAngle) * ROTATION_SPEED,
             0.0,
-            radius * cos(angle) * ROTATION_SPEED
+            radius * cos(currentAngle) * ROTATION_SPEED
         );
 
-    starsOut[index] = starOut;
+    // Write output
+    starsOut[index].position = newPosition;
+    starsOut[index].velocity = newVelocity;
 }

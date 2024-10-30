@@ -1,6 +1,7 @@
 #include "GalaxySystem.h"
 
 #include <stdexcept>
+#include <vulkan/vulkan_core.h>
 
 namespace vge {
 
@@ -113,9 +114,9 @@ namespace vge {
 
     void GalaxySystem::createComputeDescriptorSetLayout() {
         computeDescriptorSetLayout = VgeDescriptorSetLayout::Builder(vgeDevice)
-            .addBinding(0, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT)  // Input buffer
-            .addBinding(1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT)  // Output buffer
-            .build();
+                .addBinding(0, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT, VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT)
+                .addBinding(1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT, VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT)
+                .build();
     }
 
 
@@ -170,16 +171,15 @@ namespace vge {
                 radius * std::sin(angle)   // Z coordinate
             );
 
-            // Calculate orbital velocity for stable circular orbit
-            float orbitalSpeed = 1.0f;  // Fixed orbital speed
+            // Initial velocity (tangential to circle)
             initialStars[i].velocity = glm::vec3(
-                -std::sin(angle) * orbitalSpeed,  // Perpendicular to position
+                -std::sin(angle),
                 0.0f,
-                std::cos(angle) * orbitalSpeed
+                std::cos(angle)
             );
         }
 
-        // Write initial data to both buffers
+        // Write to both buffers
         starBufferA->writeToBuffer(initialStars.data());
         starBufferB->writeToBuffer(initialStars.data());
     }
@@ -191,6 +191,16 @@ namespace vge {
 
 
     void GalaxySystem::computeStars(FrameInfo& frameInfo) {
+        // Get current input and output buffers based on useBufferA flag
+        VkDescriptorBufferInfo inputInfo = useBufferA ? starBufferA->descriptorInfo() : starBufferB->descriptorInfo();
+        VkDescriptorBufferInfo outputInfo = useBufferA ? starBufferB->descriptorInfo() : starBufferA->descriptorInfo();
+
+        // Update descriptor set to point to current input/output buffers
+        VgeDescriptorWriter(*computeDescriptorSetLayout, *computeDescriptorPool)
+            .writeBuffer(0, &inputInfo)   // Input buffer binding
+            .writeBuffer(1, &outputInfo)  // Output buffer binding
+            .overwrite(computeDescriptorSet);
+
         computePipeline->bind(frameInfo.commandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE);
 
         vkCmdBindDescriptorSets(
@@ -223,7 +233,7 @@ namespace vge {
             1
         );
 
-        // Add memory barrier to ensure compute shader completes before rendering
+        // Add memory barriers
         VkMemoryBarrier memoryBarrier{};
         memoryBarrier.sType = VK_STRUCTURE_TYPE_MEMORY_BARRIER;
         memoryBarrier.srcAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
@@ -239,7 +249,7 @@ namespace vge {
             0, nullptr
         );
 
-        // Swap buffers for next frame
+        // Swap buffers
         useBufferA = !useBufferA;
     }
 
@@ -271,7 +281,7 @@ namespace vge {
         );
 
         // Bind the current star buffer
-        VkBuffer currentBuffer = useBufferA ? starBufferA->getBuffer() : starBufferB->getBuffer();
+        VkBuffer currentBuffer = useBufferA ? starBufferB->getBuffer() : starBufferA->getBuffer();
         VkDeviceSize offset = 0;
         vkCmdBindVertexBuffers(frameInfo.commandBuffer, 0, 1, &currentBuffer, &offset);
 
