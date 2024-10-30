@@ -73,10 +73,13 @@ namespace vge {
         std::unique_ptr<Pipeline> computePipeline;
         VkPipelineLayout computePipelineLayout;
         std::unique_ptr<VgeDescriptorSetLayout> computeDescriptorSetLayout;
-        VkDescriptorSet computeDescriptorSet;
+
+        // Two descriptor sets for double buffering
+        VkDescriptorSet computeDescriptorSetA;
+        VkDescriptorSet computeDescriptorSetB;
 
         // Star data and buffers
-        std::vector<Star> stars;
+        std::vector<Star> stars; // DELETE ME?
         std::unique_ptr<VgeBuffer> starBufferA;
         std::unique_ptr<VgeBuffer> starBufferB;
         bool useBufferA = true; // track which buffer is current
