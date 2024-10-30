@@ -21,10 +21,7 @@ layout(std430, binding = 1) buffer StarBufferOut {
     Star starsOut[];
 };
 
-// Constants for simulation
-const float G = 1.0; // Gravitational constant
-const float CENTER_MASS = 100000.0; // Mass of central black hole
-const float SOFTENING = 0.001; // Prevents division by zero
+const float PI = 3.14159265359;
 
 void main() {
     uint index = gl_GlobalInvocationID.x;
@@ -33,32 +30,31 @@ void main() {
         return;
     }
 
-    Star starIn = starsIn[index];
-    Star starOut;
+    // Each star gets a unique phase offset based on its index
+    float phaseOffset = (float(index) / float(push.numStars)) * 2.0 * PI;
 
-    // Calculate gravitational force from central black hole
-    vec3 toCenter = -starIn.position; // Vector pointing to center (0,0,0)
-    float distanceSquared = dot(toCenter, toCenter) + SOFTENING;
-    float distance = sqrt(distanceSquared);
+    // Use a fixed rotation speed
+    const float ROTATION_SPEED = 0.2; // Adjust this to control speed
 
-    // Calculate gravitational force
-    vec3 forceDir = normalize(toCenter);
-    float forceMagnitude = G * CENTER_MASS / distanceSquared;
-    vec3 force = forceDir * forceMagnitude;
+    // Calculate the current angle including phase offset
+    float currentAngle = (push.totalTime * ROTATION_SPEED) + phaseOffset;
 
-    // Update velocity using gravitational force
-    starOut.velocity = starIn.velocity + force * push.deltaTime;
-
-    // Update position using velocity
-    starOut.position = starIn.position + starOut.velocity * push.deltaTime;
-
-    // Optional: Add some turbulence/chaos to make it more interesting
-    float turbulence = sin(push.totalTime * 0.5 + distance * 0.1) * 0.1;
-    starOut.position += vec3(
-            sin(push.totalTime + index) * turbulence,
-            cos(push.totalTime * 0.7 + index) * turbulence,
-            sin(push.totalTime * 1.3 + index) * turbulence
+    // Calculate position on circle
+    const float radius = 2.0; // Fixed radius for all stars
+    vec3 newPosition = vec3(
+            radius * cos(currentAngle),
+            0.0, // Keep all stars in XZ plane
+            radius * sin(currentAngle)
         );
 
-    starsOut[index] = starOut;
+    // Calculate tangential velocity
+    vec3 newVelocity = vec3(
+            -radius * sin(currentAngle) * ROTATION_SPEED,
+            0.0,
+            radius * cos(currentAngle) * ROTATION_SPEED
+        );
+
+    // Write output
+    starsOut[index].position = newPosition;
+    starsOut[index].velocity = newVelocity;
 }

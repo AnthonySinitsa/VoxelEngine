@@ -32,7 +32,7 @@ namespace vge {
 
     class GalaxySystem {
     public:
-        static constexpr int NUM_STARS = 100;
+        static constexpr int NUM_STARS = 10;
         static constexpr int WORKGROUP_SIZE = 256;
 
         GalaxySystem(VgeDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
@@ -46,7 +46,6 @@ namespace vge {
         void computeStars(FrameInfo& frameInfo); // dispatch compute work
 
     private:
-        float totalTime = 0.0f;
 
         void createPipelineLayout();
         void createPipeline(VkRenderPass renderPass);
@@ -61,9 +60,11 @@ namespace vge {
         static std::vector<VkVertexInputBindingDescription> getBindingDescriptions();
         static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions();
 
+        float totalTime = 0.0f;
+
         VgeDevice& vgeDevice;
 
-
+        // Graphics pipeline related
         std::unique_ptr<Pipeline> graphicsPipeline;
         VkPipelineLayout graphicsPipelineLayout;
         VkDescriptorSetLayout globalSetLayout;
@@ -72,10 +73,13 @@ namespace vge {
         std::unique_ptr<Pipeline> computePipeline;
         VkPipelineLayout computePipelineLayout;
         std::unique_ptr<VgeDescriptorSetLayout> computeDescriptorSetLayout;
-        VkDescriptorSet computeDescriptorSet;
+
+        // Two descriptor sets for double buffering
+        VkDescriptorSet computeDescriptorSetA;
+        VkDescriptorSet computeDescriptorSetB;
 
         // Star data and buffers
-        std::vector<Star> stars;
+        std::vector<Star> stars; // DELETE ME?
         std::unique_ptr<VgeBuffer> starBufferA;
         std::unique_ptr<VgeBuffer> starBufferB;
         bool useBufferA = true; // track which buffer is current

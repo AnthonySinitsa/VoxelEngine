@@ -1,6 +1,7 @@
 #include "GalaxySystem.h"
 
 #include <stdexcept>
+#include <vulkan/vulkan_core.h>
 
 namespace vge {
 
@@ -9,8 +10,9 @@ namespace vge {
 
             try {
                 computeDescriptorPool = VgeDescriptorPool::Builder(device)
-                    .setMaxSets(1)
-                    .addPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 2)
+                    .setMaxSets(2)
+                    .addPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 4)
+                    .setPoolFlags(VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT)
                     .build();
 
                 createComputeDescriptorSetLayout();
@@ -29,6 +31,18 @@ namespace vge {
     }
 
     GalaxySystem::~GalaxySystem() {
+        // Wait for device to be idle before cleanup
+        vkDeviceWaitIdle(vgeDevice.device());
+
+        if (computeDescriptorSetA != VK_NULL_HANDLE) {
+            std::vector<VkDescriptorSet> sets = {computeDescriptorSetA};
+            computeDescriptorPool->freeDescriptors(sets);
+        }
+        if (computeDescriptorSetB != VK_NULL_HANDLE) {
+            std::vector<VkDescriptorSet> sets = {computeDescriptorSetB};
+            computeDescriptorPool->freeDescriptors(sets);
+        }
+
         vkDestroyPipelineLayout(vgeDevice.device(), graphicsPipelineLayout, nullptr);
         vkDestroyPipelineLayout(vgeDevice.device(), computePipelineLayout, nullptr);
     }
@@ -113,9 +127,9 @@ namespace vge {
 
     void GalaxySystem::createComputeDescriptorSetLayout() {
         computeDescriptorSetLayout = VgeDescriptorSetLayout::Builder(vgeDevice)
-            .addBinding(0, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT)  // Input buffer
-            .addBinding(1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT)  // Output buffer
-            .build();
+                .addBinding(0, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT, VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT)
+                .addBinding(1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT, VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT)
+                .build();
     }
 
 
@@ -145,13 +159,25 @@ namespace vge {
 
 
     void GalaxySystem::createComputeDescriptorSets() {
+        // Create descriptor sets with error checking
         auto bufferInfoA = starBufferA->descriptorInfo();
         auto bufferInfoB = starBufferB->descriptorInfo();
 
-        VgeDescriptorWriter(*computeDescriptorSetLayout, *computeDescriptorPool)
+        // Try to create first descriptor set
+        if (!VgeDescriptorWriter(*computeDescriptorSetLayout, *computeDescriptorPool)
             .writeBuffer(0, &bufferInfoA)
             .writeBuffer(1, &bufferInfoB)
-            .build(computeDescriptorSet);
+            .build(computeDescriptorSetA)) {
+            throw std::runtime_error("Failed to allocate descriptor set A");
+        }
+
+        // Try to create second descriptor set
+        if (!VgeDescriptorWriter(*computeDescriptorSetLayout, *computeDescriptorPool)
+            .writeBuffer(0, &bufferInfoB)
+            .writeBuffer(1, &bufferInfoA)
+            .build(computeDescriptorSetB)) {
+            throw std::runtime_error("Failed to allocate descriptor set B");
+        }
     }
 
 
@@ -170,16 +196,15 @@ namespace vge {
                 radius * std::sin(angle)   // Z coordinate
             );
 
-            // Calculate orbital velocity for stable circular orbit
-            float orbitalSpeed = 1.0f;  // Fixed orbital speed
+            // Initial velocity (tangential to circle)
             initialStars[i].velocity = glm::vec3(
-                -std::sin(angle) * orbitalSpeed,  // Perpendicular to position
+                -std::sin(angle),
                 0.0f,
-                std::cos(angle) * orbitalSpeed
+                std::cos(angle)
             );
         }
 
-        // Write initial data to both buffers
+        // Write to both buffers
         starBufferA->writeToBuffer(initialStars.data());
         starBufferB->writeToBuffer(initialStars.data());
     }
@@ -191,14 +216,25 @@ namespace vge {
 
 
     void GalaxySystem::computeStars(FrameInfo& frameInfo) {
+        // Wait for previous frame to complete
+        vkDeviceWaitIdle(vgeDevice.device());
+
         computePipeline->bind(frameInfo.commandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE);
+
+        // Select the appropriate descriptor set based on current buffer
+        VkDescriptorSet currentDescriptorSet = useBufferA ? computeDescriptorSetA : computeDescriptorSetB;
+
+        // Add validation check
+        if (currentDescriptorSet == VK_NULL_HANDLE) {
+            throw std::runtime_error("Invalid descriptor set");
+        }
 
         vkCmdBindDescriptorSets(
             frameInfo.commandBuffer,
             VK_PIPELINE_BIND_POINT_COMPUTE,
             computePipelineLayout,
             0, 1,
-            &computeDescriptorSet,
+            &currentDescriptorSet,
             0, nullptr
         );
 
@@ -216,6 +252,22 @@ namespace vge {
             &push
         );
 
+        // Add pipeline barrier before dispatch
+        VkMemoryBarrier preDispatchBarrier{};
+        preDispatchBarrier.sType = VK_STRUCTURE_TYPE_MEMORY_BARRIER;
+        preDispatchBarrier.srcAccessMask = VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
+        preDispatchBarrier.dstAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
+
+        vkCmdPipelineBarrier(
+            frameInfo.commandBuffer,
+            VK_PIPELINE_STAGE_VERTEX_INPUT_BIT,
+            VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT,
+            0,
+            1, &preDispatchBarrier,
+            0, nullptr,
+            0, nullptr
+        );
+
         vkCmdDispatch(
             frameInfo.commandBuffer,
             (NUM_STARS + WORKGROUP_SIZE - 1) / WORKGROUP_SIZE,
@@ -223,18 +275,18 @@ namespace vge {
             1
         );
 
-        // Add memory barrier to ensure compute shader completes before rendering
-        VkMemoryBarrier memoryBarrier{};
-        memoryBarrier.sType = VK_STRUCTURE_TYPE_MEMORY_BARRIER;
-        memoryBarrier.srcAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
-        memoryBarrier.dstAccessMask = VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
+        // Add memory barrier after dispatch
+        VkMemoryBarrier postDispatchBarrier{};
+        postDispatchBarrier.sType = VK_STRUCTURE_TYPE_MEMORY_BARRIER;
+        postDispatchBarrier.srcAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
+        postDispatchBarrier.dstAccessMask = VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
 
         vkCmdPipelineBarrier(
             frameInfo.commandBuffer,
             VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT,
             VK_PIPELINE_STAGE_VERTEX_INPUT_BIT,
             0,
-            1, &memoryBarrier,
+            1, &postDispatchBarrier,
             0, nullptr,
             0, nullptr
         );
@@ -271,7 +323,7 @@ namespace vge {
         );
 
         // Bind the current star buffer
-        VkBuffer currentBuffer = useBufferA ? starBufferA->getBuffer() : starBufferB->getBuffer();
+        VkBuffer currentBuffer = useBufferA ? starBufferB->getBuffer() : starBufferA->getBuffer();
         VkDeviceSize offset = 0;
         vkCmdBindVertexBuffers(frameInfo.commandBuffer, 0, 1, &currentBuffer, &offset);
 
