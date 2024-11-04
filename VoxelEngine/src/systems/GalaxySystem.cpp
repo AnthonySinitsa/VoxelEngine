@@ -238,8 +238,8 @@ namespace vge {
         }
 
         // Bind the compute pipeline and descriptor set
-        computePipeline->bind(frameInfo.commandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE);
         VkDescriptorSet currentDescriptorSet = useBufferA ? computeDescriptorSetA : computeDescriptorSetB;
+        computePipeline->bind(frameInfo.commandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE);
         vkCmdBindDescriptorSets(
             frameInfo.commandBuffer,
             VK_PIPELINE_BIND_POINT_COMPUTE,
@@ -300,16 +300,15 @@ namespace vge {
         static int renderFrameCounter = 0;
         bool shouldDebug = (renderFrameCounter % 1 == 0);
 
-        VgeBuffer* renderBuffer = !useBufferA ? starBufferA.get() : starBufferB.get();
+        VgeBuffer* currentBuffer = useBufferA ? starBufferB.get() : starBufferA.get();
 
         if (shouldDebug) {
             std::cout << "\nRENDER PHASE" << std::endl;
             std::cout << "Rendering from buffer " << (!useBufferA ? "A" : "B") << std::endl;
 
             // Debug render buffer state
-            VgeBuffer* renderBuffer = !useBufferA ? starBufferA.get() : starBufferB.get();
             void* renderData = nullptr;
-            if (vkMapMemory(vgeDevice.device(), renderBuffer->getMemory(), 0, VK_WHOLE_SIZE, 0, &renderData) == VK_SUCCESS) {
+            if (vkMapMemory(vgeDevice.device(), currentBuffer->getMemory(), 0, VK_WHOLE_SIZE, 0, &renderData) == VK_SUCCESS) {
                 Star* renderStars = static_cast<Star*>(renderData);
                 std::cout << "Pre-render buffer state (first 10 stars):" << std::endl;
                 for (int i = 0; i < 10; i++) {
@@ -318,7 +317,7 @@ namespace vge {
                               << renderStars[i].position.y << ", "
                               << renderStars[i].position.z << std::endl;
                 }
-                vkUnmapMemory(vgeDevice.device(), renderBuffer->getMemory());
+                vkUnmapMemory(vgeDevice.device(), currentBuffer->getMemory());
             }
         }
 
@@ -346,7 +345,7 @@ namespace vge {
             &push
         );
 
-        VkBuffer vertexBuffer = renderBuffer->getBuffer();
+        VkBuffer vertexBuffer = currentBuffer->getBuffer();
         VkDeviceSize offset = 0;
         vkCmdBindVertexBuffers(frameInfo.commandBuffer, 0, 1, &vertexBuffer, &offset);
         vkCmdDraw(frameInfo.commandBuffer, NUM_STARS, 1, 0, 0);

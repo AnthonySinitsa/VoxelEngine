@@ -5,7 +5,6 @@ layout(location = 0) in vec3 inPosition;
 layout(push_constant) uniform Push {
     mat4 modelMatrix;
     mat4 normalMatrix;
-    float time;
 } push;
 
 layout(set = 0, binding = 0) uniform GlobalUbo {
