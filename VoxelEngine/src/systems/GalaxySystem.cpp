@@ -194,18 +194,24 @@ namespace vge {
 
     void GalaxySystem::initStars() {
         std::vector<Star> initialStars(NUM_STARS);
-        float lineLength = 4.0f;
-        float spacing = lineLength / (NUM_STARS - 1);
+        float radius = 2.0f;  // Radius of the circle
+        float angleStep = (2.0f * M_PI) / NUM_STARS;  // Divide the circle into NUM_STARS segments
 
-        std::cout << "Initializing " << NUM_STARS << " stars with spacing " << spacing << std::endl;
+        std::cout << "Initializing " << NUM_STARS << " stars in a perfect circle pattern" << std::endl;
+
         for (int i = 0; i < NUM_STARS; i++) {
-            float xPos = (i * spacing) - (lineLength / 2.0f);
-            initialStars[i].position = glm::vec3(xPos, 0.0f, 0.0f);
+            // Calculate position on circle using parametric equations
+            float angle = i * angleStep;
+            initialStars[i].position = glm::vec3(
+                radius * cos(angle),  // x position
+                0.0f,                 // y position (all stars on same plane)
+                radius * sin(angle)   // z position
+            );
 
             std::cout << "Initial Star " << i << " Position: "
-                      << initialStars[i].position.x << ", "
-                      << initialStars[i].position.y << ", "
-                      << initialStars[i].position.z << std::endl;
+                        << initialStars[i].position.x << ", "
+                        << initialStars[i].position.y << ", "
+                        << initialStars[i].position.z << std::endl;
         }
 
         // Write to buffers
