@@ -75,7 +75,7 @@ namespace vge {
         VkPushConstantRange pushConstantRange{};
         pushConstantRange.stageFlags = VK_SHADER_STAGE_COMPUTE_BIT;
         pushConstantRange.offset = 0;
-        pushConstantRange.size = sizeof(int);
+        pushConstantRange.size = sizeof(ComputePushConstants);
 
         std::vector<VkDescriptorSetLayout> descriptorSetLayouts{computeDescriptorSetLayout->getDescriptorSetLayout()};
 
@@ -194,18 +194,39 @@ namespace vge {
 
     void GalaxySystem::initStars() {
         std::vector<Star> initialStars(NUM_STARS);
-        float lineLength = 4.0f;
-        float spacing = lineLength / (NUM_STARS - 1);
 
-        std::cout << "Initializing " << NUM_STARS << " stars with spacing " << spacing << std::endl;
+        float radius = 2.0f;  // Radius of the circle
+        float angleStep = (2.0f * M_PI) / NUM_STARS;  // Divide the circle into NUM_STARS segments
+        float orbitSpeed = 1.0f;  // Adjusts how fast the stars orbit
+
+        std::cout << "Initializing " << NUM_STARS << " stars in a perfect circle pattern with velocities" << std::endl;
+
         for (int i = 0; i < NUM_STARS; i++) {
-            float xPos = (i * spacing) - (lineLength / 2.0f);
-            initialStars[i].position = glm::vec3(xPos, 0.0f, 0.0f);
+            float angle = i * angleStep;
+
+            // Position on circle
+            initialStars[i].position = glm::vec3(
+                radius * cos(angle),  // x position
+                0.0f,                 // y position
+                radius * sin(angle)   // z position
+            );
+
+            // Velocity tangent to the circle
+            // For circular motion, velocity should be perpendicular to the radius
+            initialStars[i].velocity = glm::vec3(
+                -orbitSpeed * sin(angle),  // x velocity
+                0.0f,                      // y velocity
+                orbitSpeed * cos(angle)    // z velocity
+            );
 
             std::cout << "Initial Star " << i << " Position: "
-                      << initialStars[i].position.x << ", "
-                      << initialStars[i].position.y << ", "
-                      << initialStars[i].position.z << std::endl;
+                        << initialStars[i].position.x << ", "
+                        << initialStars[i].position.y << ", "
+                        << initialStars[i].position.z
+                        << " Velocity: "
+                        << initialStars[i].velocity.x << ", "
+                        << initialStars[i].velocity.y << ", "
+                        << initialStars[i].velocity.z << std::endl;
         }
 
         // Write to buffers
@@ -284,6 +305,7 @@ namespace vge {
 
         ComputePushConstants push{};
         push.numStars = NUM_STARS;
+        push.deltaTime = frameInfo.frameTime;
         vkCmdPushConstants(
             frameInfo.commandBuffer,
             computePipelineLayout,
@@ -292,6 +314,8 @@ namespace vge {
             sizeof(ComputePushConstants),
             &push
         );
+
+        std::cout << "deltaTime: " << frameInfo.frameTime << std::endl;
 
         // Dispatch the compute shader
         vkCmdDispatch(

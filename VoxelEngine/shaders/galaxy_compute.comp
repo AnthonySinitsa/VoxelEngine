@@ -3,10 +3,12 @@ layout(local_size_x = 256, local_size_y = 1, local_size_z = 1) in;
 
 struct Star {
     vec3 position;
+    vec3 velocity;
 };
 
 layout(push_constant) uniform PushConstants {
     int numStars;
+    float deltaTime;
 } push;
 
 layout(std430, binding = 0) readonly buffer StarBufferIn {
@@ -23,5 +25,29 @@ void main() {
         return;
     }
 
-    starsOut[index].position = starsIn[index].position;
+    // Read the current star
+    Star starIn = starsIn[index];
+    Star starOut;
+
+    // Get current radius and speed
+    float radius = length(vec2(starIn.position.x, starIn.position.z));
+    float speed = length(starIn.velocity);
+
+    // Update position
+    vec3 newPosition = starIn.position + starIn.velocity * push.deltaTime;
+
+    // Normalize to maintain circle radius
+    float newRadius = length(vec2(newPosition.x, newPosition.z));
+    newPosition.x *= radius / newRadius;
+    newPosition.z *= radius / newRadius;
+    newPosition.y = 0.0;
+
+    starOut.position = newPosition;
+
+    // Calculate new velocity tangent to the circle
+    // The velocity should be perpendicular to the position vector
+    vec2 normalizedPos = vec2(starOut.position.x, starOut.position.z) / radius;
+    starOut.velocity = vec3(-normalizedPos.y * speed, 0.0, normalizedPos.x * speed);
+
+    starsOut[index] = starOut;
 }
