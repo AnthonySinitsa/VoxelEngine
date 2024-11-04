@@ -125,8 +125,8 @@ namespace vge {
 
     void GalaxySystem::createComputeDescriptorSetLayout() {
         computeDescriptorSetLayout = VgeDescriptorSetLayout::Builder(vgeDevice)
-                .addBinding(0, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT, VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT)
-                .addBinding(1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT, VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT)
+                .addBinding(0, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT)
+                .addBinding(1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT)
                 .build();
     }
 
@@ -154,25 +154,36 @@ namespace vge {
 
 
     void GalaxySystem::createComputeDescriptorSets() {
-        // Create descriptor sets with error checking
-        auto bufferInfoA = starBufferA->descriptorInfo();
-        auto bufferInfoB = starBufferB->descriptorInfo();
+        // Create descriptor set A (buffer A -> buffer B)
+        {
+            auto bufferInfoA = starBufferA->descriptorInfo();
+            auto bufferInfoB = starBufferB->descriptorInfo();
 
-        // Try to create first descriptor set
-        if (!VgeDescriptorWriter(*computeDescriptorSetLayout, *computeDescriptorPool)
-            .writeBuffer(0, &bufferInfoA)
-            .writeBuffer(1, &bufferInfoB)
-            .build(computeDescriptorSetA)) {
-            throw std::runtime_error("Failed to allocate descriptor set A");
+            if (!VgeDescriptorWriter(*computeDescriptorSetLayout, *computeDescriptorPool)
+                .writeBuffer(0, &bufferInfoA)  // input buffer (binding 0)
+                .writeBuffer(1, &bufferInfoB)  // output buffer (binding 1)
+                .build(computeDescriptorSetA)) {
+                throw std::runtime_error("Failed to create compute descriptor set A");
+            }
         }
 
-        // Try to create second descriptor set
-        if (!VgeDescriptorWriter(*computeDescriptorSetLayout, *computeDescriptorPool)
-            .writeBuffer(0, &bufferInfoB)
-            .writeBuffer(1, &bufferInfoA)
-            .build(computeDescriptorSetB)) {
-            throw std::runtime_error("Failed to allocate descriptor set B");
+        // Create descriptor set B (buffer B -> buffer A)
+        {
+            auto bufferInfoA = starBufferA->descriptorInfo();
+            auto bufferInfoB = starBufferB->descriptorInfo();
+
+            if (!VgeDescriptorWriter(*computeDescriptorSetLayout, *computeDescriptorPool)
+                .writeBuffer(0, &bufferInfoB)  // input buffer (binding 0)
+                .writeBuffer(1, &bufferInfoA)  // output buffer (binding 1)
+                .build(computeDescriptorSetB)) {
+                throw std::runtime_error("Failed to create compute descriptor set B");
+            }
         }
+
+        // Add debug prints
+        std::cout << "Compute Descriptor Sets created:" << std::endl;
+        std::cout << "Set A - Input: Buffer A, Output: Buffer B" << std::endl;
+        std::cout << "Set B - Input: Buffer B, Output: Buffer A" << std::endl;
     }
 
 
@@ -237,6 +248,8 @@ namespace vge {
             std::cout << "Writing to buffer " << (useBufferA ? "B" : "A") << std::endl;
         }
 
+        std::cout << "\nCompute phase - useBufferA: " << (useBufferA ? "true" : "false") << std::endl;
+
         // Bind the compute pipeline and descriptor set
         VkDescriptorSet currentDescriptorSet = useBufferA ? computeDescriptorSetA : computeDescriptorSetB;
         computePipeline->bind(frameInfo.commandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE);
@@ -248,6 +261,21 @@ namespace vge {
             &currentDescriptorSet,
             0, nullptr
         );
+
+        // Debug buffer contents before compute
+        void* inputData = nullptr;
+        VgeBuffer* inputBuffer = useBufferA ? starBufferA.get() : starBufferB.get();
+        if (vkMapMemory(vgeDevice.device(), inputBuffer->getMemory(), 0, VK_WHOLE_SIZE, 0, &inputData) == VK_SUCCESS) {
+            Star* stars = static_cast<Star*>(inputData);
+            std::cout << "Pre-compute input buffer contents (first 10 stars):" << std::endl;
+            for (int i = 0; i < 10; i++) {
+                std::cout << "Star " << i << " Position: "
+                            << stars[i].position.x << ", "
+                            << stars[i].position.y << ", "
+                            << stars[i].position.z << std::endl;
+            }
+            vkUnmapMemory(vgeDevice.device(), inputBuffer->getMemory());
+        }
 
         // Dispatch the compute shader
         vkCmdDispatch(
@@ -349,6 +377,23 @@ namespace vge {
         VkDeviceSize offset = 0;
         vkCmdBindVertexBuffers(frameInfo.commandBuffer, 0, 1, &vertexBuffer, &offset);
         vkCmdDraw(frameInfo.commandBuffer, NUM_STARS, 1, 0, 0);
+
+
+        // Post-render debug
+        if (shouldDebug) {
+            void* postRenderData = nullptr;
+            if (vkMapMemory(vgeDevice.device(), currentBuffer->getMemory(), 0, VK_WHOLE_SIZE, 0, &postRenderData) == VK_SUCCESS) {
+                Star* postRenderStars = static_cast<Star*>(postRenderData);
+                std::cout << "\nPost-render buffer state (first 10 stars):" << std::endl;
+                for (int i = 0; i < 10; i++) {
+                    std::cout << "Star " << i << " Position: "
+                                << postRenderStars[i].position.x << ", "
+                                << postRenderStars[i].position.y << ", "
+                                << postRenderStars[i].position.z << std::endl;
+                }
+                vkUnmapMemory(vgeDevice.device(), currentBuffer->getMemory());
+            }
+        }
 
         renderFrameCounter++;
     }

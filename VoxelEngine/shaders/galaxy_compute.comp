@@ -15,13 +15,11 @@ layout(std430, binding = 1) writeonly buffer StarBufferOut {
 
 void main() {
     uint index = gl_GlobalInvocationID.x;
-    if (index >= 10) { // Hardcoded NUM_STARS for simplicity
+    if (index >= 10) { // NUM_STARS
         return;
     }
 
-    float lineLength = 4.0;
-    float spacing = lineLength / 9.0; // (NUM_STARS - 1)
-    float xPos = (float(index) * spacing) - (lineLength / 2.0);
-
-    starsOut[index].position = vec3(xPos, 0.0, 0.0);
+    // Simply copy the input position to the output
+    // This maintains the positions exactly as they were initialized
+    starsOut[index].position = starsIn[index].position;
 }
