@@ -154,9 +154,6 @@ namespace vge {
             VK_BUFFER_USAGE_STORAGE_BUFFER_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT,
             VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT
         );
-
-        starBufferA->map();
-        starBufferB->map();
     }
 
 
@@ -203,8 +200,13 @@ namespace vge {
         }
 
         // Write to buffers
+        starBufferA->map();
         starBufferA->writeToBuffer(initialStars.data());
+        starBufferA->unmap();
+
+        starBufferB->map();
         starBufferB->writeToBuffer(initialStars.data());
+        starBufferB->unmap();
 
         // Map only once for verification
         void* dataA = nullptr;
