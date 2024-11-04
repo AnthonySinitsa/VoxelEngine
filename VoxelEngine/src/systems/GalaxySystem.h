@@ -14,7 +14,8 @@
 namespace vge {
 
     struct Star {
-        glm::vec3 position;
+        alignas(16) glm::vec3 position;
+        alignas(16) glm::vec3 velocity;
     };
 
     struct SimplePushConstantData {
@@ -24,11 +25,12 @@ namespace vge {
 
     struct ComputePushConstants {
         int numStars;
+        float deltaTime;
     };
 
     class GalaxySystem {
     public:
-        static constexpr int NUM_STARS = 100;
+        static constexpr int NUM_STARS = 10;
         static constexpr int WORKGROUP_SIZE = 256;
 
         GalaxySystem(VgeDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
