@@ -1,4 +1,5 @@
 #include "GalaxySystem.h"
+#include "../Buffer/Buffer.h"
 
 #include <glm/ext/quaternion_geometric.hpp>
 #include <stdexcept>
@@ -182,16 +183,13 @@ namespace vge {
 
     void GalaxySystem::initStars() {
         std::vector<Star> initialStars(NUM_STARS);
-
         float lineLength = 4.0f;
         float spacing = lineLength / (NUM_STARS - 1);
 
         std::cout << "Initializing " << NUM_STARS << " stars with spacing " << spacing << std::endl;
-
         for (int i = 0; i < NUM_STARS; i++) {
             float xPos = (i * spacing) - (lineLength / 2.0f);
             initialStars[i].position = glm::vec3(xPos, 0.0f, 0.0f);
-            initialStars[i].velocity = glm::vec3(0.0f);
 
             std::cout << "Initial Star " << i << " Position: "
                       << initialStars[i].position.x << ", "
@@ -208,7 +206,6 @@ namespace vge {
         starBufferB->writeToBuffer(initialStars.data());
         starBufferB->unmap();
 
-        // Map only once for verification
         void* dataA = nullptr;
         if (vkMapMemory(vgeDevice.device(), starBufferA->getMemory(), 0, VK_WHOLE_SIZE, 0, &dataA) == VK_SUCCESS) {
             Star* starDataA = static_cast<Star*>(dataA);
@@ -222,15 +219,16 @@ namespace vge {
             vkUnmapMemory(vgeDevice.device(), starBufferA->getMemory());
         }
 
+        // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa
         useBufferA = true;
     }
 
 
-    void GalaxySystem::update(FrameInfo& frameInfo) {
-        totalTime += frameInfo.frameTime;
+    // void GalaxySystem::update(FrameInfo& frameInfo) {
+    //     totalTime += frameInfo.frameTime;
 
-        // std::cout << "Frame Time: " << frameInfo.frameTime << " seconds, Total Time: " << totalTime << " seconds" << std::endl;
-    }
+    //     // std::cout << "Frame Time: " << frameInfo.frameTime << " seconds, Total Time: " << totalTime << " seconds" << std::endl;
+    // }
 
 
     void GalaxySystem::computeStars(FrameInfo& frameInfo) {
@@ -259,20 +257,6 @@ namespace vge {
             0, nullptr
         );
 
-        // Push constants
-        ComputePushConstantData push{};
-        push.deltaTime = frameInfo.frameTime;
-        push.totalTime = totalTime;
-        push.numStars = NUM_STARS;
-        vkCmdPushConstants(
-            frameInfo.commandBuffer,
-            computePipelineLayout,
-            VK_SHADER_STAGE_COMPUTE_BIT,
-            0,
-            sizeof(ComputePushConstantData),
-            &push
-        );
-
         // Dispatch the compute shader
         vkCmdDispatch(
             frameInfo.commandBuffer,
@@ -285,12 +269,14 @@ namespace vge {
         VkMemoryBarrier memoryBarrier{};
         memoryBarrier.sType = VK_STRUCTURE_TYPE_MEMORY_BARRIER;
         memoryBarrier.srcAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
-        memoryBarrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT | VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
+        // memoryBarrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT | VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
+        memoryBarrier.dstAccessMask = VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
 
         vkCmdPipelineBarrier(
             frameInfo.commandBuffer,
             VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT,
-            VK_PIPELINE_STAGE_VERTEX_SHADER_BIT | VK_PIPELINE_STAGE_VERTEX_INPUT_BIT,
+            // VK_PIPELINE_STAGE_VERTEX_SHADER_BIT | VK_PIPELINE_STAGE_VERTEX_INPUT_BIT,
+            VK_PIPELINE_STAGE_VERTEX_SHADER_BIT,
             0,
             1, &memoryBarrier,
             0, nullptr,
@@ -324,10 +310,7 @@ namespace vge {
         static int renderFrameCounter = 0;
         bool shouldDebug = (renderFrameCounter % 1 == 0);
 
-        // Important: We want to read from the buffer that was just written to by compute
-        // Since useBufferA has been toggled after compute, we need to use the opposite buffer
-        // of what useBufferA currently indicates
-        VkBuffer currentBuffer = !useBufferA ? starBufferA->getBuffer() : starBufferB->getBuffer();
+        VgeBuffer* renderBuffer = !useBufferA ? starBufferA.get() : starBufferB.get();
 
         if (shouldDebug) {
             std::cout << "\nRENDER PHASE" << std::endl;
@@ -363,7 +346,6 @@ namespace vge {
         SimplePushConstantData push{};
         push.modelMatrix = glm::mat4(1.0f);
         push.normalMatrix = glm::mat4(1.0f);
-        push.time = totalTime;
 
         vkCmdPushConstants(
             frameInfo.commandBuffer,
@@ -374,8 +356,9 @@ namespace vge {
             &push
         );
 
+        VkBuffer vertexBuffer = renderBuffer->getBuffer();
         VkDeviceSize offset = 0;
-        vkCmdBindVertexBuffers(frameInfo.commandBuffer, 0, 1, &currentBuffer, &offset);
+        vkCmdBindVertexBuffers(frameInfo.commandBuffer, 0, 1, &vertexBuffer, &offset);
         vkCmdDraw(frameInfo.commandBuffer, NUM_STARS, 1, 0, 0);
 
         renderFrameCounter++;
@@ -391,12 +374,10 @@ namespace vge {
 
     std::vector<VkVertexInputAttributeDescription> GalaxySystem::getAttributeDescriptions() {
         std::vector<VkVertexInputAttributeDescription> attributeDescriptions(1);
-
         attributeDescriptions[0].binding = 0;
         attributeDescriptions[0].location = 0;
         attributeDescriptions[0].format = VK_FORMAT_R32G32B32_SFLOAT;
         attributeDescriptions[0].offset = offsetof(Star, position);
-
         return attributeDescriptions;
     }
-} // namespace vge
+} // namespace

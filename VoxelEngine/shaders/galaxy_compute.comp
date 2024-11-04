@@ -3,14 +3,7 @@ layout(local_size_x = 256, local_size_y = 1, local_size_z = 1) in;
 
 struct Star {
     vec3 position;
-    vec3 velocity;
 };
-
-layout(push_constant) uniform Push {
-    float deltaTime;
-    float totalTime;
-    int numStars;
-} push;
 
 layout(std430, binding = 0) readonly buffer StarBufferIn {
     Star starsIn[];
@@ -22,16 +15,13 @@ layout(std430, binding = 1) buffer StarBufferOut {
 
 void main() {
     uint index = gl_GlobalInvocationID.x;
-    if (index >= push.numStars) {
+    if (index >= 10) { // Hardcoded NUM_STARS for simplicity
         return;
     }
 
-    // Keep x positions exactly as they were initialized
-    float lineLength = 4.0; // Total length of the line
-    float spacing = lineLength / (float(push.numStars) - 1.0);
+    float lineLength = 4.0;
+    float spacing = lineLength / 9.0; // (NUM_STARS - 1)
     float xPos = (float(index) * spacing) - (lineLength / 2.0);
 
-    // Simply maintain the initial line formation
     starsOut[index].position = vec3(xPos, 0.0, 0.0);
-    starsOut[index].velocity = vec3(0.0, 0.0, 0.0);
 }
