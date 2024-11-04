@@ -6,6 +6,9 @@ namespace vge {
 
 class VgeBuffer {
     public:
+
+        VkDeviceMemory getMemory() const { return memory; }
+
         VgeBuffer(
             VgeDevice& device,
             VkDeviceSize instanceSize,

@@ -1,5 +1,4 @@
 #version 450
-
 layout(local_size_x = 256, local_size_y = 1, local_size_z = 1) in;
 
 struct Star {
@@ -21,40 +20,18 @@ layout(std430, binding = 1) buffer StarBufferOut {
     Star starsOut[];
 };
 
-const float PI = 3.14159265359;
-
 void main() {
     uint index = gl_GlobalInvocationID.x;
-
     if (index >= push.numStars) {
         return;
     }
 
-    // Each star gets a unique phase offset based on its index
-    float phaseOffset = (float(index) / float(push.numStars)) * 2.0 * PI;
+    // Keep x positions exactly as they were initialized
+    float lineLength = 4.0; // Total length of the line
+    float spacing = lineLength / (float(push.numStars) - 1.0);
+    float xPos = (float(index) * spacing) - (lineLength / 2.0);
 
-    // Use a fixed rotation speed
-    const float ROTATION_SPEED = 0.2; // Adjust this to control speed
-
-    // Calculate the current angle including phase offset
-    float currentAngle = (push.totalTime * ROTATION_SPEED) + phaseOffset;
-
-    // Calculate position on circle
-    const float radius = 2.0; // Fixed radius for all stars
-    vec3 newPosition = vec3(
-            radius * cos(currentAngle),
-            0.0, // Keep all stars in XZ plane
-            radius * sin(currentAngle)
-        );
-
-    // Calculate tangential velocity
-    vec3 newVelocity = vec3(
-            -radius * sin(currentAngle) * ROTATION_SPEED,
-            0.0,
-            radius * cos(currentAngle) * ROTATION_SPEED
-        );
-
-    // Write output
-    starsOut[index].position = newPosition;
-    starsOut[index].velocity = newVelocity;
+    // Simply maintain the initial line formation
+    starsOut[index].position = vec3(xPos, 0.0, 0.0);
+    starsOut[index].velocity = vec3(0.0, 0.0, 0.0);
 }
