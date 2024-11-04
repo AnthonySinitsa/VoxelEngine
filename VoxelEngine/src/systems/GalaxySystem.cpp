@@ -331,7 +331,7 @@ namespace vge {
 
         if (shouldDebug) {
             std::cout << "\nRENDER PHASE" << std::endl;
-            std::cout << "Rendering from buffer " << (useBufferA ? "A" : "B") << std::endl;
+            std::cout << "Rendering from buffer " << (!useBufferA ? "A" : "B") << std::endl;
 
             // Debug render buffer state
             VgeBuffer* renderBuffer = !useBufferA ? starBufferA.get() : starBufferB.get();
