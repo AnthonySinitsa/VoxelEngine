@@ -4,8 +4,8 @@
 #include "../Graphics/Pipeline.h"
 #include "../FrameInfo.h"
 #include "../Buffer/Buffer.h"
+#include "../Descriptor/Descriptors.h"
 
-#include <src/Descriptor/Descriptors.h>
 #include <vulkan/vulkan.h>
 #include <memory>
 #include <vector>
@@ -14,20 +14,12 @@
 namespace vge {
 
     struct Star {
-        glm::vec3 position;  // 3D position
-        glm::vec3 velocity;
+        glm::vec3 position;
     };
 
     struct SimplePushConstantData {
         glm::mat4 modelMatrix{1.f};
         glm::mat4 normalMatrix{1.f};
-        float time;
-    };
-
-    struct ComputePushConstantData {
-        float deltaTime;
-        float totalTime;
-        int numStars;
     };
 
     class GalaxySystem {
@@ -42,8 +34,8 @@ namespace vge {
         GalaxySystem& operator=(const GalaxySystem&) = delete;
 
         void render(FrameInfo& frameInfo);
-        void update(FrameInfo& frameInfo); // for compute shader dispatch
-        void computeStars(FrameInfo& frameInfo); // dispatch compute work
+        void update(FrameInfo& frameInfo);
+        void computeStars(FrameInfo& frameInfo);
 
     private:
 
@@ -54,13 +46,11 @@ namespace vge {
         void createComputeDescriptorSetLayout();
         void createComputeDescriptorSets();
         void createStarBuffer();
-        void initStars(); // initialize star data
+        void initStars();
 
         // Helper functions
         static std::vector<VkVertexInputBindingDescription> getBindingDescriptions();
         static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions();
-
-        float totalTime = 0.0f;
 
         VgeDevice& vgeDevice;
 
@@ -82,9 +72,9 @@ namespace vge {
         std::vector<Star> stars; // DELETE ME?
         std::unique_ptr<VgeBuffer> starBufferA;
         std::unique_ptr<VgeBuffer> starBufferB;
-        bool useBufferA = true; // track which buffer is current
+        bool useBufferA = true;
 
-        // Descripto pool for compute descriptor
+        // Descriptor pool for compute descriptor
         std::unique_ptr<VgeDescriptorPool> computeDescriptorPool;
     };
 } // namespace vge

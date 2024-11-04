@@ -5,7 +5,6 @@ layout(location = 0) in vec3 inPosition;
 layout(push_constant) uniform Push {
     mat4 modelMatrix;
     mat4 normalMatrix;
-    float time;
 } push;
 
 layout(set = 0, binding = 0) uniform GlobalUbo {
@@ -17,10 +16,10 @@ layout(set = 0, binding = 0) uniform GlobalUbo {
 
 void main() {
     vec4 worldPosition = push.modelMatrix * vec4(inPosition, 1.0);
-    gl_Position = ubo.projection * ubo.view * worldPosition;
-
-    // Calculate perspective-correct point size
-    float baseSize = 20.0f;
     vec4 viewPosition = ubo.view * worldPosition;
-    gl_PointSize = baseSize / viewPosition.z;
+    gl_Position = ubo.projection * viewPosition;
+
+    float distanceToCamera = length(viewPosition.xyz);
+    float baseSize = 20.0;
+    gl_PointSize = baseSize * (1.0 / distanceToCamera);
 }

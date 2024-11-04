@@ -1,7 +1,10 @@
 #include "GalaxySystem.h"
+#include "../Buffer/Buffer.h"
 
+#include <glm/ext/quaternion_geometric.hpp>
 #include <stdexcept>
 #include <vulkan/vulkan_core.h>
+#include <iostream>
 
 namespace vge {
 
@@ -69,19 +72,14 @@ namespace vge {
     }
 
     void GalaxySystem::createComputePipelineLayout() {
-        VkPushConstantRange pushConstantRange{};
-        pushConstantRange.stageFlags = VK_SHADER_STAGE_COMPUTE_BIT;
-        pushConstantRange.offset = 0;
-        pushConstantRange.size = sizeof(ComputePushConstantData);
-
         std::vector<VkDescriptorSetLayout> descriptorSetLayouts{computeDescriptorSetLayout->getDescriptorSetLayout()};
 
         VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
         pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
         pipelineLayoutInfo.setLayoutCount = static_cast<uint32_t>(descriptorSetLayouts.size());
         pipelineLayoutInfo.pSetLayouts = descriptorSetLayouts.data();
-        pipelineLayoutInfo.pushConstantRangeCount = 1;
-        pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
+        pipelineLayoutInfo.pushConstantRangeCount = 0;
+        pipelineLayoutInfo.pPushConstantRanges = nullptr;
 
         if (vkCreatePipelineLayout(vgeDevice.device(), &pipelineLayoutInfo, nullptr, &computePipelineLayout) != VK_SUCCESS) {
             throw std::runtime_error("Failed to create compute pipeline layout!");
@@ -127,8 +125,8 @@ namespace vge {
 
     void GalaxySystem::createComputeDescriptorSetLayout() {
         computeDescriptorSetLayout = VgeDescriptorSetLayout::Builder(vgeDevice)
-                .addBinding(0, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT, VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT)
-                .addBinding(1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT, VK_DESCRIPTOR_BINDING_UPDATE_AFTER_BIND_BIT)
+                .addBinding(0, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT)
+                .addBinding(1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT)
                 .build();
     }
 
@@ -152,83 +150,109 @@ namespace vge {
             VK_BUFFER_USAGE_STORAGE_BUFFER_BIT | VK_BUFFER_USAGE_VERTEX_BUFFER_BIT,
             VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT
         );
-
-        starBufferA->map();
-        starBufferB->map();
     }
 
 
     void GalaxySystem::createComputeDescriptorSets() {
-        // Create descriptor sets with error checking
-        auto bufferInfoA = starBufferA->descriptorInfo();
-        auto bufferInfoB = starBufferB->descriptorInfo();
+        // Create descriptor set A (buffer A -> buffer B)
+        {
+            auto bufferInfoA = starBufferA->descriptorInfo();
+            auto bufferInfoB = starBufferB->descriptorInfo();
 
-        // Try to create first descriptor set
-        if (!VgeDescriptorWriter(*computeDescriptorSetLayout, *computeDescriptorPool)
-            .writeBuffer(0, &bufferInfoA)
-            .writeBuffer(1, &bufferInfoB)
-            .build(computeDescriptorSetA)) {
-            throw std::runtime_error("Failed to allocate descriptor set A");
+            if (!VgeDescriptorWriter(*computeDescriptorSetLayout, *computeDescriptorPool)
+                .writeBuffer(0, &bufferInfoA)  // input buffer (binding 0)
+                .writeBuffer(1, &bufferInfoB)  // output buffer (binding 1)
+                .build(computeDescriptorSetA)) {
+                throw std::runtime_error("Failed to create compute descriptor set A");
+            }
         }
 
-        // Try to create second descriptor set
-        if (!VgeDescriptorWriter(*computeDescriptorSetLayout, *computeDescriptorPool)
-            .writeBuffer(0, &bufferInfoB)
-            .writeBuffer(1, &bufferInfoA)
-            .build(computeDescriptorSetB)) {
-            throw std::runtime_error("Failed to allocate descriptor set B");
+        // Create descriptor set B (buffer B -> buffer A)
+        {
+            auto bufferInfoA = starBufferA->descriptorInfo();
+            auto bufferInfoB = starBufferB->descriptorInfo();
+
+            if (!VgeDescriptorWriter(*computeDescriptorSetLayout, *computeDescriptorPool)
+                .writeBuffer(0, &bufferInfoB)  // input buffer (binding 0)
+                .writeBuffer(1, &bufferInfoA)  // output buffer (binding 1)
+                .build(computeDescriptorSetB)) {
+                throw std::runtime_error("Failed to create compute descriptor set B");
+            }
         }
+
+        // Add debug prints
+        std::cout << "Compute Descriptor Sets created:" << std::endl;
+        std::cout << "Set A - Input: Buffer A, Output: Buffer B" << std::endl;
+        std::cout << "Set B - Input: Buffer B, Output: Buffer A" << std::endl;
     }
 
 
     void GalaxySystem::initStars() {
         std::vector<Star> initialStars(NUM_STARS);
+        float lineLength = 4.0f;
+        float spacing = lineLength / (NUM_STARS - 1);
 
-        // Place stars in a circle
-        float radius = 2.0f;  // Fixed radius for the circle
+        std::cout << "Initializing " << NUM_STARS << " stars with spacing " << spacing << std::endl;
         for (int i = 0; i < NUM_STARS; i++) {
-            float angle = (float)i / NUM_STARS * 2.0f * glm::pi<float>();
+            float xPos = (i * spacing) - (lineLength / 2.0f);
+            initialStars[i].position = glm::vec3(xPos, 0.0f, 0.0f);
 
-            // Position stars in a perfect circle on the XZ plane
-            initialStars[i].position = glm::vec3(
-                radius * std::cos(angle),  // X coordinate
-                0.0f,                      // Y coordinate (flat on XZ plane)
-                radius * std::sin(angle)   // Z coordinate
-            );
-
-            // Initial velocity (tangential to circle)
-            initialStars[i].velocity = glm::vec3(
-                -std::sin(angle),
-                0.0f,
-                std::cos(angle)
-            );
+            std::cout << "Initial Star " << i << " Position: "
+                      << initialStars[i].position.x << ", "
+                      << initialStars[i].position.y << ", "
+                      << initialStars[i].position.z << std::endl;
         }
 
-        // Write to both buffers
+        // Write to buffers
+        starBufferA->map();
         starBufferA->writeToBuffer(initialStars.data());
+        starBufferA->unmap();
+
+        starBufferB->map();
         starBufferB->writeToBuffer(initialStars.data());
+        starBufferB->unmap();
+
+        void* dataA = nullptr;
+        if (vkMapMemory(vgeDevice.device(), starBufferA->getMemory(), 0, VK_WHOLE_SIZE, 0, &dataA) == VK_SUCCESS) {
+            Star* starDataA = static_cast<Star*>(dataA);
+            std::cout << "\nVerifying buffer A after initialization:" << std::endl;
+            for (int i = 0; i < NUM_STARS; i++) {
+                std::cout << "Buffer A Star " << i << " Position: "
+                          << starDataA[i].position.x << ", "
+                          << starDataA[i].position.y << ", "
+                          << starDataA[i].position.z << std::endl;
+            }
+            vkUnmapMemory(vgeDevice.device(), starBufferA->getMemory());
+        }
     }
 
 
     void GalaxySystem::update(FrameInfo& frameInfo) {
-        totalTime += frameInfo.frameTime;
+        // totalTime += frameInfo.frameTime;
+
+        // std::cout << "Frame Time: " << frameInfo.frameTime << " seconds, Total Time: " << totalTime << " seconds" << std::endl;
     }
 
 
     void GalaxySystem::computeStars(FrameInfo& frameInfo) {
-        // Wait for previous frame to complete
-        vkDeviceWaitIdle(vgeDevice.device());
+        static int frameCounter = 0;
+        bool shouldDebug = (frameCounter % 1 == 0);
 
-        computePipeline->bind(frameInfo.commandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE);
+        // Determine the read and write buffers based on `useBufferA`
+        VgeBuffer* readBuffer = useBufferA ? starBufferA.get() : starBufferB.get();
+        VgeBuffer* writeBuffer = useBufferA ? starBufferB.get() : starBufferA.get();
 
-        // Select the appropriate descriptor set based on current buffer
-        VkDescriptorSet currentDescriptorSet = useBufferA ? computeDescriptorSetA : computeDescriptorSetB;
-
-        // Add validation check
-        if (currentDescriptorSet == VK_NULL_HANDLE) {
-            throw std::runtime_error("Invalid descriptor set");
+        if (shouldDebug) {
+            std::cout << "\nFrame " << frameCounter << " - COMPUTE PHASE" << std::endl;
+            std::cout << "Reading from buffer " << (useBufferA ? "A" : "B") << std::endl;
+            std::cout << "Writing to buffer " << (useBufferA ? "B" : "A") << std::endl;
         }
 
+        std::cout << "\nCompute phase - useBufferA: " << (useBufferA ? "true" : "false") << std::endl;
+
+        // Bind the compute pipeline and descriptor set
+        VkDescriptorSet currentDescriptorSet = useBufferA ? computeDescriptorSetA : computeDescriptorSetB;
+        computePipeline->bind(frameInfo.commandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE);
         vkCmdBindDescriptorSets(
             frameInfo.commandBuffer,
             VK_PIPELINE_BIND_POINT_COMPUTE,
@@ -238,36 +262,22 @@ namespace vge {
             0, nullptr
         );
 
-        ComputePushConstantData push{};
-        push.deltaTime = frameInfo.frameTime;
-        push.totalTime = totalTime;
-        push.numStars = NUM_STARS;
+        // Debug buffer contents before compute
+        void* inputData = nullptr;
+        VgeBuffer* inputBuffer = useBufferA ? starBufferA.get() : starBufferB.get();
+        if (vkMapMemory(vgeDevice.device(), inputBuffer->getMemory(), 0, VK_WHOLE_SIZE, 0, &inputData) == VK_SUCCESS) {
+            Star* stars = static_cast<Star*>(inputData);
+            std::cout << "Pre-compute input buffer contents (first 10 stars):" << std::endl;
+            for (int i = 0; i < 10; i++) {
+                std::cout << "Star " << i << " Position: "
+                            << stars[i].position.x << ", "
+                            << stars[i].position.y << ", "
+                            << stars[i].position.z << std::endl;
+            }
+            vkUnmapMemory(vgeDevice.device(), inputBuffer->getMemory());
+        }
 
-        vkCmdPushConstants(
-            frameInfo.commandBuffer,
-            computePipelineLayout,
-            VK_SHADER_STAGE_COMPUTE_BIT,
-            0,
-            sizeof(ComputePushConstantData),
-            &push
-        );
-
-        // Add pipeline barrier before dispatch
-        VkMemoryBarrier preDispatchBarrier{};
-        preDispatchBarrier.sType = VK_STRUCTURE_TYPE_MEMORY_BARRIER;
-        preDispatchBarrier.srcAccessMask = VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
-        preDispatchBarrier.dstAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
-
-        vkCmdPipelineBarrier(
-            frameInfo.commandBuffer,
-            VK_PIPELINE_STAGE_VERTEX_INPUT_BIT,
-            VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT,
-            0,
-            1, &preDispatchBarrier,
-            0, nullptr,
-            0, nullptr
-        );
-
+        // Dispatch the compute shader
         vkCmdDispatch(
             frameInfo.commandBuffer,
             (NUM_STARS + WORKGROUP_SIZE - 1) / WORKGROUP_SIZE,
@@ -275,28 +285,70 @@ namespace vge {
             1
         );
 
-        // Add memory barrier after dispatch
-        VkMemoryBarrier postDispatchBarrier{};
-        postDispatchBarrier.sType = VK_STRUCTURE_TYPE_MEMORY_BARRIER;
-        postDispatchBarrier.srcAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
-        postDispatchBarrier.dstAccessMask = VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
+        // Memory barrier to ensure compute writes are visible to the vertex shader
+        VkMemoryBarrier memoryBarrier{};
+        memoryBarrier.sType = VK_STRUCTURE_TYPE_MEMORY_BARRIER;
+        memoryBarrier.srcAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
+        memoryBarrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT | VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
 
         vkCmdPipelineBarrier(
             frameInfo.commandBuffer,
             VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT,
-            VK_PIPELINE_STAGE_VERTEX_INPUT_BIT,
+            VK_PIPELINE_STAGE_VERTEX_SHADER_BIT | VK_PIPELINE_STAGE_VERTEX_INPUT_BIT,
             0,
-            1, &postDispatchBarrier,
+            1, &memoryBarrier,
             0, nullptr,
             0, nullptr
         );
 
-        // Swap buffers for next frame
+        // Toggle buffer usage
         useBufferA = !useBufferA;
+
+        // Debug: Check buffer contents after compute shader writes
+        if (shouldDebug) {
+            void* writeData = nullptr;
+            if (vkMapMemory(vgeDevice.device(), writeBuffer->getMemory(), 0, VK_WHOLE_SIZE, 0, &writeData) == VK_SUCCESS) {
+                Star* writeStars = static_cast<Star*>(writeData);
+                std::cout << "Post-compute buffer state (first 10 stars):" << std::endl;
+                for (int i = 0; i < 10; i++) {
+                    std::cout << "Star " << i << " Position: "
+                                << writeStars[i].position.x << ", "
+                                << writeStars[i].position.y << ", "
+                                << writeStars[i].position.z << std::endl;
+                }
+                vkUnmapMemory(vgeDevice.device(), writeBuffer->getMemory());
+            }
+        }
+
+        frameCounter++;
     }
 
 
     void GalaxySystem::render(FrameInfo& frameInfo) {
+        static int renderFrameCounter = 0;
+        bool shouldDebug = (renderFrameCounter % 1 == 0);
+
+        VgeBuffer* currentBuffer = useBufferA ? starBufferB.get() : starBufferA.get();
+
+        if (shouldDebug) {
+            std::cout << "\nRENDER PHASE" << std::endl;
+            std::cout << "Rendering from buffer " << (!useBufferA ? "A" : "B") << std::endl;
+
+            // Debug render buffer state
+            void* renderData = nullptr;
+            if (vkMapMemory(vgeDevice.device(), currentBuffer->getMemory(), 0, VK_WHOLE_SIZE, 0, &renderData) == VK_SUCCESS) {
+                Star* renderStars = static_cast<Star*>(renderData);
+                std::cout << "Pre-render buffer state (first 10 stars):" << std::endl;
+                for (int i = 0; i < 10; i++) {
+                    std::cout << "Star " << i << " Position: "
+                              << renderStars[i].position.x << ", "
+                              << renderStars[i].position.y << ", "
+                              << renderStars[i].position.z << std::endl;
+                }
+                vkUnmapMemory(vgeDevice.device(), currentBuffer->getMemory());
+            }
+        }
+
         graphicsPipeline->bind(frameInfo.commandBuffer);
 
         vkCmdBindDescriptorSets(
@@ -311,7 +363,6 @@ namespace vge {
         SimplePushConstantData push{};
         push.modelMatrix = glm::mat4(1.0f);
         push.normalMatrix = glm::mat4(1.0f);
-        push.time = totalTime;
 
         vkCmdPushConstants(
             frameInfo.commandBuffer,
@@ -322,12 +373,29 @@ namespace vge {
             &push
         );
 
-        // Bind the current star buffer
-        VkBuffer currentBuffer = useBufferA ? starBufferB->getBuffer() : starBufferA->getBuffer();
+        VkBuffer vertexBuffer = currentBuffer->getBuffer();
         VkDeviceSize offset = 0;
-        vkCmdBindVertexBuffers(frameInfo.commandBuffer, 0, 1, &currentBuffer, &offset);
-
+        vkCmdBindVertexBuffers(frameInfo.commandBuffer, 0, 1, &vertexBuffer, &offset);
         vkCmdDraw(frameInfo.commandBuffer, NUM_STARS, 1, 0, 0);
+
+
+        // Post-render debug
+        if (shouldDebug) {
+            void* postRenderData = nullptr;
+            if (vkMapMemory(vgeDevice.device(), currentBuffer->getMemory(), 0, VK_WHOLE_SIZE, 0, &postRenderData) == VK_SUCCESS) {
+                Star* postRenderStars = static_cast<Star*>(postRenderData);
+                std::cout << "\nPost-render buffer state (first 10 stars):" << std::endl;
+                for (int i = 0; i < 10; i++) {
+                    std::cout << "Star " << i << " Position: "
+                                << postRenderStars[i].position.x << ", "
+                                << postRenderStars[i].position.y << ", "
+                                << postRenderStars[i].position.z << std::endl;
+                }
+                vkUnmapMemory(vgeDevice.device(), currentBuffer->getMemory());
+            }
+        }
+
+        renderFrameCounter++;
     }
 
     std::vector<VkVertexInputBindingDescription> GalaxySystem::getBindingDescriptions() {
@@ -340,12 +408,10 @@ namespace vge {
 
     std::vector<VkVertexInputAttributeDescription> GalaxySystem::getAttributeDescriptions() {
         std::vector<VkVertexInputAttributeDescription> attributeDescriptions(1);
-
         attributeDescriptions[0].binding = 0;
         attributeDescriptions[0].location = 0;
         attributeDescriptions[0].format = VK_FORMAT_R32G32B32_SFLOAT;
         attributeDescriptions[0].offset = offsetof(Star, position);
-
         return attributeDescriptions;
     }
-} // namespace vge
+} // namespace
