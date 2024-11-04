@@ -1,5 +1,4 @@
-CFLAGS = -std=c++20 -O2
-
+CFLAGS = -std=c++20 -O2 -MMD -MP
 LDFLAGS = -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
 # Paths to ImGui
@@ -23,6 +22,9 @@ SRC_FILES = $(shell find $(SRC_DIR) -name "*.cpp")
 OBJ_DIR = obj
 OBJ_FILES = $(patsubst %.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES)) $(patsubst %.cpp,$(OBJ_DIR)/%.o,$(IMGUI_SRC))
 
+# Add dependency files
+DEP_FILES = $(OBJ_FILES:.o=.d)
+
 # Include directories
 INCLUDES = -I$(IMGUI_DIR) -I$(IMGUI_BACKENDS_DIR) -I$(TINYOBJ_PATH)
 
@@ -40,10 +42,13 @@ VoxelOutput: $(OBJ_FILES)
 
 # Rule to compile each source file into an object file in the obj directory
 $(OBJ_DIR)/%.o: %.cpp
-	mkdir -p $(@D)  # Ensure the obj directory exists
+	mkdir -p $(@D)
 	g++ $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-.PHONY: test clean shaders
+# Include dependency files
+-include $(DEP_FILES)
+
+.PHONY: test clean shaders debug-deps
 
 shaders: $(SHADER_FILES)
 	chmod +x $(SHADER_SCRIPT)
@@ -56,6 +61,12 @@ clean:
 	rm -f VoxelOutput
 	rm -f shaders/*.spv
 	rm -rf $(OBJ_DIR)
+
+# Debug target to show what would be rebuilt
+debug-deps:
+	@echo "Source files: $(SRC_FILES)"
+	@echo "Object files: $(OBJ_FILES)"
+	@echo "Dependency files: $(DEP_FILES)"
 
 # Shader compilation rules
 shaders/vertex_shader.vert.spv: shaders/vertex_shader.vert
