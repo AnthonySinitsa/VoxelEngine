@@ -34,7 +34,7 @@ namespace vge {
         GalaxySystem& operator=(const GalaxySystem&) = delete;
 
         void render(FrameInfo& frameInfo);
-        // void update(FrameInfo& frameInfo);
+        void update(FrameInfo& frameInfo);
         void computeStars(FrameInfo& frameInfo);
 
     private:

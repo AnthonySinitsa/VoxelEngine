@@ -72,19 +72,14 @@ namespace vge {
     }
 
     void GalaxySystem::createComputePipelineLayout() {
-        VkPushConstantRange pushConstantRange{};
-        pushConstantRange.stageFlags = VK_SHADER_STAGE_COMPUTE_BIT;
-        pushConstantRange.offset = 0;
-        pushConstantRange.size = sizeof(ComputePushConstantData);
-
         std::vector<VkDescriptorSetLayout> descriptorSetLayouts{computeDescriptorSetLayout->getDescriptorSetLayout()};
 
         VkPipelineLayoutCreateInfo pipelineLayoutInfo{};
         pipelineLayoutInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_LAYOUT_CREATE_INFO;
         pipelineLayoutInfo.setLayoutCount = static_cast<uint32_t>(descriptorSetLayouts.size());
         pipelineLayoutInfo.pSetLayouts = descriptorSetLayouts.data();
-        pipelineLayoutInfo.pushConstantRangeCount = 1;
-        pipelineLayoutInfo.pPushConstantRanges = &pushConstantRange;
+        pipelineLayoutInfo.pushConstantRangeCount = 0;
+        pipelineLayoutInfo.pPushConstantRanges = nullptr;
 
         if (vkCreatePipelineLayout(vgeDevice.device(), &pipelineLayoutInfo, nullptr, &computePipelineLayout) != VK_SUCCESS) {
             throw std::runtime_error("Failed to create compute pipeline layout!");
@@ -218,17 +213,14 @@ namespace vge {
             }
             vkUnmapMemory(vgeDevice.device(), starBufferA->getMemory());
         }
-
-        // AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa
-        useBufferA = true;
     }
 
 
-    // void GalaxySystem::update(FrameInfo& frameInfo) {
-    //     totalTime += frameInfo.frameTime;
+    void GalaxySystem::update(FrameInfo& frameInfo) {
+        // totalTime += frameInfo.frameTime;
 
-    //     // std::cout << "Frame Time: " << frameInfo.frameTime << " seconds, Total Time: " << totalTime << " seconds" << std::endl;
-    // }
+        // std::cout << "Frame Time: " << frameInfo.frameTime << " seconds, Total Time: " << totalTime << " seconds" << std::endl;
+    }
 
 
     void GalaxySystem::computeStars(FrameInfo& frameInfo) {
@@ -269,14 +261,12 @@ namespace vge {
         VkMemoryBarrier memoryBarrier{};
         memoryBarrier.sType = VK_STRUCTURE_TYPE_MEMORY_BARRIER;
         memoryBarrier.srcAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
-        // memoryBarrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT | VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
-        memoryBarrier.dstAccessMask = VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
+        memoryBarrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT | VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
 
         vkCmdPipelineBarrier(
             frameInfo.commandBuffer,
             VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT,
-            // VK_PIPELINE_STAGE_VERTEX_SHADER_BIT | VK_PIPELINE_STAGE_VERTEX_INPUT_BIT,
-            VK_PIPELINE_STAGE_VERTEX_SHADER_BIT,
+            VK_PIPELINE_STAGE_VERTEX_SHADER_BIT | VK_PIPELINE_STAGE_VERTEX_INPUT_BIT,
             0,
             1, &memoryBarrier,
             0, nullptr,
