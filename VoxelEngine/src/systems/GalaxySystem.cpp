@@ -235,6 +235,7 @@ namespace vge {
         static int frameCounter = 0;
         bool shouldDebug = (frameCounter % 1 == 0);
 
+        // Determine the read and write buffers based on `useBufferA`
         VgeBuffer* readBuffer = useBufferA ? starBufferA.get() : starBufferB.get();
         VgeBuffer* writeBuffer = useBufferA ? starBufferB.get() : starBufferA.get();
 
@@ -242,24 +243,9 @@ namespace vge {
             std::cout << "\nFrame " << frameCounter << " - COMPUTE PHASE" << std::endl;
             std::cout << "Reading from buffer " << (useBufferA ? "A" : "B") << std::endl;
             std::cout << "Writing to buffer " << (useBufferA ? "B" : "A") << std::endl;
-
-            // Debug read buffer state with proper mapping/unmapping
-            VgeBuffer* readBuffer = useBufferA ? starBufferA.get() : starBufferB.get();
-            void* readData = nullptr;
-            if (vkMapMemory(vgeDevice.device(), readBuffer->getMemory(), 0, VK_WHOLE_SIZE, 0, &readData) == VK_SUCCESS) {
-                Star* readStars = static_cast<Star*>(readData);
-                std::cout << "Pre-compute buffer state (first 10 stars):" << std::endl;
-                for (int i = 0; i < 10; i++) {
-                    std::cout << "Star " << i << " Position: "
-                                << readStars[i].position.x << ", "
-                                << readStars[i].position.y << ", "
-                                << readStars[i].position.z << std::endl;
-                }
-                vkUnmapMemory(vgeDevice.device(), readBuffer->getMemory());
-            }
         }
 
-        // Regular compute operations
+        // Bind the compute pipeline and descriptor set
         computePipeline->bind(frameInfo.commandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE);
         VkDescriptorSet currentDescriptorSet = useBufferA ? computeDescriptorSetA : computeDescriptorSetB;
         vkCmdBindDescriptorSets(
@@ -271,11 +257,11 @@ namespace vge {
             0, nullptr
         );
 
+        // Push constants
         ComputePushConstantData push{};
         push.deltaTime = frameInfo.frameTime;
         push.totalTime = totalTime;
         push.numStars = NUM_STARS;
-
         vkCmdPushConstants(
             frameInfo.commandBuffer,
             computePipelineLayout,
@@ -285,6 +271,7 @@ namespace vge {
             &push
         );
 
+        // Dispatch the compute shader
         vkCmdDispatch(
             frameInfo.commandBuffer,
             (NUM_STARS + WORKGROUP_SIZE - 1) / WORKGROUP_SIZE,
@@ -292,27 +279,27 @@ namespace vge {
             1
         );
 
-        // Memory barrier
-        VkMemoryBarrier barrier{};
-        barrier.sType = VK_STRUCTURE_TYPE_MEMORY_BARRIER;
-        barrier.srcAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
-        barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT | VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
+        // Memory barrier to ensure compute writes are visible to the vertex shader
+        VkMemoryBarrier memoryBarrier{};
+        memoryBarrier.sType = VK_STRUCTURE_TYPE_MEMORY_BARRIER;
+        memoryBarrier.srcAccessMask = VK_ACCESS_SHADER_WRITE_BIT;
+        memoryBarrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT | VK_ACCESS_VERTEX_ATTRIBUTE_READ_BIT;
 
         vkCmdPipelineBarrier(
             frameInfo.commandBuffer,
             VK_PIPELINE_STAGE_COMPUTE_SHADER_BIT,
-            VK_PIPELINE_STAGE_VERTEX_INPUT_BIT | VK_PIPELINE_STAGE_VERTEX_SHADER_BIT,
+            VK_PIPELINE_STAGE_VERTEX_SHADER_BIT | VK_PIPELINE_STAGE_VERTEX_INPUT_BIT,
             0,
-            1, &barrier,
+            1, &memoryBarrier,
             0, nullptr,
             0, nullptr
         );
 
+        // Toggle buffer usage
         useBufferA = !useBufferA;
 
+        // Debug: Check buffer contents after compute shader writes
         if (shouldDebug) {
-            // Debug write buffer state with proper mapping/unmapping
-            VgeBuffer* writeBuffer = useBufferA ? starBufferB.get() : starBufferA.get();
             void* writeData = nullptr;
             if (vkMapMemory(vgeDevice.device(), writeBuffer->getMemory(), 0, VK_WHOLE_SIZE, 0, &writeData) == VK_SUCCESS) {
                 Star* writeStars = static_cast<Star*>(writeData);
@@ -333,28 +320,32 @@ namespace vge {
 
     void GalaxySystem::render(FrameInfo& frameInfo) {
         static int renderFrameCounter = 0;
-        bool shouldDebug = (renderFrameCounter % 60 == 0);
+        bool shouldDebug = (renderFrameCounter % 1 == 0);
+
+        // Important: We want to read from the buffer that was just written to by compute
+        // Since useBufferA has been toggled after compute, we need to use the opposite buffer
+        // of what useBufferA currently indicates
+        VkBuffer currentBuffer = !useBufferA ? starBufferA->getBuffer() : starBufferB->getBuffer();
 
         if (shouldDebug) {
             std::cout << "\nRENDER PHASE" << std::endl;
-            std::cout << "Rendering from buffer " << (!useBufferA ? "A" : "B") << std::endl;
+            std::cout << "Rendering from buffer " << (useBufferA ? "A" : "B") << std::endl;
 
-            // Debug render buffer state with proper mapping/unmapping
-            VgeBuffer* renderBuffer = useBufferA ? starBufferB.get() : starBufferA.get();
+            // Debug render buffer state
+            VgeBuffer* renderBuffer = !useBufferA ? starBufferA.get() : starBufferB.get();
             void* renderData = nullptr;
             if (vkMapMemory(vgeDevice.device(), renderBuffer->getMemory(), 0, VK_WHOLE_SIZE, 0, &renderData) == VK_SUCCESS) {
                 Star* renderStars = static_cast<Star*>(renderData);
                 std::cout << "Pre-render buffer state (first 10 stars):" << std::endl;
                 for (int i = 0; i < 10; i++) {
                     std::cout << "Star " << i << " Position: "
-                                << renderStars[i].position.x << ", "
-                                << renderStars[i].position.y << ", "
-                                << renderStars[i].position.z << std::endl;
+                              << renderStars[i].position.x << ", "
+                              << renderStars[i].position.y << ", "
+                              << renderStars[i].position.z << std::endl;
                 }
                 vkUnmapMemory(vgeDevice.device(), renderBuffer->getMemory());
             }
         }
-
 
         graphicsPipeline->bind(frameInfo.commandBuffer);
 
@@ -381,11 +372,8 @@ namespace vge {
             &push
         );
 
-        // Bind the current star buffer
-        VkBuffer currentBuffer = useBufferA ? starBufferA->getBuffer() : starBufferB->getBuffer();
         VkDeviceSize offset = 0;
         vkCmdBindVertexBuffers(frameInfo.commandBuffer, 0, 1, &currentBuffer, &offset);
-
         vkCmdDraw(frameInfo.commandBuffer, NUM_STARS, 1, 0, 0);
 
         renderFrameCounter++;
