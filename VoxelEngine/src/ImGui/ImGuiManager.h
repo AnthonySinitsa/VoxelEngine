@@ -32,6 +32,9 @@ namespace vge {
             void saveSettings();
             void loadSettings();
 
+            void beginDockspace();
+            void endDockspace();
+
         private:
             Renderer &vgeRenderer;
             VgeDevice &vgeDevice;
@@ -42,5 +45,9 @@ namespace vge {
             ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
             const char* settingsFilePath = "imgui_settings.ini";
+
+            bool opt_fullscreen = true;
+            bool opt_padding = true;
+            ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
     };
 } // namespace

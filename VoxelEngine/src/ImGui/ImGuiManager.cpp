@@ -1,5 +1,6 @@
 #include "ImGuiManager.h"
 
+#include "external/ImGuiDocking/imgui_internal.h"
 #include "../Device/Device.h"
 #include "../Window.h"
 #include "../Utils/ellipse.h"
@@ -54,6 +55,13 @@ namespace vge {
 
         // Setup Dear ImGui style
         ImGui::StyleColorsDark();
+        ImGuiStyle& style = ImGui::GetStyle();
+        style.Colors[ImGuiCol_WindowBg] = ImVec4(0.0f, 0.0f, 0.0f, 0.7f);  // Semi-transparent windows
+        style.Colors[ImGuiCol_DockingPreview] = ImVec4(0.2f, 0.6f, 0.8f, 0.7f);
+        style.Colors[ImGuiCol_DockingEmptyBg] = ImVec4(0.0f, 0.0f, 0.0f, 0.0f);  // Transparent docking background
+        style.Colors[ImGuiCol_Header] = ImVec4(0.2f, 0.2f, 0.2f, 0.5f);
+        style.Colors[ImGuiCol_HeaderHovered] = ImVec4(0.3f, 0.3f, 0.3f, 0.5f);
+        style.Colors[ImGuiCol_HeaderActive] = ImVec4(0.4f, 0.4f, 0.4f, 0.5f);
 
         // Setup Platform/Renderer backends
         // Initialize imgui for vulkan
@@ -136,11 +144,72 @@ namespace vge {
     }
 
 
+    void VgeImgui::beginDockspace() {
+        // Configure flags
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoBackground;
+
+        if (opt_fullscreen) {
+            const ImGuiViewport* viewport = ImGui::GetMainViewport();
+            ImGui::SetNextWindowPos(viewport->WorkPos);
+            ImGui::SetNextWindowSize(viewport->WorkSize);
+            ImGui::SetNextWindowViewport(viewport->ID);
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+            window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse |
+                           ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+                           ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+        }
+
+        // Push transparent styles
+        ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
+        ImGui::PushStyleColor(ImGuiCol_DockingEmptyBg, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
+        ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
+
+        if (opt_padding)
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+
+        // Begin dockspace window
+        ImGui::Begin("DockSpace", nullptr, window_flags);
+
+        if (opt_padding)
+            ImGui::PopStyleVar();
+        if (opt_fullscreen)
+            ImGui::PopStyleVar(2);
+
+        // Pop transparent styles
+        ImGui::PopStyleColor(3);
+
+        // Create the actual dockspace
+        ImGuiIO& io = ImGui::GetIO();
+        if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable) {
+            ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+            ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+
+            // Set up default layout if not already done
+            static bool first_time = true;
+            if (first_time) {
+                first_time = false;
+                ImGui::DockBuilderRemoveNode(dockspace_id);
+                ImGui::DockBuilderAddNode(dockspace_id, dockspace_flags | ImGuiDockNodeFlags_DockSpace);
+                ImGui::DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
+
+                auto dock_id_right = ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Right, 0.2f, nullptr, &dockspace_id);
+                ImGui::DockBuilderDockWindow("Hierarchy", dock_id_right);
+                ImGui::DockBuilderFinish(dockspace_id);
+            }
+        }
+    }
+
+    void VgeImgui::endDockspace() {
+        ImGui::End();
+    }
+
+
     void VgeImgui::runHierarchy() {
         if(show_demo_window) ImGui::ShowDemoWindow(&show_demo_window);
 
         {
-            ImGui::Begin("Hierarchy");
+            ImGui::Begin("Hierarchy", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar);
 
             // Demo and color controls section
             ImGui::Text("Global Controls");
@@ -148,7 +217,7 @@ namespace vge {
             ImGui::Spacing();
 
             ImGui::Checkbox("Demo Window", &show_demo_window);
-            if(ImGui::ColorEdit3("clear color", (float *)&clear_color)) {
+            if(ImGui::ColorEdit3("Sky Color", (float *)&clear_color)) {
                 vgeRenderer.setBackgroundColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
             }
 
@@ -158,9 +227,6 @@ namespace vge {
 
             // Ellipse Controls in a TreeNode
             if (ImGui::TreeNode("Galaxy Parameters")) {
-                ImGui::TextWrapped("Adjust the shape and orientation of the galaxy's elliptical paths");
-                ImGui::Spacing();
-
                 // Inner Ellipse Controls
                 if (ImGui::TreeNode("Inner Ellipse")) {
                     if (ImGui::IsItemHovered()) {
