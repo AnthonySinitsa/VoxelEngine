@@ -7,6 +7,7 @@
 #include "Rendering/Renderer.h"
 #include "Input/Input.h"
 #include "Buffer/Buffer.h"
+#include "external/ImGuiDocking/imgui_internal.h"
 #include <memory>
 #include <src/Descriptor/Descriptors.h>
 #include <src/Presentation/SwapChain.h>
@@ -158,7 +159,9 @@ namespace vge{
                 galaxySystem->render(frameInfo);
 
                 vgeImgui->newFrame(); // Start new ImGui frame
-                vgeImgui->runExample(); // Render ImGui example window
+                vgeImgui->beginDockspace();
+                vgeImgui->runHierarchy();
+                vgeImgui->endDockspace();
                 vgeImgui->render(commandBuffer); // Render ImGui
 
                 vgeRenderer.endSwapChainRenderPass(commandBuffer); // End swapchain render pass

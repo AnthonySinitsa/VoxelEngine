@@ -1,5 +1,6 @@
 #include "GalaxySystem.h"
 #include "../Buffer/Buffer.h"
+#include "../Utils/ellipse.h"
 
 #include <glm/ext/quaternion_geometric.hpp>
 #include <stdexcept>
@@ -195,38 +196,24 @@ namespace vge {
     void GalaxySystem::initStars() {
         std::vector<Star> initialStars(NUM_STARS);
 
-        float radius = 2.0f;  // Radius of the circle
-        float angleStep = (2.0f * M_PI) / NUM_STARS;  // Divide the circle into NUM_STARS segments
-        float orbitSpeed = 1.0f;  // Adjusts how fast the stars orbit
+        float angleStep = (2.0f * M_PI) / (static_cast<float>(NUM_STARS) / 2);
 
-        std::cout << "Initializing " << NUM_STARS << " stars in a perfect circle pattern with velocities" << std::endl;
+        // Initialize half of the stars on the inner ellipse
+        for (int i = 0; i < NUM_STARS / 2; i++) {
+            float t = i * angleStep;
+            auto [innerPoint, _] = Ellipse::calculateBothEllipses(t);
 
-        for (int i = 0; i < NUM_STARS; i++) {
-            float angle = i * angleStep;
+            initialStars[i].position = glm::vec3(innerPoint.x, 0.0f, innerPoint.y);
+            initialStars[i].velocity = glm::vec3(0.0f);
+        }
 
-            // Position on circle
-            initialStars[i].position = glm::vec3(
-                radius * cos(angle),  // x position
-                0.0f,                 // y position
-                radius * sin(angle)   // z position
-            );
+        // Initialize the other half on the outer ellipse
+        for (int i = NUM_STARS / 2; i < NUM_STARS; i++) {
+            float t = (i - static_cast<float>(NUM_STARS) / 2) * angleStep;
+            auto [_, outerPoint] = Ellipse::calculateBothEllipses(t);
 
-            // Velocity tangent to the circle
-            // For circular motion, velocity should be perpendicular to the radius
-            initialStars[i].velocity = glm::vec3(
-                -orbitSpeed * sin(angle),  // x velocity
-                0.0f,                      // y velocity
-                orbitSpeed * cos(angle)    // z velocity
-            );
-
-            std::cout << "Initial Star " << i << " Position: "
-                        << initialStars[i].position.x << ", "
-                        << initialStars[i].position.y << ", "
-                        << initialStars[i].position.z
-                        << " Velocity: "
-                        << initialStars[i].velocity.x << ", "
-                        << initialStars[i].velocity.y << ", "
-                        << initialStars[i].velocity.z << std::endl;
+            initialStars[i].position = glm::vec3(outerPoint.x, 0.0f, outerPoint.y);
+            initialStars[i].velocity = glm::vec3(0.0f);
         }
 
         // Write to buffers
@@ -306,6 +293,8 @@ namespace vge {
         ComputePushConstants push{};
         push.numStars = NUM_STARS;
         push.deltaTime = frameInfo.frameTime;
+        push.innerEllipse = Ellipse::innerEllipse;
+        push.outerEllipse = Ellipse::outerEllipse;
         vkCmdPushConstants(
             frameInfo.commandBuffer,
             computePipelineLayout,

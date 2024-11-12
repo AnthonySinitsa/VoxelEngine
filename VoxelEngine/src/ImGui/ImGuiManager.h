@@ -24,13 +24,18 @@ namespace vge {
 
             void render(VkCommandBuffer commandBuffer);
 
-            void runExample();
+            void runHierarchy();
             void RenderUI();
             void ShowExampleAppDockSpace();
             void controlBackgroundColor();
 
             void saveSettings();
             void loadSettings();
+
+            void beginDockspace();
+            void endDockspace();
+
+            void updatePerformanceMetrics();
 
         private:
             Renderer &vgeRenderer;
@@ -42,5 +47,17 @@ namespace vge {
             ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
             const char* settingsFilePath = "imgui_settings.ini";
+
+            bool opt_fullscreen = true;
+            bool opt_padding = true;
+            ImGuiDockNodeFlags dockspace_flags = ImGuiDockNodeFlags_None;
+
+            static const int MAX_FRAME_HISTORY = 150;
+            std::vector<float> frameTimeHistory;
+            std::vector<float> fpsHistory;
+            float avgFrameTime = 0.0f;
+            float avgFps = 0.0f;
+            float timeSinceLastUpdate = 0.0f;
+            const float UPDATE_INTERVAL = 1.0f;
     };
 } // namespace

@@ -1,7 +1,9 @@
 #include "ImGuiManager.h"
 
+#include "external/ImGuiDocking/imgui_internal.h"
 #include "../Device/Device.h"
 #include "../Window.h"
+#include "../Utils/ellipse.h"
 
 // libs
 #include <cstdint>
@@ -53,6 +55,13 @@ namespace vge {
 
         // Setup Dear ImGui style
         ImGui::StyleColorsDark();
+        ImGuiStyle& style = ImGui::GetStyle();
+        style.Colors[ImGuiCol_WindowBg] = ImVec4(0.0f, 0.0f, 0.0f, 0.7f);  // Semi-transparent windows
+        style.Colors[ImGuiCol_DockingPreview] = ImVec4(0.2f, 0.6f, 0.8f, 0.7f);
+        style.Colors[ImGuiCol_DockingEmptyBg] = ImVec4(0.0f, 0.0f, 0.0f, 0.0f);  // Transparent docking background
+        style.Colors[ImGuiCol_Header] = ImVec4(0.2f, 0.2f, 0.2f, 0.5f);
+        style.Colors[ImGuiCol_HeaderHovered] = ImVec4(0.3f, 0.3f, 0.3f, 0.5f);
+        style.Colors[ImGuiCol_HeaderActive] = ImVec4(0.4f, 0.4f, 0.4f, 0.5f);
 
         // Setup Platform/Renderer backends
         // Initialize imgui for vulkan
@@ -135,51 +144,205 @@ namespace vge {
     }
 
 
-    void VgeImgui::runExample(){
+    void VgeImgui::beginDockspace() {
+        // Configure flags
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoBackground;
+
+        if (opt_fullscreen) {
+            const ImGuiViewport* viewport = ImGui::GetMainViewport();
+            ImGui::SetNextWindowPos(viewport->WorkPos);
+            ImGui::SetNextWindowSize(viewport->WorkSize);
+            ImGui::SetNextWindowViewport(viewport->ID);
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+            window_flags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse |
+                           ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove |
+                           ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+        }
+
+        // Push transparent styles
+        ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
+        ImGui::PushStyleColor(ImGuiCol_DockingEmptyBg, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
+        ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.0f, 0.0f, 0.0f, 0.0f));
+
+        if (opt_padding)
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+
+        // Begin dockspace window
+        ImGui::Begin("DockSpace", nullptr, window_flags);
+
+        if (opt_padding)
+            ImGui::PopStyleVar();
+        if (opt_fullscreen)
+            ImGui::PopStyleVar(2);
+
+        // Pop transparent styles
+        ImGui::PopStyleColor(3);
+
+        // Create the actual dockspace
+        ImGuiIO& io = ImGui::GetIO();
+        if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable) {
+            ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+            ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), dockspace_flags);
+
+            // Set up default layout if not already done
+            static bool first_time = true;
+            if (first_time) {
+                first_time = false;
+                ImGui::DockBuilderRemoveNode(dockspace_id);
+                ImGui::DockBuilderAddNode(dockspace_id, dockspace_flags | ImGuiDockNodeFlags_DockSpace);
+                ImGui::DockBuilderSetNodeSize(dockspace_id, ImGui::GetMainViewport()->Size);
+
+                auto dock_id_right = ImGui::DockBuilderSplitNode(dockspace_id, ImGuiDir_Right, 0.2f, nullptr, &dockspace_id);
+                ImGui::DockBuilderDockWindow("Hierarchy", dock_id_right);
+                ImGui::DockBuilderFinish(dockspace_id);
+            }
+        }
+    }
+
+    void VgeImgui::endDockspace() {
+        ImGui::End();
+    }
+
+
+    void VgeImgui::updatePerformanceMetrics() {
+        float currentFrameTime = 1000.0f / ImGui::GetIO().Framerate;
+        float currentFps = ImGui::GetIO().Framerate;
+        float deltaTime = ImGui::GetIO().DeltaTime;
+
+        // Initialize vectors if needed
+        if (frameTimeHistory.empty()) {
+            frameTimeHistory.resize(MAX_FRAME_HISTORY, currentFrameTime);
+            fpsHistory.resize(MAX_FRAME_HISTORY, currentFps);
+        }
+
+        // Add new values to history
+        for (int i = 0; i < MAX_FRAME_HISTORY - 1; i++) {
+            frameTimeHistory[i] = frameTimeHistory[i + 1];
+            fpsHistory[i] = fpsHistory[i + 1];
+        }
+        frameTimeHistory[MAX_FRAME_HISTORY - 1] = currentFrameTime;
+        fpsHistory[MAX_FRAME_HISTORY - 1] = currentFps;
+
+        // Update running averages every second
+        timeSinceLastUpdate += deltaTime;
+        if (timeSinceLastUpdate >= UPDATE_INTERVAL) {
+            // Calculate new averages
+            float newAvgFrameTime = 0.0f;
+            float newAvgFps = 0.0f;
+            for (int i = 0; i < MAX_FRAME_HISTORY; i++) {
+                newAvgFrameTime += frameTimeHistory[i];
+                newAvgFps += fpsHistory[i];
+            }
+            avgFrameTime = newAvgFrameTime / MAX_FRAME_HISTORY;
+            avgFps = newAvgFps / MAX_FRAME_HISTORY;
+
+            // Reset timer
+            timeSinceLastUpdate = 0.0f;
+        }
+    }
+
+
+    void VgeImgui::runHierarchy() {
         if(show_demo_window) ImGui::ShowDemoWindow(&show_demo_window);
 
         {
-            static float f = 0.0f;
-            static int counter = 0;
+            ImGui::Begin("Hierarchy", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar);
 
-            ImGui::Begin("World, James World");
+            // Demo and color controls section
+            ImGui::Text("Global Controls");
+            ImGui::Separator();
+            ImGui::Spacing();
 
-            ImGui::Text("This is some useful text. AI poo");
-
-            ImGui::Checkbox("demo WIIINDOW", &show_demo_window); // edit bools storing our window open/close state
-            ImGui::Checkbox("Another Window HERHERHERH", &show_another_window);
-
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f); // edit 1 float using slider from 0.0f to 1.0f
-            if(ImGui::ColorEdit3("clear color", (float *)&clear_color)){
+            ImGui::Checkbox("Demo Window", &show_demo_window);
+            if(ImGui::ColorEdit3("Sky Color", (float *)&clear_color, ImGuiColorEditFlags_NoInputs)) {
                 vgeRenderer.setBackgroundColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
             }
 
-            if(ImGui::Button("Button"))
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
+            ImGui::Spacing();
+            ImGui::Separator();
+            ImGui::Spacing();
 
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
+            // Ellipse Controls in a TreeNode
+            if (ImGui::TreeNode("Galaxy Parameters")) {
+                // Inner Ellipse Controls
+                if (ImGui::TreeNode("Inner Ellipse")) {
+                    if (ImGui::IsItemHovered()) {
+                        ImGui::SetTooltip("Parameters for the inner ring of stars");
+                    }
+
+                    ImGui::DragFloat("Major Axis##Inner", &Ellipse::innerEllipse.majorAxis, 0.01f, 0.1f, 5.0f);
+                    if (ImGui::IsItemHovered()) {
+                        ImGui::SetTooltip("Controls the length of the ellipse");
+                    }
+
+                    ImGui::DragFloat("Minor Axis##Inner", &Ellipse::innerEllipse.minorAxis, 0.01f, 0.1f, 5.0f);
+
+                    float innerDegrees = glm::degrees(Ellipse::innerEllipse.tiltAngle);
+                    if (ImGui::DragFloat("Tilt Angle##Inner", &innerDegrees, 1.0f, 0.0f, 360.0f)) {
+                        Ellipse::innerEllipse.tiltAngle = glm::radians(innerDegrees);
+                    }
+
+                    ImGui::Spacing();
+                    if (ImGui::Button("Reset Inner Ellipse")) {
+                        Ellipse::innerEllipse = {1.0f, 0.8f, M_PI / 6.0f};
+                    }
+
+                    ImGui::TreePop();
+                }
+
+                ImGui::Spacing();
+
+                // Outer Ellipse Controls
+                if (ImGui::TreeNode("Outer Ellipse")) {
+                    if (ImGui::IsItemHovered()) {
+                        ImGui::SetTooltip("Parameters for the outer ring of stars");
+                    }
+
+                    ImGui::DragFloat("Major Axis##Outer", &Ellipse::outerEllipse.majorAxis, 0.01f, 0.1f, 5.0f);
+                    ImGui::DragFloat("Minor Axis##Outer", &Ellipse::outerEllipse.minorAxis, 0.01f, 0.1f, 5.0f);
+
+                    float outerDegrees = glm::degrees(Ellipse::outerEllipse.tiltAngle);
+                    if (ImGui::DragFloat("Tilt Angle##Outer", &outerDegrees, 1.0f, 0.0f, 360.0f)) {
+                        Ellipse::outerEllipse.tiltAngle = glm::radians(outerDegrees);
+                    }
+
+                    ImGui::Spacing();
+                    if (ImGui::Button("Reset Outer Ellipse")) {
+                        Ellipse::outerEllipse = {2.0f, 1.6f, M_PI / 3.0f};
+                    }
+
+                    ImGui::TreePop();
+                }
+
+                ImGui::Spacing();
+                ImGui::Separator();
+                ImGui::Spacing();
+
+                if (ImGui::Button("Reset All Ellipses")) {
+                    Ellipse::innerEllipse = {1.0f, 0.8f, M_PI / 6.0f};
+                    Ellipse::outerEllipse = {2.0f, 1.6f, M_PI / 3.0f};
+                }
+
+                ImGui::TreePop();
+            }
+
+            ImGui::Spacing();
+            ImGui::Separator();
+
+            // Performance metrics section
+            updatePerformanceMetrics();
+
+            ImGui::Text("Average:");
+            ImGui::Text("%.3f ms/frame (%.1f FPS)", avgFrameTime, avgFps);
+
+            ImGui::Spacing();
+            ImGui::Text("Current:");
+            ImGui::Text("%.3f ms/frame (%.1f FPS)",
                 1000.0f / ImGui::GetIO().Framerate,
-                ImGui::GetIO().Framerate
-            );
+                ImGui::GetIO().Framerate);
 
             ImGui::End();
         }
-
-
-
-        // 3. Show another simple window
-        if(show_another_window){
-            ImGui::Begin(
-                "Another Window YARHHRH",
-                &show_another_window
-            );
-
-            ImGui::Text("Hello from another window!!!");
-            if(ImGui::Button("Close Me")) show_another_window = false;
-            ImGui::End();
-        }
-
     }
 } // namespace
