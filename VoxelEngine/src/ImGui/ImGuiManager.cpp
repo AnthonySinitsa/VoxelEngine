@@ -205,6 +205,44 @@ namespace vge {
     }
 
 
+    void VgeImgui::updatePerformanceMetrics() {
+        float currentFrameTime = 1000.0f / ImGui::GetIO().Framerate;
+        float currentFps = ImGui::GetIO().Framerate;
+        float deltaTime = ImGui::GetIO().DeltaTime;
+
+        // Initialize vectors if needed
+        if (frameTimeHistory.empty()) {
+            frameTimeHistory.resize(MAX_FRAME_HISTORY, currentFrameTime);
+            fpsHistory.resize(MAX_FRAME_HISTORY, currentFps);
+        }
+
+        // Add new values to history
+        for (int i = 0; i < MAX_FRAME_HISTORY - 1; i++) {
+            frameTimeHistory[i] = frameTimeHistory[i + 1];
+            fpsHistory[i] = fpsHistory[i + 1];
+        }
+        frameTimeHistory[MAX_FRAME_HISTORY - 1] = currentFrameTime;
+        fpsHistory[MAX_FRAME_HISTORY - 1] = currentFps;
+
+        // Update running averages every second
+        timeSinceLastUpdate += deltaTime;
+        if (timeSinceLastUpdate >= UPDATE_INTERVAL) {
+            // Calculate new averages
+            float newAvgFrameTime = 0.0f;
+            float newAvgFps = 0.0f;
+            for (int i = 0; i < MAX_FRAME_HISTORY; i++) {
+                newAvgFrameTime += frameTimeHistory[i];
+                newAvgFps += fpsHistory[i];
+            }
+            avgFrameTime = newAvgFrameTime / MAX_FRAME_HISTORY;
+            avgFps = newAvgFps / MAX_FRAME_HISTORY;
+
+            // Reset timer
+            timeSinceLastUpdate = 0.0f;
+        }
+    }
+
+
     void VgeImgui::runHierarchy() {
         if(show_demo_window) ImGui::ShowDemoWindow(&show_demo_window);
 
@@ -217,7 +255,7 @@ namespace vge {
             ImGui::Spacing();
 
             ImGui::Checkbox("Demo Window", &show_demo_window);
-            if(ImGui::ColorEdit3("Sky Color", (float *)&clear_color)) {
+            if(ImGui::ColorEdit3("Sky Color", (float *)&clear_color, ImGuiColorEditFlags_NoInputs)) {
                 vgeRenderer.setBackgroundColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
             }
 
@@ -292,12 +330,17 @@ namespace vge {
             ImGui::Spacing();
             ImGui::Separator();
 
-            // Performance metrics
-            ImGui::Text("Performance");
+            // Performance metrics section
+            updatePerformanceMetrics();
+
+            ImGui::Text("Average:");
+            ImGui::Text("%.3f ms/frame (%.1f FPS)", avgFrameTime, avgFps);
+
+            ImGui::Spacing();
+            ImGui::Text("Current:");
             ImGui::Text("%.3f ms/frame (%.1f FPS)",
                 1000.0f / ImGui::GetIO().Framerate,
-                ImGui::GetIO().Framerate
-            );
+                ImGui::GetIO().Framerate);
 
             ImGui::End();
         }
