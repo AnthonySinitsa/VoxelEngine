@@ -7,7 +7,6 @@
 #include "Rendering/Renderer.h"
 #include "Input/Input.h"
 #include "Buffer/Buffer.h"
-#include "external/ImGuiDocking/imgui_internal.h"
 #include <memory>
 #include <src/Descriptor/Descriptors.h>
 #include <src/Presentation/SwapChain.h>
@@ -46,7 +45,8 @@ namespace vge{
             vgeDevice,
             vgeRenderer,
             vgeRenderer.getSwapChainRenderPass(),
-            VgeSwapChain::MAX_FRAMES_IN_FLIGHT
+            VgeSwapChain::MAX_FRAMES_IN_FLIGHT,
+            galaxySystem.get()
         );
     }
 

@@ -14,9 +14,8 @@ struct EllipseParams {
 
 layout(push_constant) uniform PushConstants {
     int numStars;
+    int numEllipses;
     float deltaTime;
-    EllipseParams innerEllipse;
-    EllipseParams outerEllipse;
 } push;
 
 layout(std430, binding = 0) readonly buffer StarBufferIn {
@@ -27,13 +26,15 @@ layout(std430, binding = 1) writeonly buffer StarBufferOut {
     Star starsOut[];
 };
 
+layout(std430, binding = 2) readonly buffer EllipseBuffer {
+    EllipseParams ellipses[25];
+} ellipseData;
+
 vec2 calculateEllipsePoint(float t, EllipseParams params) {
     float x = params.majorAxis * cos(t) * cos(params.tiltAngle) -
             params.minorAxis * sin(t) * sin(params.tiltAngle);
-
     float y = params.majorAxis * cos(t) * sin(params.tiltAngle) +
             params.minorAxis * sin(t) * cos(params.tiltAngle);
-
     return vec2(x, y);
 }
 
@@ -43,19 +44,20 @@ void main() {
         return;
     }
 
-    // Determine which ellipse to use based on star index
-    bool isInnerEllipse = index < push.numStars / 2;
+    // Calculate which ellipse this star belongs to
+    int starsPerEllipse = push.numStars / push.numEllipses;
+    int ellipseIndex = int(index) / starsPerEllipse;
+    ellipseIndex = min(ellipseIndex, push.numEllipses - 1);
 
-    // Calculate angle parameter t based on star index
-    float numStarsInEllipse = float(push.numStars) / 2.0;
-    float t = (isInnerEllipse ? float(index) : float(index - push.numStars / 2))
-            * (2.0 * 3.14159) / numStarsInEllipse;
+    // Calculate the star's position within its ellipse
+    float localIndex = float(index - (ellipseIndex * starsPerEllipse));
+    int totalStarsInEllipse = (ellipseIndex == push.numEllipses - 1)
+        ? push.numStars - (starsPerEllipse * (push.numEllipses - 1)) : starsPerEllipse;
 
-    // Get ellipse point
-    vec2 point = calculateEllipsePoint(t,
-            isInnerEllipse ? push.innerEllipse : push.outerEllipse);
+    float t = localIndex * (2.0 * 3.14159) / float(totalStarsInEllipse);
+    vec2 point = calculateEllipsePoint(t, ellipseData.ellipses[ellipseIndex]);
 
-    // Update position
+    // Copy the existing star data but update the position
+    starsOut[index] = starsIn[index];
     starsOut[index].position = vec3(point.x, 0.0, point.y);
-    starsOut[index].velocity = vec3(0.0); // You might want to calculate appropriate velocities
 }

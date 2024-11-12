@@ -13,6 +13,7 @@
 #include "src/Rendering/Renderer.h"
 
 // std
+#include <src/systems/GalaxySystem.h>
 #include <stdexcept>
 #include <vulkan/vulkan_core.h>
 #include <fstream>
@@ -20,8 +21,8 @@
 namespace vge {
 
     VgeImgui::VgeImgui(
-        Window &window, VgeDevice &device, Renderer &renderer, VkRenderPass renderPass, uint32_t imageCount
-    ) : vgeDevice{device}, vgeRenderer{renderer}{
+        Window &window, VgeDevice &device, Renderer &renderer, VkRenderPass renderPass, uint32_t imageCount, GalaxySystem* galaxySystem
+    ) : vgeDevice{device}, vgeRenderer{renderer}, galaxySystem{galaxySystem} {
         // Set up descriptor pool stored on this instance
         VkDescriptorPoolSize pool_sizes[] = {
             {VK_DESCRIPTOR_TYPE_SAMPLER, 1000},
@@ -263,65 +264,95 @@ namespace vge {
             ImGui::Separator();
             ImGui::Spacing();
 
-            // Ellipse Controls in a TreeNode
+            // Galaxy Parameters in a TreeNode
             if (ImGui::TreeNode("Galaxy Parameters")) {
-                // Inner Ellipse Controls
-                if (ImGui::TreeNode("Inner Ellipse")) {
-                    if (ImGui::IsItemHovered()) {
-                        ImGui::SetTooltip("Parameters for the inner ring of stars");
-                    }
+                bool parametersChanged = false;
+                static float baseRadius = 1.0f;
+                static float radiusIncrement = 0.5f;
+                static float baseTilt = 0.0f;
+                static float tiltIncrement = 0.16f;
+                static float eccentricity = 0.8f;
 
-                    ImGui::DragFloat("Major Axis##Inner", &Ellipse::innerEllipse.majorAxis, 0.01f, 0.1f, 5.0f);
-                    if (ImGui::IsItemHovered()) {
-                        ImGui::SetTooltip("Controls the length of the ellipse");
-                    }
+                // Base Radius Control
+                if (ImGui::DragFloat("Base Radius", &baseRadius, 0.01f, 0.1f, 5.0f, "%.2f")) {
+                    parametersChanged = true;
+                }
+                if (ImGui::IsItemHovered()) {
+                    ImGui::SetTooltip("Starting radius for the first ellipse");
+                }
 
-                    ImGui::DragFloat("Minor Axis##Inner", &Ellipse::innerEllipse.minorAxis, 0.01f, 0.1f, 5.0f);
+                // Radius Increment Control
+                if (ImGui::DragFloat("Radius Increment", &radiusIncrement, 0.01f, 0.1f, 2.0f, "%.2f")) {
+                    parametersChanged = true;
+                }
+                if (ImGui::IsItemHovered()) {
+                    ImGui::SetTooltip("How much larger each successive ellipse becomes");
+                }
 
-                    float innerDegrees = glm::degrees(Ellipse::innerEllipse.tiltAngle);
-                    if (ImGui::DragFloat("Tilt Angle##Inner", &innerDegrees, 1.0f, 0.0f, 360.0f)) {
-                        Ellipse::innerEllipse.tiltAngle = glm::radians(innerDegrees);
-                    }
+                // Base Tilt Control
+                float baseTiltDegrees = glm::degrees(baseTilt);
+                if (ImGui::DragFloat("Base Tilt", &baseTiltDegrees, 1.0f, -180.0f, 180.0f, "%.1f°")) {
+                    baseTilt = glm::radians(baseTiltDegrees);
+                    parametersChanged = true;
+                }
+                if (ImGui::IsItemHovered()) {
+                    ImGui::SetTooltip("Starting tilt angle for the first ellipse");
+                }
 
-                    ImGui::Spacing();
-                    if (ImGui::Button("Reset Inner Ellipse")) {
-                        Ellipse::innerEllipse = {1.0f, 0.8f, M_PI / 6.0f};
-                    }
+                // Tilt Increment Control
+                float tiltIncrementDegrees = glm::degrees(tiltIncrement);
+                if (ImGui::DragFloat("Tilt Increment", &tiltIncrementDegrees, 0.1f, 0.0f, 45.0f, "%.1f°")) {
+                    tiltIncrement = glm::radians(tiltIncrementDegrees);
+                    parametersChanged = true;
+                }
+                if (ImGui::IsItemHovered()) {
+                    ImGui::SetTooltip("How much additional tilt each successive ellipse gets");
+                }
 
-                    ImGui::TreePop();
+                // Eccentricity Control
+                if (ImGui::DragFloat("Eccentricity", &eccentricity, 0.01f, 0.1f, 1.0f, "%.2f")) {
+                    parametersChanged = true;
+                }
+                if (ImGui::IsItemHovered()) {
+                    ImGui::SetTooltip("Controls how elliptical the shapes are (1.0 = circular)");
                 }
 
                 ImGui::Spacing();
+                if (parametersChanged) {
+                    // If parameters changed or reset button was clicked, update the static values
+                    // in the Ellipse class
+                    Ellipse::baseRadius = baseRadius;
+                    Ellipse::radiusIncrement = radiusIncrement;
+                    Ellipse::baseTilt = baseTilt;
+                    Ellipse::tiltIncrement = tiltIncrement;
+                    Ellipse::eccentricity = eccentricity;
 
-                // Outer Ellipse Controls
-                if (ImGui::TreeNode("Outer Ellipse")) {
-                    if (ImGui::IsItemHovered()) {
-                        ImGui::SetTooltip("Parameters for the outer ring of stars");
-                    }
+                    // Generate new ellipse parameters
+                    Ellipse::generateEllipseParams(Ellipse::MAX_ELLIPSES);
 
-                    ImGui::DragFloat("Major Axis##Outer", &Ellipse::outerEllipse.majorAxis, 0.01f, 0.1f, 5.0f);
-                    ImGui::DragFloat("Minor Axis##Outer", &Ellipse::outerEllipse.minorAxis, 0.01f, 0.1f, 5.0f);
-
-                    float outerDegrees = glm::degrees(Ellipse::outerEllipse.tiltAngle);
-                    if (ImGui::DragFloat("Tilt Angle##Outer", &outerDegrees, 1.0f, 0.0f, 360.0f)) {
-                        Ellipse::outerEllipse.tiltAngle = glm::radians(outerDegrees);
-                    }
-
-                    ImGui::Spacing();
-                    if (ImGui::Button("Reset Outer Ellipse")) {
-                        Ellipse::outerEllipse = {2.0f, 1.6f, M_PI / 3.0f};
-                    }
-
-                    ImGui::TreePop();
+                    // Update the galaxy system
+                    galaxySystem->updateGalaxyParameters();
                 }
 
-                ImGui::Spacing();
-                ImGui::Separator();
-                ImGui::Spacing();
+                if (ImGui::Button("Restore Defaults")) {
+                    baseRadius = 1.0f;
+                    radiusIncrement = 0.5f;
+                    baseTilt = 0.0f;
+                    tiltIncrement = 0.16f;
+                    eccentricity = 0.8f;
 
-                if (ImGui::Button("Reset All Ellipses")) {
-                    Ellipse::innerEllipse = {1.0f, 0.8f, M_PI / 6.0f};
-                    Ellipse::outerEllipse = {2.0f, 1.6f, M_PI / 3.0f};
+                    // Update the Ellipse class values
+                    Ellipse::baseRadius = baseRadius;
+                    Ellipse::radiusIncrement = radiusIncrement;
+                    Ellipse::baseTilt = baseTilt;
+                    Ellipse::tiltIncrement = tiltIncrement;
+                    Ellipse::eccentricity = eccentricity;
+
+                    // Generate new ellipse parameters
+                    Ellipse::generateEllipseParams(Ellipse::MAX_ELLIPSES);
+
+                    // Update the galaxy system
+                    galaxySystem->updateGalaxyParameters();
                 }
 
                 ImGui::TreePop();
