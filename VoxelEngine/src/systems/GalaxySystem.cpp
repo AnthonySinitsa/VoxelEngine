@@ -5,7 +5,6 @@
 #include <glm/ext/quaternion_geometric.hpp>
 #include <stdexcept>
 #include <vulkan/vulkan_core.h>
-#include <iostream>
 
 namespace vge {
 
@@ -185,11 +184,6 @@ namespace vge {
                 throw std::runtime_error("Failed to create compute descriptor set B");
             }
         }
-
-        // Add debug prints
-        std::cout << "Compute Descriptor Sets created:" << std::endl;
-        std::cout << "Set A - Input: Buffer A, Output: Buffer B" << std::endl;
-        std::cout << "Set B - Input: Buffer B, Output: Buffer A" << std::endl;
     }
 
 
@@ -224,19 +218,6 @@ namespace vge {
         starBufferB->map();
         starBufferB->writeToBuffer(initialStars.data());
         starBufferB->unmap();
-
-        void* dataA = nullptr;
-        if (vkMapMemory(vgeDevice.device(), starBufferA->getMemory(), 0, VK_WHOLE_SIZE, 0, &dataA) == VK_SUCCESS) {
-            Star* starDataA = static_cast<Star*>(dataA);
-            std::cout << "\nVerifying buffer A after initialization:" << std::endl;
-            for (int i = 0; i < NUM_STARS; i++) {
-                std::cout << "Buffer A Star " << i << " Position: "
-                          << starDataA[i].position.x << ", "
-                          << starDataA[i].position.y << ", "
-                          << starDataA[i].position.z << std::endl;
-            }
-            vkUnmapMemory(vgeDevice.device(), starBufferA->getMemory());
-        }
     }
 
 
@@ -248,21 +229,6 @@ namespace vge {
 
 
     void GalaxySystem::computeStars(FrameInfo& frameInfo) {
-        static int frameCounter = 0;
-        bool shouldDebug = (frameCounter % 1 == 0);
-
-        // Determine the read and write buffers based on `useBufferA`
-        VgeBuffer* readBuffer = useBufferA ? starBufferA.get() : starBufferB.get();
-        VgeBuffer* writeBuffer = useBufferA ? starBufferB.get() : starBufferA.get();
-
-        if (shouldDebug) {
-            std::cout << "\nFrame " << frameCounter << " - COMPUTE PHASE" << std::endl;
-            std::cout << "Reading from buffer " << (useBufferA ? "A" : "B") << std::endl;
-            std::cout << "Writing to buffer " << (useBufferA ? "B" : "A") << std::endl;
-        }
-
-        std::cout << "\nCompute phase - useBufferA: " << (useBufferA ? "true" : "false") << std::endl;
-
         // Bind the compute pipeline and descriptor set
         VkDescriptorSet currentDescriptorSet = useBufferA ? computeDescriptorSetA : computeDescriptorSetB;
         computePipeline->bind(frameInfo.commandBuffer, VK_PIPELINE_BIND_POINT_COMPUTE);
@@ -274,21 +240,6 @@ namespace vge {
             &currentDescriptorSet,
             0, nullptr
         );
-
-        // Debug buffer contents before compute
-        void* inputData = nullptr;
-        VgeBuffer* inputBuffer = useBufferA ? starBufferA.get() : starBufferB.get();
-        if (vkMapMemory(vgeDevice.device(), inputBuffer->getMemory(), 0, VK_WHOLE_SIZE, 0, &inputData) == VK_SUCCESS) {
-            Star* stars = static_cast<Star*>(inputData);
-            std::cout << "Pre-compute input buffer contents (first 10 stars):" << std::endl;
-            for (int i = 0; i < 10; i++) {
-                std::cout << "Star " << i << " Position: "
-                            << stars[i].position.x << ", "
-                            << stars[i].position.y << ", "
-                            << stars[i].position.z << std::endl;
-            }
-            vkUnmapMemory(vgeDevice.device(), inputBuffer->getMemory());
-        }
 
         ComputePushConstants push{};
         push.numStars = NUM_STARS;
@@ -303,8 +254,6 @@ namespace vge {
             sizeof(ComputePushConstants),
             &push
         );
-
-        std::cout << "deltaTime: " << frameInfo.frameTime << std::endl;
 
         // Dispatch the compute shader
         vkCmdDispatch(
@@ -332,51 +281,11 @@ namespace vge {
 
         // Toggle buffer usage
         useBufferA = !useBufferA;
-
-        // Debug: Check buffer contents after compute shader writes
-        if (shouldDebug) {
-            void* writeData = nullptr;
-            if (vkMapMemory(vgeDevice.device(), writeBuffer->getMemory(), 0, VK_WHOLE_SIZE, 0, &writeData) == VK_SUCCESS) {
-                Star* writeStars = static_cast<Star*>(writeData);
-                std::cout << "Post-compute buffer state (first 10 stars):" << std::endl;
-                for (int i = 0; i < 10; i++) {
-                    std::cout << "Star " << i << " Position: "
-                                << writeStars[i].position.x << ", "
-                                << writeStars[i].position.y << ", "
-                                << writeStars[i].position.z << std::endl;
-                }
-                vkUnmapMemory(vgeDevice.device(), writeBuffer->getMemory());
-            }
-        }
-
-        frameCounter++;
     }
 
 
     void GalaxySystem::render(FrameInfo& frameInfo) {
-        static int renderFrameCounter = 0;
-        bool shouldDebug = (renderFrameCounter % 1 == 0);
-
         VgeBuffer* currentBuffer = useBufferA ? starBufferB.get() : starBufferA.get();
-
-        if (shouldDebug) {
-            std::cout << "\nRENDER PHASE" << std::endl;
-            std::cout << "Rendering from buffer " << (!useBufferA ? "A" : "B") << std::endl;
-
-            // Debug render buffer state
-            void* renderData = nullptr;
-            if (vkMapMemory(vgeDevice.device(), currentBuffer->getMemory(), 0, VK_WHOLE_SIZE, 0, &renderData) == VK_SUCCESS) {
-                Star* renderStars = static_cast<Star*>(renderData);
-                std::cout << "Pre-render buffer state (first 10 stars):" << std::endl;
-                for (int i = 0; i < 10; i++) {
-                    std::cout << "Star " << i << " Position: "
-                              << renderStars[i].position.x << ", "
-                              << renderStars[i].position.y << ", "
-                              << renderStars[i].position.z << std::endl;
-                }
-                vkUnmapMemory(vgeDevice.device(), currentBuffer->getMemory());
-            }
-        }
 
         graphicsPipeline->bind(frameInfo.commandBuffer);
 
@@ -406,25 +315,6 @@ namespace vge {
         VkDeviceSize offset = 0;
         vkCmdBindVertexBuffers(frameInfo.commandBuffer, 0, 1, &vertexBuffer, &offset);
         vkCmdDraw(frameInfo.commandBuffer, NUM_STARS, 1, 0, 0);
-
-
-        // Post-render debug
-        if (shouldDebug) {
-            void* postRenderData = nullptr;
-            if (vkMapMemory(vgeDevice.device(), currentBuffer->getMemory(), 0, VK_WHOLE_SIZE, 0, &postRenderData) == VK_SUCCESS) {
-                Star* postRenderStars = static_cast<Star*>(postRenderData);
-                std::cout << "\nPost-render buffer state (first 10 stars):" << std::endl;
-                for (int i = 0; i < 10; i++) {
-                    std::cout << "Star " << i << " Position: "
-                                << postRenderStars[i].position.x << ", "
-                                << postRenderStars[i].position.y << ", "
-                                << postRenderStars[i].position.z << std::endl;
-                }
-                vkUnmapMemory(vgeDevice.device(), currentBuffer->getMemory());
-            }
-        }
-
-        renderFrameCounter++;
     }
 
     std::vector<VkVertexInputBindingDescription> GalaxySystem::getBindingDescriptions() {
