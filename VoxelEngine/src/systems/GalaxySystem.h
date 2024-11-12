@@ -24,17 +24,21 @@ namespace vge {
         glm::mat4 normalMatrix{1.f};
     };
 
+    struct EllipseBufferObject {
+        Ellipse::EllipseParams ellipses[Ellipse::MAX_ELLIPSES];
+    };
+
     struct ComputePushConstants {
         int numStars;
+        int numEllipses;
         float deltaTime;
-        Ellipse::EllipseParams innerEllipse;
-        Ellipse::EllipseParams outerEllipse;
     };
 
     class GalaxySystem {
     public:
-        static constexpr int NUM_STARS = 200;
+        static constexpr int NUM_STARS = 100000;
         static constexpr int WORKGROUP_SIZE = 256;
+        static constexpr int MAX_ELLIPSES = 25;
 
         GalaxySystem(VgeDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
         ~GalaxySystem();
@@ -55,6 +59,8 @@ namespace vge {
         void createComputeDescriptorSetLayout();
         void createComputeDescriptorSets();
         void createStarBuffer();
+        void createEllipseBuffer();
+        void updateEllipseBuffer();
         void initStars();
 
         // Helper functions
@@ -85,5 +91,7 @@ namespace vge {
 
         // Descriptor pool for compute descriptor
         std::unique_ptr<VgeDescriptorPool> computeDescriptorPool;
+
+        std::unique_ptr<VgeBuffer> ellipseBuffer;
     };
 } // namespace vge

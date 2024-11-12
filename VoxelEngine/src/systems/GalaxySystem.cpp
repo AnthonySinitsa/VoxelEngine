@@ -5,6 +5,7 @@
 #include <glm/ext/quaternion_geometric.hpp>
 #include <stdexcept>
 #include <vulkan/vulkan_core.h>
+#include <iostream>
 
 namespace vge {
 
@@ -14,12 +15,14 @@ namespace vge {
             try {
                 computeDescriptorPool = VgeDescriptorPool::Builder(device)
                     .setMaxSets(2)
-                    .addPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 4)
+                    .addPoolSize(VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, 6)
                     .setPoolFlags(VK_DESCRIPTOR_POOL_CREATE_FREE_DESCRIPTOR_SET_BIT)
                     .build();
 
                 createComputeDescriptorSetLayout();
                 createStarBuffer();
+                createEllipseBuffer();
+                updateEllipseBuffer();
                 createComputeDescriptorSets();
                 createComputePipelineLayout();
                 createComputePipeline();
@@ -28,6 +31,7 @@ namespace vge {
                 initStars();
 
             } catch (const std::exception& e) {
+                std::cerr << "Error during GalaxySystem initialization: " << e.what() << std::endl;
                 assert("Error during GalaxySystem initialization!!!");
                 throw;
             }
@@ -36,6 +40,10 @@ namespace vge {
     GalaxySystem::~GalaxySystem() {
         // Wait for device to be idle before cleanup
         vkDeviceWaitIdle(vgeDevice.device());
+
+        if (ellipseBuffer) {
+            ellipseBuffer->unmap();
+        }
 
         if (computeDescriptorSetA != VK_NULL_HANDLE) {
             std::vector<VkDescriptorSet> sets = {computeDescriptorSetA};
@@ -132,6 +140,7 @@ namespace vge {
         computeDescriptorSetLayout = VgeDescriptorSetLayout::Builder(vgeDevice)
                 .addBinding(0, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT)
                 .addBinding(1, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT)
+                .addBinding(2, VK_DESCRIPTOR_TYPE_STORAGE_BUFFER, VK_SHADER_STAGE_COMPUTE_BIT)
                 .build();
     }
 
@@ -157,16 +166,31 @@ namespace vge {
         );
     }
 
+    void GalaxySystem::createEllipseBuffer() {
+        ellipseBuffer = std::make_unique<VgeBuffer>(
+            vgeDevice,
+            sizeof(Ellipse::EllipseParams),
+            MAX_ELLIPSES,
+            VK_BUFFER_USAGE_STORAGE_BUFFER_BIT,
+            VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT
+        );
+
+        // Map the buffer and write the ellipse data
+        ellipseBuffer->map();
+    }
+
 
     void GalaxySystem::createComputeDescriptorSets() {
         // Create descriptor set A (buffer A -> buffer B)
         {
             auto bufferInfoA = starBufferA->descriptorInfo();
             auto bufferInfoB = starBufferB->descriptorInfo();
+            auto ellipseBufferInfo = ellipseBuffer->descriptorInfo();
 
             if (!VgeDescriptorWriter(*computeDescriptorSetLayout, *computeDescriptorPool)
                 .writeBuffer(0, &bufferInfoA)  // input buffer (binding 0)
                 .writeBuffer(1, &bufferInfoB)  // output buffer (binding 1)
+                .writeBuffer(2, &ellipseBufferInfo)
                 .build(computeDescriptorSetA)) {
                 throw std::runtime_error("Failed to create compute descriptor set A");
             }
@@ -176,10 +200,12 @@ namespace vge {
         {
             auto bufferInfoA = starBufferA->descriptorInfo();
             auto bufferInfoB = starBufferB->descriptorInfo();
+            auto ellipseBufferInfo = ellipseBuffer->descriptorInfo();
 
             if (!VgeDescriptorWriter(*computeDescriptorSetLayout, *computeDescriptorPool)
                 .writeBuffer(0, &bufferInfoB)  // input buffer (binding 0)
                 .writeBuffer(1, &bufferInfoA)  // output buffer (binding 1)
+                .writeBuffer(2, &ellipseBufferInfo)
                 .build(computeDescriptorSetB)) {
                 throw std::runtime_error("Failed to create compute descriptor set B");
             }
@@ -187,27 +213,35 @@ namespace vge {
     }
 
 
+    void GalaxySystem::updateEllipseBuffer() {
+        // Generate new ellipse parameters
+        Ellipse::generateEllipseParams(MAX_ELLIPSES);
+
+        // Write to the buffer
+        ellipseBuffer->writeToBuffer(Ellipse::ellipseParams.data(),
+            sizeof(Ellipse::EllipseParams) * Ellipse::ellipseParams.size());
+    }
+
+
     void GalaxySystem::initStars() {
         std::vector<Star> initialStars(NUM_STARS);
 
-        float angleStep = (2.0f * M_PI) / (static_cast<float>(NUM_STARS) / 2);
+        int starsPerEllipse = NUM_STARS / MAX_ELLIPSES;
 
-        // Initialize half of the stars on the inner ellipse
-        for (int i = 0; i < NUM_STARS / 2; i++) {
-            float t = i * angleStep;
-            auto [innerPoint, _] = Ellipse::calculateBothEllipses(t);
+        for (int ellipseIndex = 0; ellipseIndex < MAX_ELLIPSES; ellipseIndex++) {
+            int startIndex = ellipseIndex * starsPerEllipse;
+            int endIndex = (ellipseIndex == MAX_ELLIPSES - 1) ? NUM_STARS : startIndex + starsPerEllipse;
+            int starsInThisEllipse = endIndex - startIndex;
 
-            initialStars[i].position = glm::vec3(innerPoint.x, 0.0f, innerPoint.y);
-            initialStars[i].velocity = glm::vec3(0.0f);
-        }
+            float angleStep = (2.0f * M_PI) / starsInThisEllipse;
 
-        // Initialize the other half on the outer ellipse
-        for (int i = NUM_STARS / 2; i < NUM_STARS; i++) {
-            float t = (i - static_cast<float>(NUM_STARS) / 2) * angleStep;
-            auto [_, outerPoint] = Ellipse::calculateBothEllipses(t);
+            for (int i = startIndex; i < endIndex; i++) {
+                float t = (i - startIndex) * angleStep;
+                glm::vec2 point = Ellipse::calculateEllipsePoint(t, Ellipse::ellipseParams[ellipseIndex]);
 
-            initialStars[i].position = glm::vec3(outerPoint.x, 0.0f, outerPoint.y);
-            initialStars[i].velocity = glm::vec3(0.0f);
+                initialStars[i].position = glm::vec3(point.x, 0.0f, point.y);
+                initialStars[i].velocity = glm::vec3(0.0f);
+            }
         }
 
         // Write to buffers
@@ -243,9 +277,8 @@ namespace vge {
 
         ComputePushConstants push{};
         push.numStars = NUM_STARS;
+        push.numEllipses = MAX_ELLIPSES;
         push.deltaTime = frameInfo.frameTime;
-        push.innerEllipse = Ellipse::innerEllipse;
-        push.outerEllipse = Ellipse::outerEllipse;
         vkCmdPushConstants(
             frameInfo.commandBuffer,
             computePipelineLayout,
