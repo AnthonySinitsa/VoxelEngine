@@ -222,6 +222,10 @@ namespace vge {
             sizeof(Ellipse::EllipseParams) * Ellipse::ellipseParams.size());
     }
 
+    void GalaxySystem::updateGalaxyParameters() {
+        updateEllipseBuffer();
+    }
+
 
     void GalaxySystem::initStars() {
         std::vector<Star> initialStars(NUM_STARS);

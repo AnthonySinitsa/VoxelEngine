@@ -17,15 +17,15 @@ namespace vge {
             static inline const int MAX_ELLIPSES = 25; // Maximum number of ellipses we can support
             static inline std::vector<EllipseParams> ellipseParams;
 
+            // Base parameters that will be scaled for each ellipse
+            static inline float baseRadius = 1.0f;           // Starting radius
+            static inline float radiusIncrement = 0.5f;      // How much each ellipse grows
+            static inline float baseTilt = 0.0f;             // Starting tilt (0 radians)
+            static inline float tiltIncrement = 0.16f;       // Small increment per ellipse (about 2.86 degrees)
+            static inline float eccentricity = 0.8f;         // Relationship between major and minor axis
+
             static void generateEllipseParams(int numEllipses) {
                 ellipseParams.clear();
-
-                // Base parameters that will be scaled for each ellipse
-                const float baseRadius = 1.0f;           // Starting radius
-                const float radiusIncrement = 0.5f;   // How much each ellipse grows
-                const float baseTilt = 0.0f;             // Starting tilt (0 radians)
-                const float tiltIncrement = 0.16f;       // Small increment per ellipse (about 2.86 degrees)
-                const float eccentricity = 0.8f;         // Relationship between major and minor axis
 
                 for (int i = 0; i < numEllipses; i++) {
                     EllipseParams params;

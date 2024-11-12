@@ -6,8 +6,11 @@
 
 // libs
 #include "external/ImGuiDocking/imgui.h"
+#include <src/systems/GalaxySystem.h>
 
 namespace vge {
+
+    class GalaxySystem;
 
     static void check_vk_result(VkResult err) {
         if(err == 0) return;
@@ -17,7 +20,13 @@ namespace vge {
 
     class VgeImgui {
         public:
-            VgeImgui(Window &window, VgeDevice &device, Renderer &renderer, VkRenderPass renderPass, uint32_t imageCount);
+            VgeImgui(
+                Window &window,
+                VgeDevice &device,
+                Renderer &renderer,
+                VkRenderPass renderPass,
+                uint32_t imageCount,
+                GalaxySystem* galaxySystem);
             ~VgeImgui();
 
             void newFrame();
@@ -59,5 +68,7 @@ namespace vge {
             float avgFps = 0.0f;
             float timeSinceLastUpdate = 0.0f;
             const float UPDATE_INTERVAL = 1.0f;
+
+            GalaxySystem* galaxySystem;
     };
 } // namespace

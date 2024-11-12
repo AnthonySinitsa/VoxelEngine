@@ -49,6 +49,7 @@ namespace vge {
         void render(FrameInfo& frameInfo);
         void update(FrameInfo& frameInfo);
         void computeStars(FrameInfo& frameInfo);
+        void updateGalaxyParameters();
 
     private:
 
