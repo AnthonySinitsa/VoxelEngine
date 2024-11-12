@@ -2,6 +2,7 @@
 
 #include "../Device/Device.h"
 #include "../Window.h"
+#include "../Utils/ellipse.h"
 
 // libs
 #include <cstdint>
@@ -135,51 +136,104 @@ namespace vge {
     }
 
 
-    void VgeImgui::runExample(){
+    void VgeImgui::runHierarchy() {
         if(show_demo_window) ImGui::ShowDemoWindow(&show_demo_window);
 
         {
-            static float f = 0.0f;
-            static int counter = 0;
+            ImGui::Begin("Hierarchy");
 
-            ImGui::Begin("World, James World");
+            // Demo and color controls section
+            ImGui::Text("Global Controls");
+            ImGui::Separator();
+            ImGui::Spacing();
 
-            ImGui::Text("This is some useful text. AI poo");
-
-            ImGui::Checkbox("demo WIIINDOW", &show_demo_window); // edit bools storing our window open/close state
-            ImGui::Checkbox("Another Window HERHERHERH", &show_another_window);
-
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f); // edit 1 float using slider from 0.0f to 1.0f
-            if(ImGui::ColorEdit3("clear color", (float *)&clear_color)){
+            ImGui::Checkbox("Demo Window", &show_demo_window);
+            if(ImGui::ColorEdit3("clear color", (float *)&clear_color)) {
                 vgeRenderer.setBackgroundColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
             }
 
-            if(ImGui::Button("Button"))
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
+            ImGui::Spacing();
+            ImGui::Separator();
+            ImGui::Spacing();
 
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)",
+            // Ellipse Controls in a TreeNode
+            if (ImGui::TreeNode("Galaxy Parameters")) {
+                ImGui::TextWrapped("Adjust the shape and orientation of the galaxy's elliptical paths");
+                ImGui::Spacing();
+
+                // Inner Ellipse Controls
+                if (ImGui::TreeNode("Inner Ellipse")) {
+                    if (ImGui::IsItemHovered()) {
+                        ImGui::SetTooltip("Parameters for the inner ring of stars");
+                    }
+
+                    ImGui::DragFloat("Major Axis##Inner", &Ellipse::innerEllipse.majorAxis, 0.01f, 0.1f, 5.0f);
+                    if (ImGui::IsItemHovered()) {
+                        ImGui::SetTooltip("Controls the length of the ellipse");
+                    }
+
+                    ImGui::DragFloat("Minor Axis##Inner", &Ellipse::innerEllipse.minorAxis, 0.01f, 0.1f, 5.0f);
+
+                    float innerDegrees = glm::degrees(Ellipse::innerEllipse.tiltAngle);
+                    if (ImGui::DragFloat("Tilt Angle##Inner", &innerDegrees, 1.0f, 0.0f, 360.0f)) {
+                        Ellipse::innerEllipse.tiltAngle = glm::radians(innerDegrees);
+                    }
+
+                    ImGui::Spacing();
+                    if (ImGui::Button("Reset Inner Ellipse")) {
+                        Ellipse::innerEllipse = {1.0f, 0.8f, M_PI / 6.0f};
+                    }
+
+                    ImGui::TreePop();
+                }
+
+                ImGui::Spacing();
+
+                // Outer Ellipse Controls
+                if (ImGui::TreeNode("Outer Ellipse")) {
+                    if (ImGui::IsItemHovered()) {
+                        ImGui::SetTooltip("Parameters for the outer ring of stars");
+                    }
+
+                    ImGui::DragFloat("Major Axis##Outer", &Ellipse::outerEllipse.majorAxis, 0.01f, 0.1f, 5.0f);
+                    ImGui::DragFloat("Minor Axis##Outer", &Ellipse::outerEllipse.minorAxis, 0.01f, 0.1f, 5.0f);
+
+                    float outerDegrees = glm::degrees(Ellipse::outerEllipse.tiltAngle);
+                    if (ImGui::DragFloat("Tilt Angle##Outer", &outerDegrees, 1.0f, 0.0f, 360.0f)) {
+                        Ellipse::outerEllipse.tiltAngle = glm::radians(outerDegrees);
+                    }
+
+                    ImGui::Spacing();
+                    if (ImGui::Button("Reset Outer Ellipse")) {
+                        Ellipse::outerEllipse = {2.0f, 1.6f, M_PI / 3.0f};
+                    }
+
+                    ImGui::TreePop();
+                }
+
+                ImGui::Spacing();
+                ImGui::Separator();
+                ImGui::Spacing();
+
+                if (ImGui::Button("Reset All Ellipses")) {
+                    Ellipse::innerEllipse = {1.0f, 0.8f, M_PI / 6.0f};
+                    Ellipse::outerEllipse = {2.0f, 1.6f, M_PI / 3.0f};
+                }
+
+                ImGui::TreePop();
+            }
+
+            ImGui::Spacing();
+            ImGui::Separator();
+
+            // Performance metrics
+            ImGui::Text("Performance");
+            ImGui::Text("%.3f ms/frame (%.1f FPS)",
                 1000.0f / ImGui::GetIO().Framerate,
                 ImGui::GetIO().Framerate
             );
 
             ImGui::End();
         }
-
-
-
-        // 3. Show another simple window
-        if(show_another_window){
-            ImGui::Begin(
-                "Another Window YARHHRH",
-                &show_another_window
-            );
-
-            ImGui::Text("Hello from another window!!!");
-            if(ImGui::Button("Close Me")) show_another_window = false;
-            ImGui::End();
-        }
-
     }
 } // namespace

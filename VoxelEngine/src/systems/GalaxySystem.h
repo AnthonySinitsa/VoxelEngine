@@ -5,6 +5,7 @@
 #include "../FrameInfo.h"
 #include "../Buffer/Buffer.h"
 #include "../Descriptor/Descriptors.h"
+#include "../Utils/ellipse.h"
 
 #include <vulkan/vulkan.h>
 #include <memory>
@@ -26,6 +27,8 @@ namespace vge {
     struct ComputePushConstants {
         int numStars;
         float deltaTime;
+        Ellipse::EllipseParams innerEllipse;
+        Ellipse::EllipseParams outerEllipse;
     };
 
     class GalaxySystem {

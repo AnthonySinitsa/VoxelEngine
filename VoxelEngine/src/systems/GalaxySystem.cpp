@@ -293,6 +293,8 @@ namespace vge {
         ComputePushConstants push{};
         push.numStars = NUM_STARS;
         push.deltaTime = frameInfo.frameTime;
+        push.innerEllipse = Ellipse::innerEllipse;
+        push.outerEllipse = Ellipse::outerEllipse;
         vkCmdPushConstants(
             frameInfo.commandBuffer,
             computePipelineLayout,

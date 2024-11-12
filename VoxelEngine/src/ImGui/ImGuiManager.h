@@ -24,7 +24,7 @@ namespace vge {
 
             void render(VkCommandBuffer commandBuffer);
 
-            void runExample();
+            void runHierarchy();
             void RenderUI();
             void ShowExampleAppDockSpace();
             void controlBackgroundColor();

@@ -158,7 +158,7 @@ namespace vge{
                 galaxySystem->render(frameInfo);
 
                 vgeImgui->newFrame(); // Start new ImGui frame
-                vgeImgui->runExample(); // Render ImGui example window
+                vgeImgui->runHierarchy();
                 vgeImgui->render(commandBuffer); // Render ImGui
 
                 vgeRenderer.endSwapChainRenderPass(commandBuffer); // End swapchain render pass

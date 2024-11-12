@@ -6,9 +6,17 @@ struct Star {
     vec3 velocity;
 };
 
+struct EllipseParams {
+    float majorAxis;
+    float minorAxis;
+    float tiltAngle;
+};
+
 layout(push_constant) uniform PushConstants {
     int numStars;
     float deltaTime;
+    EllipseParams innerEllipse;
+    EllipseParams outerEllipse;
 } push;
 
 layout(std430, binding = 0) readonly buffer StarBufferIn {
@@ -19,37 +27,35 @@ layout(std430, binding = 1) writeonly buffer StarBufferOut {
     Star starsOut[];
 };
 
+vec2 calculateEllipsePoint(float t, EllipseParams params) {
+    float x = params.majorAxis * cos(t) * cos(params.tiltAngle) -
+            params.minorAxis * sin(t) * sin(params.tiltAngle);
+
+    float y = params.majorAxis * cos(t) * sin(params.tiltAngle) +
+            params.minorAxis * sin(t) * cos(params.tiltAngle);
+
+    return vec2(x, y);
+}
+
 void main() {
     uint index = gl_GlobalInvocationID.x;
     if (index >= push.numStars) {
         return;
     }
 
-    // // Read the current star
-    // Star starIn = starsIn[index];
-    // Star starOut;
+    // Determine which ellipse to use based on star index
+    bool isInnerEllipse = index < push.numStars / 2;
 
-    // // Get current radius and speed
-    // float radius = length(vec2(starIn.position.x, starIn.position.z));
-    // float speed = length(starIn.velocity);
+    // Calculate angle parameter t based on star index
+    float numStarsInEllipse = float(push.numStars) / 2.0;
+    float t = (isInnerEllipse ? float(index) : float(index - push.numStars / 2))
+            * (2.0 * 3.14159) / numStarsInEllipse;
 
-    // // Update position
-    // vec3 newPosition = starIn.position + starIn.velocity * push.deltaTime;
+    // Get ellipse point
+    vec2 point = calculateEllipsePoint(t,
+            isInnerEllipse ? push.innerEllipse : push.outerEllipse);
 
-    // // Normalize to maintain circle radius
-    // float newRadius = length(vec2(newPosition.x, newPosition.z));
-    // newPosition.x *= radius / newRadius;
-    // newPosition.z *= radius / newRadius;
-    // newPosition.y = 0.0;
-
-    // starOut.position = newPosition;
-
-    // // Calculate new velocity tangent to the circle
-    // // The velocity should be perpendicular to the position vector
-    // vec2 normalizedPos = vec2(starOut.position.x, starOut.position.z) / radius;
-    // starOut.velocity = vec3(-normalizedPos.y * speed, 0.0, normalizedPos.x * speed);
-
-    // starsOut[index] = starOut;
-
-    starsOut[index] = starsIn[index];
+    // Update position
+    starsOut[index].position = vec3(point.x, 0.0, point.y);
+    starsOut[index].velocity = vec3(0.0); // You might want to calculate appropriate velocities
 }
