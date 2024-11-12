@@ -318,7 +318,7 @@ namespace vge {
                 }
 
                 ImGui::Spacing();
-                if (ImGui::Button("Reset Parameters") || parametersChanged) {
+                if (parametersChanged) {
                     // If parameters changed or reset button was clicked, update the static values
                     // in the Ellipse class
                     Ellipse::baseRadius = baseRadius;

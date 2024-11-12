@@ -9,6 +9,10 @@
 
 ---
 
+## Implementing galaxy particle system WIP (100,000 stars rendering right now)
+
+![galaxy](VoxelEngine/images/SecondGalaxyAttempt.gif)
+
 ## Project Layout
 
 ### [Windowing](VoxelEngine/README/Windowing.md)
