@@ -27,10 +27,10 @@ layout(std430, binding = 1) writeonly buffer StarBufferOut {
 };
 
 layout(std430, binding = 2) readonly buffer EllipseBuffer {
-    EllipseParams ellipses[25];
+    EllipseParams ellipses[30];
 } ellipseData;
 
-const float BASE_ROTATION_SPEED = 0.05;
+const float BASE_ROTATION_SPEED = -0.05;
 const float SPEED_MULTIPLIER = 2.0;
 
 vec2 calculateEllipsePoint(float t, EllipseParams params) {
@@ -47,32 +47,34 @@ void main() {
         return;
     }
 
-    // Calculate which ellipse this star belongs to
     int starsPerEllipse = push.numStars / push.numEllipses;
     int ellipseIndex = int(index) / starsPerEllipse;
     ellipseIndex = min(ellipseIndex, push.numEllipses - 1);
 
-    // Get the current ellipse parameters
     EllipseParams params = ellipseData.ellipses[ellipseIndex];
 
+    // Get the stored parameters
+    float currentAngle = starsIn[index].velocity.x;
+    float offsetX = starsIn[index].velocity.y;
+    float offsetZ = starsIn[index].velocity.z;
+
     // Calculate rotation speed based on ellipse size
-    // Smaller ellipses (smaller majorAxis) will rotate faster
-    float speedFactor = SPEED_MULTIPLIER / max(params.majorAxis, 0.1); // Prevent division by zero
+    float speedFactor = SPEED_MULTIPLIER / max(params.majorAxis, 0.1);
     float rotationSpeed = BASE_ROTATION_SPEED * speedFactor;
 
-    // Get and update the angle
-    float currentAngle = starsIn[index].velocity.x;
+    // Update angle
     float newAngle = currentAngle + rotationSpeed * push.deltaTime;
-
-    // Wrap angle between 0 and 2π
     if (newAngle > 2.0 * 3.14159) {
         newAngle -= 2.0 * 3.14159;
     }
 
-    // Calculate new position
-    vec2 newPoint = calculateEllipsePoint(newAngle, params);
+    // Calculate base position on ellipse
+    vec2 basePoint = calculateEllipsePoint(newAngle, params);
 
-    // Update star data
-    starsOut[index].position = vec3(newPoint.x, 0.0, newPoint.y);
-    starsOut[index].velocity = vec3(newAngle, 0.0, 0.0);
+    // Apply the stored offset to maintain consistent randomization
+    vec3 newPosition = vec3(basePoint.x + offsetX, 0.0, basePoint.y + offsetZ);
+
+    // Store updated position and parameters
+    starsOut[index].position = newPosition;
+    starsOut[index].velocity = vec3(newAngle, offsetX, offsetZ);
 }

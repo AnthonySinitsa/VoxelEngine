@@ -1,6 +1,7 @@
 #include "GalaxySystem.h"
 #include "../Buffer/Buffer.h"
 #include "../Utils/ellipse.h"
+#include "../Utils/hashFunction.h"
 
 #include <glm/ext/quaternion_geometric.hpp>
 #include <stdexcept>
@@ -243,8 +244,23 @@ namespace vge {
                 float t = (i - startIndex) * angleStep;
                 glm::vec2 point = Ellipse::calculateEllipsePoint(t, Ellipse::ellipseParams[ellipseIndex]);
 
-                initialStars[i].position = glm::vec3(point.x, 0.0f, point.y);
-                initialStars[i].velocity = glm::vec3(t, 0.0f, 0.0f);
+                // Generate random offsets using our hash function
+                float randRadius = hash(float(i) * 12.345f) * 1.0f;
+                float randAngle = hash(float(i) * 67.890f) * 2.0f * M_PI;
+
+                // Calculate random offset in polar coordinates
+                float offsetX = randRadius * cos(randAngle);
+                float offsetZ = randRadius * sin(randAngle);
+
+                // Apply the random offset to the original position
+                initialStars[i].position = glm::vec3(
+                    point.x + offsetX,
+                    0.0f,
+                    point.y + offsetZ
+                );
+
+                // Store the original angle and ellipse index for the compute shader
+                initialStars[i].velocity = glm::vec3(t, offsetX, offsetZ);
             }
         }
 

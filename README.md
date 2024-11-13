@@ -9,7 +9,11 @@
 
 ---
 
-## Implementing galaxy particle system WIP (100,000 stars rendering right now)
+## 2 million stars rendered with average 7ms frame time
+
+![2mil](VoxelEngine/images/2milStars.png)
+
+## Implementing galaxy particle system (100,000 stars rendering right now)
 
 ![galaxy](VoxelEngine/images/SecondGalaxyAttempt.gif)
 
