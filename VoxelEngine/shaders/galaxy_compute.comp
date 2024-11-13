@@ -3,7 +3,7 @@ layout(local_size_x = 256, local_size_y = 1, local_size_z = 1) in;
 
 struct Star {
     vec3 position;
-    vec3 velocity;
+    vec3 velocity; // We'll use velocity.x to store the current angle
 };
 
 struct EllipseParams {
@@ -27,8 +27,10 @@ layout(std430, binding = 1) writeonly buffer StarBufferOut {
 };
 
 layout(std430, binding = 2) readonly buffer EllipseBuffer {
-    EllipseParams ellipses[30];
+    EllipseParams ellipses[25];
 } ellipseData;
+
+const float ROTATION_SPEED = 0.005; // Radians per second
 
 vec2 calculateEllipsePoint(float t, EllipseParams params) {
     float x = params.majorAxis * cos(t) * cos(params.tiltAngle) -
@@ -49,15 +51,22 @@ void main() {
     int ellipseIndex = int(index) / starsPerEllipse;
     ellipseIndex = min(ellipseIndex, push.numEllipses - 1);
 
-    // Calculate the star's position within its ellipse
-    float localIndex = float(index - (ellipseIndex * starsPerEllipse));
-    int totalStarsInEllipse = (ellipseIndex == push.numEllipses - 1)
-        ? push.numStars - (starsPerEllipse * (push.numEllipses - 1)) : starsPerEllipse;
+    // Get the star's current angle from its velocity.x component
+    float currentAngle = starsIn[index].velocity.x;
 
-    float t = localIndex * (2.0 * 3.14159) / float(totalStarsInEllipse);
-    vec2 point = calculateEllipsePoint(t, ellipseData.ellipses[ellipseIndex]);
+    // Update the angle based on deltaTime
+    float speed = ROTATION_SPEED * (1.0 + float(push.numEllipses - ellipseIndex) * 0.2); // Make inner ellipses faster
+    float newAngle = currentAngle + speed * push.deltaTime;
 
-    // Copy the existing star data but update the position
-    starsOut[index] = starsIn[index];
-    starsOut[index].position = vec3(point.x, 0.0, point.y);
+    // Wrap angle between 0 and 2π
+    if (newAngle > 2.0 * 3.14159) {
+        newAngle -= 2.0 * 3.14159;
+    }
+
+    // Calculate new position using the same ellipse equation
+    vec2 newPoint = calculateEllipsePoint(newAngle, ellipseData.ellipses[ellipseIndex]);
+
+    // Update star data
+    starsOut[index].position = vec3(newPoint.x, 0.0, newPoint.y);
+    starsOut[index].velocity = vec3(newAngle, 0.0, 0.0); // Store new angle in velocity.x
 }
