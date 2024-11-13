@@ -36,7 +36,7 @@ namespace vge {
 
     class GalaxySystem {
     public:
-        static constexpr int NUM_STARS = 10000;
+        static constexpr int NUM_STARS = 100000;
         static constexpr int WORKGROUP_SIZE = 256;
         static constexpr int MAX_ELLIPSES = 30;
 

@@ -267,7 +267,7 @@ namespace vge {
             // Galaxy Parameters in a TreeNode
             if (ImGui::TreeNode("Galaxy Parameters")) {
                 bool parametersChanged = false;
-                static float baseRadius = 0.10f;
+                static float baseRadius = 1.0f;
                 static float radiusIncrement = 0.5f;
                 static float baseTilt = 0.0f;
                 static float tiltIncrement = 0.16f;
@@ -335,7 +335,7 @@ namespace vge {
                 }
 
                 if (ImGui::Button("Restore Defaults")) {
-                    baseRadius = 0.10f;
+                    baseRadius = 1.0f;
                     radiusIncrement = 0.5f;
                     baseTilt = 0.0f;
                     tiltIncrement = 0.16f;

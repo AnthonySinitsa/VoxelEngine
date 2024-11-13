@@ -56,11 +56,7 @@ void main() {
     // Get the stored parameters
     float currentAngle = starsIn[index].velocity.x;
     float offsetX = starsIn[index].velocity.y;
-    float offsetY = starsIn[index].velocity.z;
-    float offsetZ = 0.0; // We'll read this from velocity.z
-    if (starsIn[index].velocity.length() >= 4.0) {
-        offsetZ = starsIn[index].velocity.z;
-    }
+    float offsetZ = starsIn[index].velocity.z;
 
     // Calculate rotation speed based on ellipse size
     float speedFactor = SPEED_MULTIPLIER / max(params.majorAxis, 0.1);
@@ -76,9 +72,9 @@ void main() {
     vec2 basePoint = calculateEllipsePoint(newAngle, params);
 
     // Apply the stored offset to maintain consistent randomization
-    vec3 newPosition = vec3(basePoint.x + offsetX, offsetY, basePoint.y + offsetZ);
+    vec3 newPosition = vec3(basePoint.x + offsetX, 0.0, basePoint.y + offsetZ);
 
     // Store updated position and parameters
     starsOut[index].position = newPosition;
-    starsOut[index].velocity = vec3(newAngle, offsetX, offsetY);
+    starsOut[index].velocity = vec3(newAngle, offsetX, offsetZ);
 }

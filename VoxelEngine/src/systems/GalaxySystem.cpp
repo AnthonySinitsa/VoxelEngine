@@ -240,16 +240,13 @@ namespace vge {
 
             float angleStep = (2.0f * M_PI) / starsInThisEllipse;
 
-            float maxHeight = 0.05f + (float(ellipseIndex) / MAX_ELLIPSES) * 0.15f;
-
             for (int i = startIndex; i < endIndex; i++) {
                 float t = (i - startIndex) * angleStep;
                 glm::vec2 point = Ellipse::calculateEllipsePoint(t, Ellipse::ellipseParams[ellipseIndex]);
 
                 // Generate random offsets using our hash function
-                float randRadius = hash(float(i) * 12.345f) * 0.1f; // Max 0.1 units deviation
+                float randRadius = hash(float(i) * 12.345f) * 1.0f;
                 float randAngle = hash(float(i) * 67.890f) * 2.0f * M_PI;
-                float randHeight = (hash(float(i) * 89.012f) * 2.0f - 1.0f) * maxHeight;
 
                 // Calculate random offset in polar coordinates
                 float offsetX = randRadius * cos(randAngle);
@@ -258,12 +255,12 @@ namespace vge {
                 // Apply the random offset to the original position
                 initialStars[i].position = glm::vec3(
                     point.x + offsetX,
-                    randHeight,
+                    0.0f,
                     point.y + offsetZ
                 );
 
                 // Store the original angle and ellipse index for the compute shader
-                initialStars[i].velocity = glm::vec4(t, offsetX, randHeight, offsetZ);
+                initialStars[i].velocity = glm::vec3(t, offsetX, offsetZ);
             }
         }
 
