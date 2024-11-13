@@ -244,7 +244,7 @@ namespace vge {
                 glm::vec2 point = Ellipse::calculateEllipsePoint(t, Ellipse::ellipseParams[ellipseIndex]);
 
                 initialStars[i].position = glm::vec3(point.x, 0.0f, point.y);
-                initialStars[i].velocity = glm::vec3(0.0f);
+                initialStars[i].velocity = glm::vec3(t, 0.0f, 0.0f);
             }
         }
 

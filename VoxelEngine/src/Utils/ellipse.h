@@ -14,7 +14,7 @@ namespace vge {
                 float tiltAngle;
             };
 
-            static inline const int MAX_ELLIPSES = 25; // Maximum number of ellipses we can support
+            static inline const int MAX_ELLIPSES = 30; // Maximum number of ellipses we can support
             static inline std::vector<EllipseParams> ellipseParams;
 
             // Base parameters that will be scaled for each ellipse
