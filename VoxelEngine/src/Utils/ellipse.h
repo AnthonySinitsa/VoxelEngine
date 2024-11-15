@@ -1,7 +1,5 @@
 #pragma once
 
-#include "hashFunction.h"
-
 #include <cstdint>
 #include <glm/glm.hpp>
 #include <cmath>
@@ -46,19 +44,24 @@ namespace vge {
                 }
             }
 
-            // Calculate point on ellipse given parameter t
-            static glm::vec3 calculateEllipsePoint(float t, const EllipseParams& params, uint32_t seed) {
+            static float calculateVaucouleursHeight(float x, float z, float maxHeight = 0.5f) {
+                float radius = std::sqrt(x * x + z * z);
+                float effectiveRadius = baseRadius * 2.0f;
+                const float constant = 1.4f;
+                const float centralIntensity = 10.0f;
+                float heightFactor = centralIntensity * std::exp(-constant * std::pow(radius/effectiveRadius, 0.25f));
+                return maxHeight * heightFactor;
+            }
+
+            // Update the calculateEllipsePoint to use storedHeight parameter
+            static glm::vec3 calculateEllipsePoint(float t, const EllipseParams& params, float storedHeight) {
                 float x = params.majorAxis * std::cos(t) * std::cos(params.tiltAngle) -
                         params.minorAxis * std::sin(t) * std::sin(params.tiltAngle);
 
                 float z = params.majorAxis * std::cos(t) * std::sin(params.tiltAngle) +
                         params.minorAxis * std::sin(t) * std::cos(params.tiltAngle);
 
-                float heightFactor = std::sin(t * 2.0f + hash(seed) * 6.28318f);
-                float heightScale = 0.5f;
-                float y = heightFactor * heightScale;
-
-                return glm::vec3(x, y, z);
+                return glm::vec3(x, storedHeight, z);
             }
 
             // Get point for a specific ellipse index

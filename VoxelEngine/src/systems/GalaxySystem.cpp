@@ -6,7 +6,6 @@
 #include <glm/ext/quaternion_geometric.hpp>
 #include <stdexcept>
 #include <vulkan/vulkan_core.h>
-#include <iostream>
 
 namespace vge {
 
@@ -32,7 +31,6 @@ namespace vge {
                 initStars();
 
             } catch (const std::exception& e) {
-                std::cerr << "Error during GalaxySystem initialization: " << e.what() << std::endl;
                 assert("Error during GalaxySystem initialization!!!");
                 throw;
             }
@@ -242,21 +240,24 @@ namespace vge {
 
             for (int i = startIndex; i < endIndex; i++) {
                 float t = (i - startIndex) * angleStep;
-                glm::vec3 point = Ellipse::calculateEllipsePoint(t, Ellipse::ellipseParams[ellipseIndex], i);
+
+                // Get base ellipse position without height
+                glm::vec3 basePos = Ellipse::calculateEllipsePoint(t, Ellipse::ellipseParams[ellipseIndex], 0.0f);
+
+                // Calculate height using de Vaucouleurs's Law
+                float baseHeight = Ellipse::calculateVaucouleursHeight(basePos.x, basePos.z);
+                float randomizedHeight = baseHeight * (hash(float(i)) * 2.0f - 1.0f);
 
                 // Generate random offsets using our hash function
-                float randRadius = hash(float(i) * 12.345f) * 1.0f; // modify 1.0 for more radius
+                float randRadius = hash(float(i) * 12.345f) * 1.0f;
                 float randAngle = hash(float(i) * 67.890f) * 2.0f * M_PI;
 
                 // Calculate random offset in polar coordinates
                 float offsetX = randRadius * cos(randAngle);
                 float offsetZ = randRadius * sin(randAngle);
 
-                // Apply the random offset to the original position
-                initialStars[i].position = point + glm::vec3(offsetX, 0.0f, offsetZ);
-
-                // Store the original angle and ellipse index for the compute shader
-                initialStars[i].velocity = glm::vec3(t, offsetX, offsetZ);
+                initialStars[i].position = basePos + glm::vec3(offsetX, randomizedHeight, offsetZ);
+                initialStars[i].velocity = glm::vec3(t, randomizedHeight, randRadius);
             }
         }
 
