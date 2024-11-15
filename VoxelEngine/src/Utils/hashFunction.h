@@ -10,7 +10,7 @@ namespace vge {
 // Returns a value between 0 and 1
 inline float hash(uint32_t n) {
     n = (n << 13U) ^ n;
-    n = n * (n * n * 15731U + 0x789221U) + 0x1376312589U;
+    n = n * (n * n * 15731U + 0x789221U) + 0x137631U;
     return float(n & uint32_t(0x7fffffffU)) / float(0x7fffffff);
 }
 
@@ -43,7 +43,7 @@ USE THIS BELOW TO COPY TO SHADER FILE
 // Returns a value between 0 and 1
 float hash(uint n) {
     n = (n << 13U) ^ n;
-    n = n * (n * n * 15731U + 0x789221U) + 0x1376312589U;
+    n = n * (n * n * 15731U + 0x789221U) + 0x137631U;
     return float(n & uint(0x7fffffffU)) / float(0x7fffffff);
 }
 

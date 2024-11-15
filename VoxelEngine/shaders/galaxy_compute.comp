@@ -33,12 +33,31 @@ layout(std430, binding = 2) readonly buffer EllipseBuffer {
 const float BASE_ROTATION_SPEED = -0.05;
 const float SPEED_MULTIPLIER = 2.0;
 
-vec2 calculateEllipsePoint(float t, EllipseParams params) {
+float hash(uint n) {
+    n = (n << 13U) ^ n;
+    n = n * (n * n * 15731U + 0x789221U) + 0x137631U;
+    return float(n & uint(0x7fffffffU)) / float(0x7fffffff);
+}
+
+// Variant that takes a float and returns a float
+float hash(float n) {
+    return hash(uint(n));
+}
+
+vec3 calculateEllipsePoint(float t, EllipseParams params, float seed) {
+    // Calculate base ellipse point
     float x = params.majorAxis * cos(t) * cos(params.tiltAngle) -
             params.minorAxis * sin(t) * sin(params.tiltAngle);
-    float y = params.majorAxis * cos(t) * sin(params.tiltAngle) +
+
+    float z = params.majorAxis * cos(t) * sin(params.tiltAngle) +
             params.minorAxis * sin(t) * cos(params.tiltAngle);
-    return vec2(x, y);
+
+    // Calculate height using the same formula as CPU side
+    float heightFactor = sin(t * 2.0 + hash(seed) * 6.28318);
+    float heightScale = params.majorAxis * 0.1;
+    float y = heightFactor * heightScale;
+
+    return vec3(x, y, z);
 }
 
 void main() {
@@ -68,11 +87,11 @@ void main() {
         newAngle -= 2.0 * 3.14159;
     }
 
-    // Calculate base position on ellipse
-    vec2 basePoint = calculateEllipsePoint(newAngle, params);
+    // Calculate new position including height
+    vec3 basePoint = calculateEllipsePoint(newAngle, params, float(index));
 
     // Apply the stored offset to maintain consistent randomization
-    vec3 newPosition = vec3(basePoint.x + offsetX, 0.0, basePoint.y + offsetZ);
+    vec3 newPosition = basePoint + vec3(offsetX, 0.0, offsetZ);
 
     // Store updated position and parameters
     starsOut[index].position = newPosition;

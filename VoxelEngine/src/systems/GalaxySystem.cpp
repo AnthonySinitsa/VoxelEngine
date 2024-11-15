@@ -242,10 +242,10 @@ namespace vge {
 
             for (int i = startIndex; i < endIndex; i++) {
                 float t = (i - startIndex) * angleStep;
-                glm::vec2 point = Ellipse::calculateEllipsePoint(t, Ellipse::ellipseParams[ellipseIndex]);
+                glm::vec3 point = Ellipse::calculateEllipsePoint(t, Ellipse::ellipseParams[ellipseIndex], i);
 
                 // Generate random offsets using our hash function
-                float randRadius = hash(float(i) * 12.345f) * 1.0f;
+                float randRadius = hash(float(i) * 12.345f) * 1.0f; // modify 1.0 for more radius
                 float randAngle = hash(float(i) * 67.890f) * 2.0f * M_PI;
 
                 // Calculate random offset in polar coordinates
@@ -253,11 +253,7 @@ namespace vge {
                 float offsetZ = randRadius * sin(randAngle);
 
                 // Apply the random offset to the original position
-                initialStars[i].position = glm::vec3(
-                    point.x + offsetX,
-                    0.0f,
-                    point.y + offsetZ
-                );
+                initialStars[i].position = point + glm::vec3(offsetX, 0.0f, offsetZ);
 
                 // Store the original angle and ellipse index for the compute shader
                 initialStars[i].velocity = glm::vec3(t, offsetX, offsetZ);
