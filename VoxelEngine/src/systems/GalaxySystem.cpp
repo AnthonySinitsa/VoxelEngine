@@ -223,6 +223,7 @@ namespace vge {
 
     void GalaxySystem::updateGalaxyParameters() {
         updateEllipseBuffer();
+        initStars();
     }
 
 
@@ -245,11 +246,11 @@ namespace vge {
                 glm::vec3 basePos = Ellipse::calculateEllipsePoint(t, Ellipse::ellipseParams[ellipseIndex], 0.0f);
 
                 // Calculate height using de Vaucouleurs's Law
-                float baseHeight = Ellipse::calculateVaucouleursHeight(basePos.x, basePos.z);
+                float baseHeight = Ellipse::calculateVaucouleursHeight(basePos.x, basePos.z, Ellipse::maxHeight);
                 float randomizedHeight = baseHeight * (hash(float(i)) * 2.0f - 1.0f);
 
                 // Generate random offsets using our hash function
-                float randRadius = hash(float(i) * 12.345f) * 1.0f;
+                float randRadius = hash(float(i) * 12.345f) * 4.0f;
                 float randAngle = hash(float(i) * 67.890f) * 2.0f * M_PI;
 
                 // Calculate random offset in polar coordinates

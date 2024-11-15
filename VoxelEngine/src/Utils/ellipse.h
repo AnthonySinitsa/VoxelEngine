@@ -25,6 +25,12 @@ namespace vge {
             static inline float tiltIncrement = 0.16f;
             static inline float eccentricity = 0.8f;
 
+            // Galaxy shape using Vaucouleurs Law
+            static inline float constant = 1.4f;
+            static inline float centralIntensity = 10.0f;
+            static inline float effectiveRadiusScale = 2.0f;
+            static inline float maxHeight = 0.5f;
+
             static void generateEllipseParams(int numEllipses) {
                 ellipseParams.clear();
 
@@ -44,11 +50,9 @@ namespace vge {
                 }
             }
 
-            static float calculateVaucouleursHeight(float x, float z, float maxHeight = 0.5f) {
+            static float calculateVaucouleursHeight(float x, float z, float maxHeight) {
                 float radius = std::sqrt(x * x + z * z);
-                float effectiveRadius = baseRadius * 2.0f;
-                const float constant = 1.4f;
-                const float centralIntensity = 10.0f;
+                float effectiveRadius = baseRadius * effectiveRadiusScale;
                 float heightFactor = centralIntensity * std::exp(-constant * std::pow(radius/effectiveRadius, 0.25f));
                 return maxHeight * heightFactor;
             }

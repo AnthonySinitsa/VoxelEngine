@@ -31,7 +31,7 @@ layout(std430, binding = 2) readonly buffer EllipseBuffer {
 } ellipseData;
 
 const float BASE_ROTATION_SPEED = -0.05;
-const float SPEED_MULTIPLIER = 2.0;
+const float SPEED_MULTIPLIER = 20.0;
 
 float hash(uint n) {
     n = (n << 13U) ^ n;
