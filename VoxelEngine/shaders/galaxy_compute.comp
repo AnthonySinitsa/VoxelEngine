@@ -31,14 +31,17 @@ layout(std430, binding = 2) readonly buffer EllipseBuffer {
 } ellipseData;
 
 const float BASE_ROTATION_SPEED = -0.05;
-const float SPEED_MULTIPLIER = 2.0;
+const float SPEED_MULTIPLIER = 20.0;
 
-vec2 calculateEllipsePoint(float t, EllipseParams params) {
-    float x = params.majorAxis * cos(t) * cos(params.tiltAngle) -
-            params.minorAxis * sin(t) * sin(params.tiltAngle);
-    float y = params.majorAxis * cos(t) * sin(params.tiltAngle) +
-            params.minorAxis * sin(t) * cos(params.tiltAngle);
-    return vec2(x, y);
+float hash(uint n) {
+    n = (n << 13U) ^ n;
+    n = n * (n * n * 15731U + 0x789221U) + 0x137631U;
+    return float(n & uint(0x7fffffffU)) / float(0x7fffffff);
+}
+
+// Variant that takes a float and returns a float
+float hash(float n) {
+    return hash(uint(n));
 }
 
 void main() {
@@ -55,8 +58,8 @@ void main() {
 
     // Get the stored parameters
     float currentAngle = starsIn[index].velocity.x;
-    float offsetX = starsIn[index].velocity.y;
-    float offsetZ = starsIn[index].velocity.z;
+    float storedHeight = starsIn[index].velocity.y;
+    float radialOffset = starsIn[index].velocity.z;
 
     // Calculate rotation speed based on ellipse size
     float speedFactor = SPEED_MULTIPLIER / max(params.majorAxis, 0.1);
@@ -68,13 +71,24 @@ void main() {
         newAngle -= 2.0 * 3.14159;
     }
 
-    // Calculate base position on ellipse
-    vec2 basePoint = calculateEllipsePoint(newAngle, params);
+    // Calculate base ellipse position
+    float x = params.majorAxis * cos(newAngle) * cos(params.tiltAngle) -
+            params.minorAxis * sin(newAngle) * sin(params.tiltAngle);
+    float z = params.majorAxis * cos(newAngle) * sin(params.tiltAngle) +
+            params.minorAxis * sin(newAngle) * cos(params.tiltAngle);
 
-    // Apply the stored offset to maintain consistent randomization
-    vec3 newPosition = vec3(basePoint.x + offsetX, 0.0, basePoint.y + offsetZ);
+    // Apply stored radial offset in the orbital plane
+    float offsetAngle = newAngle + radialOffset;
+    vec3 offset = vec3(
+            cos(offsetAngle) * radialOffset,
+            0.0,
+            sin(offsetAngle) * radialOffset
+        );
+
+    // Combine position with stored height
+    vec3 newPosition = vec3(x, storedHeight, z) + offset;
 
     // Store updated position and parameters
     starsOut[index].position = newPosition;
-    starsOut[index].velocity = vec3(newAngle, offsetX, offsetZ);
+    starsOut[index].velocity = vec3(newAngle, storedHeight, radialOffset);
 }
