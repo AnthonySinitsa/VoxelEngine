@@ -55,7 +55,7 @@ namespace vge {
                         params.minorAxis * std::sin(t) * std::cos(params.tiltAngle);
 
                 float heightFactor = std::sin(t * 2.0f + hash(seed) * 6.28318f);
-                float heightScale = params.majorAxis * 0.5f;
+                float heightScale = params.majorAxis * 0.1f;
                 float y = heightFactor * heightScale;
 
                 return glm::vec3(x, y, z);
