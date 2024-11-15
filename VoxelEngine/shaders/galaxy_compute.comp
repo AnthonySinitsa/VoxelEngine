@@ -54,7 +54,7 @@ vec3 calculateEllipsePoint(float t, EllipseParams params, float seed) {
 
     // Calculate height using the same formula as CPU side
     float heightFactor = sin(t * 2.0 + hash(seed) * 6.28318);
-    float heightScale = params.majorAxis * 0.1;
+    float heightScale = 0.5;
     float y = heightFactor * heightScale;
 
     return vec3(x, y, z);
