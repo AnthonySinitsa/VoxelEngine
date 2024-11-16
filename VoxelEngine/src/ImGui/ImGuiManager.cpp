@@ -21,8 +21,15 @@
 namespace vge {
 
     VgeImgui::VgeImgui(
-        Window &window, VgeDevice &device, Renderer &renderer, VkRenderPass renderPass, uint32_t imageCount, GalaxySystem* galaxySystem
-    ) : vgeDevice{device}, vgeRenderer{renderer}, galaxySystem{galaxySystem} {
+        Window &window,
+        VgeDevice &device,
+        Renderer &renderer,
+        VkRenderPass renderPass,
+        uint32_t imageCount,
+        GalaxySystem* galaxySystem
+    ) : vgeDevice{device},
+        vgeRenderer{renderer},
+        galaxySystem{galaxySystem} {
         // Set up descriptor pool stored on this instance
         VkDescriptorPoolSize pool_sizes[] = {
             {VK_DESCRIPTOR_TYPE_SAMPLER, 1000},
