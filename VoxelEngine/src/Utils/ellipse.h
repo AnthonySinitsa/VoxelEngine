@@ -19,7 +19,7 @@ namespace vge {
             static inline std::vector<EllipseParams> ellipseParams;
 
             // Base parameters that will be scaled for each ellipse
-            static inline float baseRadius = 1.0f;
+            static inline float baseRadius = 1.83f;
             static inline float radiusIncrement = 0.5f;
             static inline float baseTilt = 0.0f;
             static inline float tiltIncrement = 0.16f;
@@ -51,7 +51,7 @@ namespace vge {
             }
 
             static float calculateVaucouleursHeight(float x, float z, float maxHeight) {
-                float radius = std::sqrt(x * x + z * z);
+                float radius = std::sqrt(x * x + z * z) + 0.0001f;
                 float effectiveRadius = baseRadius * effectiveRadiusScale;
                 float heightFactor = centralIntensity * std::exp(-constant * std::pow(radius/effectiveRadius, 0.25f));
                 return maxHeight * heightFactor;

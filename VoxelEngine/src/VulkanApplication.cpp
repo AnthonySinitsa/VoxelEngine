@@ -46,7 +46,8 @@ namespace vge{
             vgeRenderer,
             vgeRenderer.getSwapChainRenderPass(),
             VgeSwapChain::MAX_FRAMES_IN_FLIGHT,
-            galaxySystem.get()
+            galaxySystem.get(),
+            &input
         );
     }
 
@@ -105,7 +106,7 @@ namespace vge{
 
         auto viewerObject = GameObject::createGameObject();
         viewerObject.transform.translation.z = -2.5f;
-        Input input{};
+        // Input input{};
 
         auto currentTime = std::chrono::high_resolution_clock::now();
 
