@@ -1,6 +1,6 @@
 # VoxelEngine (WIP)
 
-```This is a Rendering Engine created using the Vulkan Graphics API. The backend is finished, currently working on creating different scenes to more showcase the awesomeness of this project.```
+```This is a Rendering Engine created using the Vulkan Graphics API. The backend is finished, currently working on creating different scenes to more showcase this project.```
 
 ---
 ### Link to my trello board to the project organization.
@@ -9,15 +9,16 @@
 
 ---
 
+## Implementing galaxy particle system
+
 ## One-hundred-thousand
 
-![onehunnedthousand](VoxelEngine/images/SpinningGalaxyPlain.gif)
+![1.83](VoxelEngine/images/1.83radius.gif)
 
 ## 2 million stars rendered with average 7ms frame time
 
 ![2mil](VoxelEngine/images/2milStars.png)
 
-## Implementing galaxy particle system (100,000 stars rendering right now)
 
 ![galaxy](VoxelEngine/images/SecondGalaxyAttempt.gif)
 
@@ -34,5 +35,13 @@
 ### [Drawing](VoxelEngine/README/Drawing.md)
 
 ![Drawing](VoxelEngine/images/Drawing.png)
+
+## References and Resources Used
+
+https://beltoforion.de/en/spiral_galaxy_renderer/
+
+[Ellipse Formula](https://www.desmos.com/calculator/qmu0f229zh)
+
+[de Vaucouleurs's Law](https://www.desmos.com/calculator/bax4od28zj)
 
 <!-- command to run on linux `make test` --->
