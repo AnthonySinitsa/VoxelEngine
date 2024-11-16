@@ -26,10 +26,12 @@ namespace vge {
         Renderer &renderer,
         VkRenderPass renderPass,
         uint32_t imageCount,
-        GalaxySystem* galaxySystem
+        GalaxySystem* galaxySystem,
+        Input* input
     ) : vgeDevice{device},
         vgeRenderer{renderer},
-        galaxySystem{galaxySystem} {
+        galaxySystem{galaxySystem},
+        input{input} {
         // Set up descriptor pool stored on this instance
         VkDescriptorPoolSize pool_sizes[] = {
             {VK_DESCRIPTOR_TYPE_SAMPLER, 1000},
@@ -265,6 +267,16 @@ namespace vge {
             ImGui::Checkbox("Demo Window", &show_demo_window);
             if(ImGui::ColorEdit3("Sky Color", (float *)&clear_color, ImGuiColorEditFlags_NoInputs)) {
                 vgeRenderer.setBackgroundColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
+            }
+
+            ImGui::Spacing();
+            ImGui::Separator();
+            ImGui::Text("Camera Controls");
+
+            // Movement speed slider
+            float currentSpeed = input->moveSpeed;
+            if (ImGui::SliderFloat("Movement Speed", &currentSpeed, 1.0f, 20.0f, "%.1f")) {
+                input->moveSpeed = currentSpeed;
             }
 
             ImGui::Spacing();

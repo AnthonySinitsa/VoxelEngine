@@ -35,7 +35,7 @@ namespace vge{
             bool isMouseLocked() const { return mouseLocked; }
 
             KeyMappings keys{};
-            float moveSpeed{3.f};
+            float moveSpeed{20.f};
             float lookSpeed{1.5f};
             float mouseSensitivity{0.1f};
 

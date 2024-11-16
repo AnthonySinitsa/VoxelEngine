@@ -43,5 +43,6 @@ namespace vge {
 
             std::unique_ptr<VgeImgui> vgeImgui{};
             std::unique_ptr<GalaxySystem> galaxySystem;
+            Input input{};
     };
 } // namespace

@@ -3,14 +3,16 @@
 #include "../Device/Device.h"
 #include "../Window.h"
 #include "../Rendering/Renderer.h"
+#include "../systems/GalaxySystem.h"
+#include "../Input/Input.h"
 
 // libs
 #include "external/ImGuiDocking/imgui.h"
-#include <src/systems/GalaxySystem.h>
 
 namespace vge {
 
     class GalaxySystem;
+    class Input;
 
     static void check_vk_result(VkResult err) {
         if(err == 0) return;
@@ -26,7 +28,8 @@ namespace vge {
                 Renderer &renderer,
                 VkRenderPass renderPass,
                 uint32_t imageCount,
-                GalaxySystem* galaxySystem);
+                GalaxySystem* galaxySystem,
+                Input* input);
             ~VgeImgui();
 
             void newFrame();
@@ -70,5 +73,6 @@ namespace vge {
             const float UPDATE_INTERVAL = 1.0f;
 
             GalaxySystem* galaxySystem;
+            Input* input;
     };
 } // namespace
