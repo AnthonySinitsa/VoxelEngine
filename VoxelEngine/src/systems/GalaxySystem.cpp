@@ -238,6 +238,7 @@ namespace vge {
             int starsInThisEllipse = endIndex - startIndex;
 
             float angleStep = (2.0f * M_PI) / starsInThisEllipse;
+            float currentEllipseSize = Ellipse::ellipseParams[ellipseIndex].majorAxis;
 
             for (int i = startIndex; i < endIndex; i++) {
                 float t = (i - startIndex) * angleStep;
@@ -249,7 +250,7 @@ namespace vge {
                 float baseHeight = Ellipse::calculateVaucouleursHeight(basePos.x, basePos.z, Ellipse::maxHeight);
                 float randomizedHeight = baseHeight * (hash(float(i)) * 2.0f - 1.0f);
 
-                // Generate random offsets using our hash function
+                // NTS: replace 4.0f with currentEllipseSize
                 float randRadius = hash(float(i) * 12.345f) * 4.0f;
                 float randAngle = hash(float(i) * 67.890f) * 2.0f * M_PI;
 
