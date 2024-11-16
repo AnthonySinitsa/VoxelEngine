@@ -19,7 +19,7 @@ namespace vge {
             static inline std::vector<EllipseParams> ellipseParams;
 
             // Base parameters that will be scaled for each ellipse
-            static inline float baseRadius = 1.0f;
+            static inline float baseRadius = 1.83f;
             static inline float radiusIncrement = 0.5f;
             static inline float baseTilt = 0.0f;
             static inline float tiltIncrement = 0.16f;

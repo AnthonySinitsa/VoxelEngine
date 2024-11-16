@@ -267,7 +267,7 @@ namespace vge {
             // Galaxy Parameters in a TreeNode
             if (ImGui::TreeNode("Galaxy Parameters")) {
                 bool parametersChanged = false;
-                static float baseRadius = 1.0f;
+                static float baseRadius = 1.83f;
                 static float radiusIncrement = 0.5f;
                 static float baseTilt = 0.0f;
                 static float tiltIncrement = 0.16f;
@@ -317,26 +317,6 @@ namespace vge {
                     ImGui::SetTooltip("Controls how elliptical the shapes are (1.0 = circular)");
                 }
 
-                ImGui::Spacing();
-                if (ImGui::Button("Restore Shape Values")) {
-                    baseRadius = 1.0f;
-                    radiusIncrement = 0.5f;
-                    baseTilt = 0.0f;
-                    tiltIncrement = 0.16f;
-                    eccentricity = 0.8f;
-
-                    // Update the Ellipse class values
-                    Ellipse::baseRadius = baseRadius;
-                    Ellipse::radiusIncrement = radiusIncrement;
-                    Ellipse::baseTilt = baseTilt;
-                    Ellipse::tiltIncrement = tiltIncrement;
-                    Ellipse::eccentricity = eccentricity;
-
-                    // Generate new ellipse parameters
-                    Ellipse::generateEllipseParams(Ellipse::MAX_ELLIPSES);
-                    galaxySystem->updateGalaxyParameters();
-                }
-
 
                 ImGui::Spacing();
                 ImGui::Text("Height Distribution Parameters");
@@ -347,7 +327,7 @@ namespace vge {
                     parametersChanged = true;
                 }
                 if (ImGui::IsItemHovered()) {
-                    ImGui::SetTooltip("Controls the intensity at the center of the galaxy (I_0)");
+                    ImGui::SetTooltip("Controls the intensity at the center of the galaxy (I0)");
                 }
 
                 // Constant (b) Control
@@ -359,7 +339,7 @@ namespace vge {
                 }
 
                 // Effective Radius Scale Control
-                if (ImGui::DragFloat("Effective Radius (R_e)", &Ellipse::effectiveRadiusScale, 0.1f, 0.1f, 10.0f, "%.1f")) {
+                if (ImGui::DragFloat("Effective Radius (Re)", &Ellipse::effectiveRadiusScale, 0.1f, 0.1f, 10.0f, "%.1f")) {
                     parametersChanged = true;
                 }
                 if (ImGui::IsItemHovered()) {
@@ -374,21 +354,7 @@ namespace vge {
                     ImGui::SetTooltip("Maximum possible height for any star");
                 }
 
-                if (ImGui::Button("Restore Distribution Value")) {
-                    Ellipse::centralIntensity = 10.0f;
-                    Ellipse::constant = 1.4f;
-                    Ellipse::effectiveRadiusScale = 2.0f;
-                    Ellipse::maxHeight = 0.5f;
-
-                    // Generate new ellipse parameters and update galaxy
-                    Ellipse::generateEllipseParams(Ellipse::MAX_ELLIPSES);
-                    galaxySystem->updateGalaxyParameters();
-                }
-
                 ImGui::Spacing();
-                ImGui::Separator();
-                ImGui::Spacing();
-
                 if (parametersChanged) {
                     // If parameters changed or reset button was clicked, update the static values
                     // in the Ellipse class
@@ -404,6 +370,33 @@ namespace vge {
                     // Update the galaxy system
                     galaxySystem->updateGalaxyParameters();
                 }
+
+                if (ImGui::Button("Restore Defaults")) {
+                    baseRadius = 1.83f;
+                    radiusIncrement = 0.5f;
+                    baseTilt = 0.0f;
+                    tiltIncrement = 0.16f;
+                    eccentricity = 0.8f;
+
+                    Ellipse::centralIntensity = 10.0f;
+                    Ellipse::constant = 1.4f;
+                    Ellipse::effectiveRadiusScale = 2.0f;
+                    Ellipse::maxHeight = 0.5f;
+
+                    // Update the Ellipse class values
+                    Ellipse::baseRadius = baseRadius;
+                    Ellipse::radiusIncrement = radiusIncrement;
+                    Ellipse::baseTilt = baseTilt;
+                    Ellipse::tiltIncrement = tiltIncrement;
+                    Ellipse::eccentricity = eccentricity;
+
+                    // Generate new ellipse parameters
+                    Ellipse::generateEllipseParams(Ellipse::MAX_ELLIPSES);
+
+                    // Update the galaxy system
+                    galaxySystem->updateGalaxyParameters();
+                }
+
                 ImGui::TreePop();
             }
 
