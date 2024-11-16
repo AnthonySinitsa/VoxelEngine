@@ -286,14 +286,9 @@ namespace vge {
             // Galaxy Parameters in a TreeNode
             if (ImGui::TreeNode("Galaxy Parameters")) {
                 bool parametersChanged = false;
-                static float baseRadius = 1.83f;
-                static float radiusIncrement = 0.5f;
-                static float baseTilt = 0.0f;
-                static float tiltIncrement = 0.16f;
-                static float eccentricity = 0.8f;
 
                 // Base Radius Control
-                if (ImGui::DragFloat("Base Radius", &baseRadius, 0.01f, 0.1f, 5.0f, "%.2f")) {
+                if (ImGui::DragFloat("Base Radius", &Ellipse::baseRadius, 0.01f, 0.1f, 5.0f, "%.2f")) {
                     parametersChanged = true;
                 }
                 if (ImGui::IsItemHovered()) {
@@ -301,7 +296,7 @@ namespace vge {
                 }
 
                 // Radius Increment Control
-                if (ImGui::DragFloat("Radius Increment", &radiusIncrement, 0.01f, 0.1f, 2.0f, "%.2f")) {
+                if (ImGui::DragFloat("Radius Increment", &Ellipse::radiusIncrement, 0.01f, 0.1f, 2.0f, "%.2f")) {
                     parametersChanged = true;
                 }
                 if (ImGui::IsItemHovered()) {
@@ -309,9 +304,9 @@ namespace vge {
                 }
 
                 // Base Tilt Control
-                float baseTiltDegrees = glm::degrees(baseTilt);
+                float baseTiltDegrees = glm::degrees(Ellipse::baseTilt);
                 if (ImGui::DragFloat("Base Tilt", &baseTiltDegrees, 1.0f, -180.0f, 180.0f, "%.1f°")) {
-                    baseTilt = glm::radians(baseTiltDegrees);
+                    Ellipse::baseTilt = glm::radians(baseTiltDegrees);
                     parametersChanged = true;
                 }
                 if (ImGui::IsItemHovered()) {
@@ -319,9 +314,9 @@ namespace vge {
                 }
 
                 // Tilt Increment Control
-                float tiltIncrementDegrees = glm::degrees(tiltIncrement);
+                float tiltIncrementDegrees = glm::degrees(Ellipse::tiltIncrement);
                 if (ImGui::DragFloat("Tilt Increment", &tiltIncrementDegrees, 0.1f, 0.0f, 45.0f, "%.1f°")) {
-                    tiltIncrement = glm::radians(tiltIncrementDegrees);
+                    Ellipse::tiltIncrement = glm::radians(tiltIncrementDegrees);
                     parametersChanged = true;
                 }
                 if (ImGui::IsItemHovered()) {
@@ -329,7 +324,7 @@ namespace vge {
                 }
 
                 // Eccentricity Control
-                if (ImGui::DragFloat("Eccentricity", &eccentricity, 0.01f, 0.1f, 1.0f, "%.2f")) {
+                if (ImGui::DragFloat("Eccentricity", &Ellipse::eccentricity, 0.01f, 0.1f, 1.0f, "%.2f")) {
                     parametersChanged = true;
                 }
                 if (ImGui::IsItemHovered()) {
@@ -375,14 +370,6 @@ namespace vge {
 
                 ImGui::Spacing();
                 if (parametersChanged) {
-                    // If parameters changed or reset button was clicked, update the static values
-                    // in the Ellipse class
-                    Ellipse::baseRadius = baseRadius;
-                    Ellipse::radiusIncrement = radiusIncrement;
-                    Ellipse::baseTilt = baseTilt;
-                    Ellipse::tiltIncrement = tiltIncrement;
-                    Ellipse::eccentricity = eccentricity;
-
                     // Generate new ellipse parameters
                     Ellipse::generateEllipseParams(Ellipse::MAX_ELLIPSES);
 
@@ -391,23 +378,16 @@ namespace vge {
                 }
 
                 if (ImGui::Button("Restore Defaults")) {
-                    baseRadius = 1.83f;
-                    radiusIncrement = 0.5f;
-                    baseTilt = 0.0f;
-                    tiltIncrement = 0.16f;
-                    eccentricity = 0.8f;
+                    Ellipse::baseRadius = 1.83f;
+                    Ellipse::radiusIncrement = 0.5f;
+                    Ellipse::baseTilt = 0.0f;
+                    Ellipse::tiltIncrement = 0.16f;
+                    Ellipse::eccentricity = 0.8f;
 
                     Ellipse::centralIntensity = 10.0f;
                     Ellipse::constant = 1.4f;
                     Ellipse::effectiveRadiusScale = 2.0f;
                     Ellipse::maxHeight = 0.5f;
-
-                    // Update the Ellipse class values
-                    Ellipse::baseRadius = baseRadius;
-                    Ellipse::radiusIncrement = radiusIncrement;
-                    Ellipse::baseTilt = baseTilt;
-                    Ellipse::tiltIncrement = tiltIncrement;
-                    Ellipse::eccentricity = eccentricity;
 
                     // Generate new ellipse parameters
                     Ellipse::generateEllipseParams(Ellipse::MAX_ELLIPSES);
