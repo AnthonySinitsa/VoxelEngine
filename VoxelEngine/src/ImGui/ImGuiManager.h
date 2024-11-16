@@ -49,6 +49,20 @@ namespace vge {
 
             void updatePerformanceMetrics();
 
+            // UI Section Renderers
+            void renderGlobalControls();
+            void renderCameraControls();
+            void renderGalaxyParameters();
+            void renderPerformanceMetrics();
+
+            // Galaxy Parameter Sub-sections
+            void renderGalaxyShapeParameters(bool& parametersChanged);
+            void renderHeightDistributionParameters(bool& parametersChanged);
+
+            // Helper functions
+            void handleGalaxyParameterChanges(bool parametersChanged);
+            void restoreDefaultGalaxyParameters();
+
         private:
             Renderer &vgeRenderer;
             VgeDevice &vgeDevice;
