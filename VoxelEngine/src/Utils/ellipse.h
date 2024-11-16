@@ -51,7 +51,7 @@ namespace vge {
             }
 
             static float calculateVaucouleursHeight(float x, float z, float maxHeight) {
-                float radius = std::sqrt(x * x + z * z);
+                float radius = std::sqrt(x * x + z * z) + 0.0001f;
                 float effectiveRadius = baseRadius * effectiveRadiusScale;
                 float heightFactor = centralIntensity * std::exp(-constant * std::pow(radius/effectiveRadius, 0.25f));
                 return maxHeight * heightFactor;
