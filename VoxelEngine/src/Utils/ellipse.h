@@ -27,6 +27,7 @@ namespace vge {
 
             // Galaxy shape using Vaucouleurs Law
             static inline float constant = 1.4f;
+            static inline float baseRadius2 = 1.83f;
             static inline float centralIntensity = 10.0f;
             static inline float effectiveRadiusScale = 2.0f;
             static inline float maxHeight = 0.5f;
@@ -52,7 +53,7 @@ namespace vge {
 
             static float calculateVaucouleursHeight(float x, float z, float maxHeight) {
                 float radius = std::sqrt(x * x + z * z) + 0.0001f;
-                float effectiveRadius = baseRadius * effectiveRadiusScale;
+                float effectiveRadius = baseRadius2 * effectiveRadiusScale;
                 float heightFactor = centralIntensity * std::exp(-constant * std::pow(radius/effectiveRadius, 0.25f));
                 return maxHeight * heightFactor;
             }

@@ -108,6 +108,20 @@ namespace vge {
         // Configure for point rendering
         pipelineConfig.inputAssemblyInfo.topology = VK_PRIMITIVE_TOPOLOGY_POINT_LIST;
 
+        // Enable alpha blending
+        pipelineConfig.colorBlendAttachment.blendEnable = VK_TRUE;
+        pipelineConfig.colorBlendAttachment.srcColorBlendFactor = VK_BLEND_FACTOR_SRC_ALPHA;
+        pipelineConfig.colorBlendAttachment.dstColorBlendFactor = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+        pipelineConfig.colorBlendAttachment.colorBlendOp = VK_BLEND_OP_ADD;
+        pipelineConfig.colorBlendAttachment.srcAlphaBlendFactor = VK_BLEND_FACTOR_ONE;
+        pipelineConfig.colorBlendAttachment.dstAlphaBlendFactor = VK_BLEND_FACTOR_ZERO;
+        pipelineConfig.colorBlendAttachment.alphaBlendOp = VK_BLEND_OP_ADD;
+
+        // Enable depth testing but disable depth writing for transparency
+        pipelineConfig.depthStencilInfo.depthTestEnable = VK_TRUE;
+        pipelineConfig.depthStencilInfo.depthWriteEnable = VK_FALSE;
+        pipelineConfig.depthStencilInfo.depthCompareOp = VK_COMPARE_OP_LESS;
+
         pipelineConfig.renderPass = renderPass;
         pipelineConfig.pipelineLayout = graphicsPipelineLayout;
         pipelineConfig.bindingDescriptions = getBindingDescriptions();

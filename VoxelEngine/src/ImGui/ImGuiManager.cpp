@@ -329,7 +329,7 @@ namespace vge {
 
     void VgeImgui::renderGalaxyShapeParameters(bool& parametersChanged) {
         // Base Radius Control
-        if (ImGui::DragFloat("Base Radius", &Ellipse::baseRadius, 0.01f, 0.1f, 5.0f, "%.2f")) {
+        if (ImGui::DragFloat("Base Radius", &Ellipse::baseRadius, 0.01f, 1.0f, 5.0f, "%.2f")) {
             parametersChanged = true;
         }
         if (ImGui::IsItemHovered()) {
@@ -382,6 +382,13 @@ namespace vge {
         }
         if (ImGui::IsItemHovered()) {
             ImGui::SetTooltip("Controls the intensity at the center of the galaxy (I0)");
+        }
+
+        if (ImGui::DragFloat("Base Radius2", &Ellipse::baseRadius2, 0.01f, 0.1f, 5.0f, "%.2f")) {
+            parametersChanged = true;
+        }
+        if (ImGui::IsItemHovered()) {
+            ImGui::SetTooltip("Base Radius 2");
         }
 
         // Constant (b) Control
@@ -445,6 +452,7 @@ namespace vge {
         Ellipse::eccentricity = 0.8f;
 
         Ellipse::centralIntensity = 10.0f;
+        Ellipse::baseRadius2 = 1.83f;
         Ellipse::constant = 1.4f;
         Ellipse::effectiveRadiusScale = 2.0f;
         Ellipse::maxHeight = 0.5f;
