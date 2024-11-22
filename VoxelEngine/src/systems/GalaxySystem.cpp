@@ -129,8 +129,8 @@ namespace vge {
 
         graphicsPipeline = std::make_unique<Pipeline>(
             vgeDevice,
-            "shaders/galaxy_vertex.vert.spv",
-            "shaders/galaxy_fragment.frag.spv",
+            "shaders/Galaxy/galaxy_vertex.vert.spv",
+            "shaders/Galaxy/galaxy_fragment.frag.spv",
             pipelineConfig
         );
     }
@@ -143,7 +143,7 @@ namespace vge {
 
         computePipeline = std::make_unique<Pipeline>(
             vgeDevice,
-            "shaders/galaxy_compute.comp.spv",
+            "shaders/Galaxy/galaxy_compute.comp.spv",
             computePipelineConfig
         );
     }

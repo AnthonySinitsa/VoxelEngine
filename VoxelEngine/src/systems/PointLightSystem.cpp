@@ -65,8 +65,8 @@ namespace vge{
         pipelineConfig.pipelineLayout = pipelineLayout;
         vgePipeline = std::make_unique<Pipeline>(
             vgeDevice,
-            "shaders/point_light_vertex.vert.spv",
-            "shaders/point_light_fragment.frag.spv",
+            "shaders/PointLight/point_light_vertex.vert.spv",
+            "shaders/PointLight/point_light_fragment.frag.spv",
             pipelineConfig
         );
     }
