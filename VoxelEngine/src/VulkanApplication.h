@@ -6,7 +6,7 @@
 #include "Window.h"
 #include "Descriptor/Descriptors.h"
 #include "ImGui/ImGuiManager.h"
-#include "systems/GalaxySystem.h"
+#include "systems/Galaxy/GalaxySystem.h"
 
 // std
 #include <memory>

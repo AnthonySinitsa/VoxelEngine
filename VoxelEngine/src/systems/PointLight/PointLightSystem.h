@@ -1,8 +1,8 @@
 #pragma once
 
-#include "../Graphics/Pipeline.h"
-#include "../Device/Device.h"
-#include "../FrameInfo.h"
+#include "../../Graphics/Pipeline.h"
+#include "../../Device/Device.h"
+#include "../../FrameInfo.h"
 
 // std
 #include <memory>

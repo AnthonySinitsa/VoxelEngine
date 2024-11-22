@@ -1,7 +1,7 @@
 #include "GalaxySystem.h"
-#include "../Buffer/Buffer.h"
-#include "../Utils/ellipse.h"
-#include "../Utils/hashFunction.h"
+#include "../../Buffer/Buffer.h"
+#include "../../Utils/ellipse.h"
+#include "../../Utils/hashFunction.h"
 
 #include <glm/ext/quaternion_geometric.hpp>
 #include <stdexcept>
