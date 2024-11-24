@@ -3,14 +3,14 @@
 #include "Camera/Camera.h"
 #include "Game/GameObject.h"
 #include "systems/RenderSystem.h"
-#include "systems/PointLightSystem.h"
+#include "systems/PointLight/PointLightSystem.h"
 #include "Rendering/Renderer.h"
 #include "Input/Input.h"
 #include "Buffer/Buffer.h"
 #include <memory>
 #include <src/Descriptor/Descriptors.h>
 #include <src/Presentation/SwapChain.h>
-#include <src/systems/GalaxySystem.h>
+#include <src/systems/Galaxy/GalaxySystem.h>
 
 // libs
 #define GLM_FORCE_RADIANS

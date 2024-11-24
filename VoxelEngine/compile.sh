@@ -3,10 +3,10 @@
 /usr/bin/glslc shaders/fragment_shader.frag -o shaders/fragment_shader.frag.spv
 
 # point light
-/usr/bin/glslc shaders/point_light_vertex.vert -o shaders/point_light_vertex.vert.spv
-/usr/bin/glslc shaders/point_light_fragment.frag -o shaders/point_light_fragment.frag.spv
+/usr/bin/glslc shaders/PointLight/point_light_vertex.vert -o shaders/PointLight/point_light_vertex.vert.spv
+/usr/bin/glslc shaders/PointLight/point_light_fragment.frag -o shaders/PointLight/point_light_fragment.frag.spv
 
 # galaxy
-/usr/bin/glslc shaders/galaxy_vertex.vert -o shaders/galaxy_vertex.vert.spv
-/usr/bin/glslc shaders/galaxy_fragment.frag -o shaders/galaxy_fragment.frag.spv
-/usr/bin/glslc shaders/galaxy_compute.comp -o shaders/galaxy_compute.comp.spv
+/usr/bin/glslc shaders/Galaxy/galaxy_vertex.vert -o shaders/Galaxy/galaxy_vertex.vert.spv
+/usr/bin/glslc shaders/Galaxy/galaxy_fragment.frag -o shaders/Galaxy/galaxy_fragment.frag.spv
+/usr/bin/glslc shaders/Galaxy/galaxy_compute.comp -o shaders/Galaxy/galaxy_compute.comp.spv

@@ -3,7 +3,7 @@
 #include "../Device/Device.h"
 #include "../Window.h"
 #include "../Rendering/Renderer.h"
-#include "../systems/GalaxySystem.h"
+#include "../systems/Galaxy/GalaxySystem.h"
 #include "../Input/Input.h"
 
 // libs

@@ -13,7 +13,7 @@
 #include "src/Rendering/Renderer.h"
 
 // std
-#include <src/systems/GalaxySystem.h>
+#include <src/systems/Galaxy/GalaxySystem.h>
 #include <stdexcept>
 #include <vulkan/vulkan_core.h>
 #include <fstream>

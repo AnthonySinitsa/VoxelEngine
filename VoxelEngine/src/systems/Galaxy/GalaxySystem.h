@@ -1,11 +1,11 @@
 #pragma once
 
-#include "../Device/Device.h"
-#include "../Graphics/Pipeline.h"
-#include "../FrameInfo.h"
-#include "../Buffer/Buffer.h"
-#include "../Descriptor/Descriptors.h"
-#include "../Utils/ellipse.h"
+#include "../../Device/Device.h"
+#include "../../Graphics/Pipeline.h"
+#include "../../FrameInfo.h"
+#include "../../Buffer/Buffer.h"
+#include "../../Descriptor/Descriptors.h"
+#include "../../Utils/ellipse.h"
 
 #include <vulkan/vulkan.h>
 #include <memory>
