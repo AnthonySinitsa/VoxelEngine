@@ -1,19 +1,17 @@
 #include "ImGuiManager.h"
 
-#include "external/ImGuiDocking/imgui_internal.h"
 #include "../Device/Device.h"
 #include "../Window.h"
-#include "../Utils/ellipse.h"
+#include "../Rendering/Renderer.h"
 
 // libs
 #include <cstdint>
 #include "external/ImGuiDocking/imgui.h"
+#include "external/ImGuiDocking/imgui_internal.h"
 #include "external/ImGuiDocking/backends/imgui_impl_glfw.h"
 #include "external/ImGuiDocking/backends/imgui_impl_vulkan.h"
-#include "src/Rendering/Renderer.h"
 
 // std
-#include <src/systems/Galaxy/GalaxySystem.h>
 #include <stdexcept>
 #include <vulkan/vulkan_core.h>
 #include <fstream>
@@ -26,11 +24,11 @@ namespace vge {
         Renderer &renderer,
         VkRenderPass renderPass,
         uint32_t imageCount,
-        GalaxySystem* galaxySystem,
+        Scene* scene,
         Input* input
     ) : vgeDevice{device},
         vgeRenderer{renderer},
-        galaxySystem{galaxySystem},
+        currentScene{scene},
         input{input} {
         // Set up descriptor pool stored on this instance
         VkDescriptorPoolSize pool_sizes[] = {
@@ -262,7 +260,9 @@ namespace vge {
 
         renderGlobalControls();
         renderCameraControls();
-        renderGalaxyParameters();
+        if(currentScene){
+            currentScene->renderUI();
+        }
         renderPerformanceMetrics();
 
         ImGui::End();
@@ -304,120 +304,6 @@ namespace vge {
 
 /*---------------------------------------------------------- */
 
-    void VgeImgui::renderGalaxyParameters() {
-        if (!ImGui::TreeNode("Galaxy Parameters")) return;
-
-        bool parametersChanged = false;
-        renderGalaxyShapeParameters(parametersChanged);
-
-        ImGui::Spacing();
-        ImGui::Text("Height Distribution Parameters");
-        ImGui::Separator();
-
-        renderHeightDistributionParameters(parametersChanged);
-
-        ImGui::Spacing();
-        if (ImGui::Button("Restore Defaults")) {
-            restoreDefaultGalaxyParameters();
-        }
-
-        handleGalaxyParameterChanges(parametersChanged);
-        ImGui::TreePop();
-    }
-
-/*---------------------------------------------------------- */
-
-    void VgeImgui::renderGalaxyShapeParameters(bool& parametersChanged) {
-        // Base Radius Control
-        if (ImGui::DragFloat("Base Radius", &Ellipse::baseRadius, 0.01f, 1.0f, 5.0f, "%.2f")) {
-            parametersChanged = true;
-        }
-        if (ImGui::IsItemHovered()) {
-            ImGui::SetTooltip("Starting radius for the first ellipse");
-        }
-
-        // Radius Increment Control
-        if (ImGui::DragFloat("Radius Increment", &Ellipse::radiusIncrement, 0.01f, 0.1f, 2.0f, "%.2f")) {
-            parametersChanged = true;
-        }
-        if (ImGui::IsItemHovered()) {
-            ImGui::SetTooltip("How much larger each successive ellipse becomes");
-        }
-
-        // Base Tilt Control
-        float baseTiltDegrees = glm::degrees(Ellipse::baseTilt);
-        if (ImGui::DragFloat("Base Tilt", &baseTiltDegrees, 1.0f, -180.0f, 180.0f, "%.1f°")) {
-            Ellipse::baseTilt = glm::radians(baseTiltDegrees);
-            parametersChanged = true;
-        }
-        if (ImGui::IsItemHovered()) {
-            ImGui::SetTooltip("Starting tilt angle for the first ellipse");
-        }
-
-        // Tilt Increment Control
-        float tiltIncrementDegrees = glm::degrees(Ellipse::tiltIncrement);
-        if (ImGui::DragFloat("Tilt Increment", &tiltIncrementDegrees, 0.1f, 0.0f, 45.0f, "%.1f°")) {
-            Ellipse::tiltIncrement = glm::radians(tiltIncrementDegrees);
-            parametersChanged = true;
-        }
-        if (ImGui::IsItemHovered()) {
-            ImGui::SetTooltip("How much additional tilt each successive ellipse gets");
-        }
-
-        // Eccentricity Control
-        if (ImGui::DragFloat("Eccentricity", &Ellipse::eccentricity, 0.01f, 0.1f, 1.0f, "%.2f")) {
-            parametersChanged = true;
-        }
-        if (ImGui::IsItemHovered()) {
-            ImGui::SetTooltip("Controls how elliptical the shapes are (1.0 = circular)");
-        }
-    }
-
-/*---------------------------------------------------------- */
-
-    void VgeImgui::renderHeightDistributionParameters(bool& parametersChanged) {
-        // Central Intensity Control
-        if (ImGui::DragFloat("Central Intensity (I_0)", &Ellipse::centralIntensity, 0.1f, 0.1f, 50.0f, "%.1f")) {
-            parametersChanged = true;
-        }
-        if (ImGui::IsItemHovered()) {
-            ImGui::SetTooltip("Controls the intensity at the center of the galaxy (I0)");
-        }
-
-        if (ImGui::DragFloat("Base Radius2", &Ellipse::baseRadius2, 0.01f, 0.1f, 5.0f, "%.2f")) {
-            parametersChanged = true;
-        }
-        if (ImGui::IsItemHovered()) {
-            ImGui::SetTooltip("Base Radius 2");
-        }
-
-        // Constant (b) Control
-        if (ImGui::DragFloat("Distribution Constant (b)", &Ellipse::constant, 0.1f, 0.1f, 10.0f, "%.1f")) {
-            parametersChanged = true;
-        }
-        if (ImGui::IsItemHovered()) {
-            ImGui::SetTooltip("Controls how quickly the height decreases with radius (b)");
-        }
-
-        // Effective Radius Scale Control
-        if (ImGui::DragFloat("Effective Radius (Re)", &Ellipse::effectiveRadiusScale, 0.1f, 0.1f, 10.0f, "%.1f")) {
-            parametersChanged = true;
-        }
-        if (ImGui::IsItemHovered()) {
-            ImGui::SetTooltip("Multiplier for the effective radius (Re = baseRadius * scale)");
-        }
-
-        // Max Height Control
-        if (ImGui::DragFloat("Max Height", &Ellipse::maxHeight, 0.01f, 0.1f, 2.0f, "%.2f")) {
-            parametersChanged = true;
-        }
-        if (ImGui::IsItemHovered()) {
-            ImGui::SetTooltip("Maximum possible height for any star");
-        }
-    }
-
-/*---------------------------------------------------------- */
-
     void VgeImgui::renderPerformanceMetrics() {
         ImGui::Separator();
 
@@ -435,29 +321,5 @@ namespace vge {
 
 /*---------------------------------------------------------- */
 
-    void VgeImgui::handleGalaxyParameterChanges(bool parametersChanged) {
-        if (parametersChanged) {
-            Ellipse::generateEllipseParams(Ellipse::MAX_ELLIPSES);
-            galaxySystem->updateGalaxyParameters();
-        }
-    }
 
-/*---------------------------------------------------------- */
-
-    void VgeImgui::restoreDefaultGalaxyParameters() {
-        Ellipse::baseRadius = 1.83f;
-        Ellipse::radiusIncrement = 0.5f;
-        Ellipse::baseTilt = 0.0f;
-        Ellipse::tiltIncrement = 0.16f;
-        Ellipse::eccentricity = 0.8f;
-
-        Ellipse::centralIntensity = 10.0f;
-        Ellipse::baseRadius2 = 1.83f;
-        Ellipse::constant = 1.4f;
-        Ellipse::effectiveRadiusScale = 2.0f;
-        Ellipse::maxHeight = 0.5f;
-
-        Ellipse::generateEllipseParams(Ellipse::MAX_ELLIPSES);
-        galaxySystem->updateGalaxyParameters();
-    }
 } // namespace

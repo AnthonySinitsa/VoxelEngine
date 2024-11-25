@@ -3,7 +3,7 @@
 #include "../Device/Device.h"
 #include "../Window.h"
 #include "../Rendering/Renderer.h"
-#include "../systems/Galaxy/GalaxySystem.h"
+#include "../Scenes/Scene.h"
 #include "../Input/Input.h"
 
 // libs
@@ -11,7 +11,7 @@
 
 namespace vge {
 
-    class GalaxySystem;
+    class Scene;
     class Input;
 
     static void check_vk_result(VkResult err) {
@@ -28,7 +28,7 @@ namespace vge {
                 Renderer &renderer,
                 VkRenderPass renderPass,
                 uint32_t imageCount,
-                GalaxySystem* galaxySystem,
+                Scene* scene,
                 Input* input);
             ~VgeImgui();
 
@@ -52,16 +52,7 @@ namespace vge {
             // UI Section Renderers
             void renderGlobalControls();
             void renderCameraControls();
-            void renderGalaxyParameters();
             void renderPerformanceMetrics();
-
-            // Galaxy Parameter Sub-sections
-            void renderGalaxyShapeParameters(bool& parametersChanged);
-            void renderHeightDistributionParameters(bool& parametersChanged);
-
-            // Helper functions
-            void handleGalaxyParameterChanges(bool parametersChanged);
-            void restoreDefaultGalaxyParameters();
 
         private:
             Renderer &vgeRenderer;
@@ -86,7 +77,7 @@ namespace vge {
             float timeSinceLastUpdate = 0.0f;
             const float UPDATE_INTERVAL = 1.0f;
 
-            GalaxySystem* galaxySystem;
+            Scene* currentScene;
             Input* input;
     };
 } // namespace

@@ -6,7 +6,7 @@
 #include "Window.h"
 #include "Descriptor/Descriptors.h"
 #include "ImGui/ImGuiManager.h"
-#include "systems/Galaxy/GalaxySystem.h"
+#include "Scenes/Scene.h"
 
 // std
 #include <memory>
@@ -30,7 +30,6 @@ namespace vge {
         private:
             void loadGameObjects();
             void createDescriptorSetLayout();
-            void createGalaxySystem();
 
             Window vgeWindow{WIDTH, HEIGHT, "AAAAAAAAAA"};
             VgeDevice vgeDevice{vgeWindow};
@@ -42,7 +41,7 @@ namespace vge {
             GameObject::Map gameObjects;
 
             std::unique_ptr<VgeImgui> vgeImgui{};
-            std::unique_ptr<GalaxySystem> galaxySystem;
+            std::unique_ptr<Scene> currentScene;
             Input input{};
     };
 } // namespace

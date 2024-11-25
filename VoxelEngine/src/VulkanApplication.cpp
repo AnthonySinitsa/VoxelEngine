@@ -1,16 +1,15 @@
 #include "VulkanApplication.h"
 
+#include "Buffer/Buffer.h"
 #include "Camera/Camera.h"
+#include "Descriptor/Descriptors.h"
 #include "Game/GameObject.h"
+#include "Input/Input.h"
+#include "Presentation/SwapChain.h"
+#include "Rendering/Renderer.h"
 #include "systems/RenderSystem.h"
 #include "systems/PointLight/PointLightSystem.h"
-#include "Rendering/Renderer.h"
-#include "Input/Input.h"
-#include "Buffer/Buffer.h"
-#include <memory>
-#include <src/Descriptor/Descriptors.h>
-#include <src/Presentation/SwapChain.h>
-#include <src/systems/Galaxy/GalaxySystem.h>
+#include "Scenes/GalaxyScene.h"
 
 // libs
 #define GLM_FORCE_RADIANS
@@ -20,8 +19,9 @@
 #include <glm/gtc/constants.hpp>
 
 // std
-#include <chrono>
 #include <cassert>
+#include <chrono>
+#include <memory>
 #include <vulkan/vulkan_core.h>
 
 namespace vge{
@@ -34,10 +34,15 @@ namespace vge{
             .build();
 
         createDescriptorSetLayout();
-        createGalaxySystem();
 
         // Load game objects
         // loadGameObjects();
+
+        currentScene = std::make_unique<GalaxyScene>(
+            vgeDevice,
+            vgeRenderer.getSwapChainRenderPass(),
+            globalSetLayout->getDescriptorSetLayout()
+        );
 
         // Initialize ImGui
         vgeImgui = std::make_unique<VgeImgui>(
@@ -46,7 +51,7 @@ namespace vge{
             vgeRenderer,
             vgeRenderer.getSwapChainRenderPass(),
             VgeSwapChain::MAX_FRAMES_IN_FLIGHT,
-            galaxySystem.get(),
+            currentScene.get(),
             &input
         );
     }
@@ -58,14 +63,6 @@ namespace vge{
         globalSetLayout = VgeDescriptorSetLayout::Builder(vgeDevice)
             .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
             .build();
-    }
-
-    void VulkanApplication::createGalaxySystem() {
-        galaxySystem = std::make_unique<GalaxySystem>(
-            vgeDevice,
-            vgeRenderer.getSwapChainRenderPass(),
-            globalSetLayout->getDescriptorSetLayout()
-        );
     }
 
     void VulkanApplication::run(){
@@ -150,14 +147,12 @@ namespace vge{
                 uboBuffers[frameIndex]->writeToBuffer(&ubo);
                 uboBuffers[frameIndex]->flush();
 
-                galaxySystem->update(frameInfo);
-                galaxySystem->computeStars(frameInfo);
+                // Update and render current scene
+                currentScene->update(frameInfo);
 
                 vgeRenderer.beginSwapChainRenderPass(commandBuffer); // Begin swapchain render pass
 
-                renderSystem.renderGameObjects(frameInfo); // Render game objects
-                pointLightSystem.render(frameInfo);
-                galaxySystem->render(frameInfo);
+                currentScene->render(frameInfo);
 
                 vgeImgui->newFrame(); // Start new ImGui frame
                 vgeImgui->beginDockspace();
