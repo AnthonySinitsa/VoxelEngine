@@ -174,14 +174,26 @@ namespace vge{
     }
 
 
-    // void VulkanApplication::loadGameObjects(){
-    //     std::shared_ptr<Model> vgeModel =
-    //         Model::createModelFromFile(vgeDevice, "src/3dModels/Lowpoly_tree.obj");
-    //     auto tree = GameObject::createGameObject();
-    //     tree.model = vgeModel;
-    //     tree.transform.translation = {.0f, .0f, 0.f};
-    //     tree.transform.scale = glm::vec3{.2f};
-    //     tree.transform.rotation = glm::vec3{glm::radians(180.0f), 0.f, 0.f};
-    //     gameObjects.emplace(tree.getId(), std::move(tree));
-    // }
+    void VulkanApplication::loadGameObjects(){
+        std::shared_ptr<Model> vgeModel =
+            Model::createModelFromFile(vgeDevice, "src/3dModels/smooth_vase.obj");
+        auto tree = GameObject::createGameObject();
+        tree.model = vgeModel;
+        tree.transform.translation = {1.0f, .0f, 0.f};
+        tree.transform.scale = glm::vec3{2.2f};
+        tree.transform.rotation = glm::vec3{glm::radians(0.0f), 0.f, 0.f};
+        gameObjects.emplace(tree.getId(), std::move(tree));
+
+        // Create a point light
+        auto pointLight = GameObject::makePointLight(
+            1.0f,     // intensity
+            0.1f,      // radius
+            glm::vec3{1.0f, 0.5f, 1.0f}  // color (white)
+        );
+        // Set position of the light
+        pointLight.transform.translation = {0.0f, -1.0f, 0.0f};  // example position
+
+        // Add to game objects map
+        gameObjects.emplace(pointLight.getId(), std::move(pointLight));
+    }
 } // namespace
