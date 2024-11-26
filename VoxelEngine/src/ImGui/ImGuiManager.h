@@ -3,15 +3,17 @@
 #include "../Device/Device.h"
 #include "../Window.h"
 #include "../Rendering/Renderer.h"
-#include "../systems/Galaxy/GalaxySystem.h"
+#include "../Scenes/Scene.h"
 #include "../Input/Input.h"
 
 // libs
 #include "external/ImGuiDocking/imgui.h"
+#include <vulkan/vulkan_core.h>
+#include <memory>
 
 namespace vge {
 
-    class GalaxySystem;
+    class Scene;
     class Input;
 
     static void check_vk_result(VkResult err) {
@@ -28,45 +30,36 @@ namespace vge {
                 Renderer &renderer,
                 VkRenderPass renderPass,
                 uint32_t imageCount,
-                GalaxySystem* galaxySystem,
+                std::unique_ptr<Scene>* scenePtr,
+                VkDescriptorSetLayout globalSetLayout,
                 Input* input);
             ~VgeImgui();
 
             void newFrame();
-
             void render(VkCommandBuffer commandBuffer);
-
             void runHierarchy();
             void RenderUI();
             void ShowExampleAppDockSpace();
             void controlBackgroundColor();
-
             void saveSettings();
             void loadSettings();
-
             void beginDockspace();
             void endDockspace();
-
             void updatePerformanceMetrics();
 
             // UI Section Renderers
             void renderGlobalControls();
+            void renderSceneSelector();
             void renderCameraControls();
-            void renderGalaxyParameters();
             void renderPerformanceMetrics();
-
-            // Galaxy Parameter Sub-sections
-            void renderGalaxyShapeParameters(bool& parametersChanged);
-            void renderHeightDistributionParameters(bool& parametersChanged);
-
-            // Helper functions
-            void handleGalaxyParameterChanges(bool parametersChanged);
-            void restoreDefaultGalaxyParameters();
 
         private:
             Renderer &vgeRenderer;
             VgeDevice &vgeDevice;
             VkDescriptorPool descriptorPool;
+            VkRenderPass renderPass;
+            std::unique_ptr<Scene>* currentScenePtr;
+            VkDescriptorSetLayout globalSetLayout;
 
             bool show_demo_window = false;
             bool show_another_window = false;
@@ -86,7 +79,6 @@ namespace vge {
             float timeSinceLastUpdate = 0.0f;
             const float UPDATE_INTERVAL = 1.0f;
 
-            GalaxySystem* galaxySystem;
             Input* input;
     };
 } // namespace
