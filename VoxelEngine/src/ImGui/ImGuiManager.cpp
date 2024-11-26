@@ -3,6 +3,7 @@
 #include "../Device/Device.h"
 #include "../Window.h"
 #include "../Rendering/Renderer.h"
+#include "../Scenes/GalaxyScene.h"
 
 // libs
 #include <cstdint>
@@ -12,6 +13,7 @@
 #include "external/ImGuiDocking/backends/imgui_impl_vulkan.h"
 
 // std
+#include <memory>
 #include <stdexcept>
 #include <vulkan/vulkan_core.h>
 #include <fstream>
@@ -24,11 +26,14 @@ namespace vge {
         Renderer &renderer,
         VkRenderPass renderPass,
         uint32_t imageCount,
-        Scene* scene,
+        std::unique_ptr<Scene>* scenePtr,
+        VkDescriptorSetLayout globalSetLayout,
         Input* input
     ) : vgeDevice{device},
         vgeRenderer{renderer},
-        currentScene{scene},
+        renderPass{renderPass},
+        currentScenePtr{scenePtr},
+        globalSetLayout{globalSetLayout},
         input{input} {
         // Set up descriptor pool stored on this instance
         VkDescriptorPoolSize pool_sizes[] = {
@@ -250,6 +255,40 @@ namespace vge {
         }
     }
 
+
+/*------------------------SCENES----------------------------- */
+
+    void VgeImgui::renderSceneSelector() {
+        ImGui::Text("Scene Selection");
+        ImGui::Separator();
+        ImGui::Spacing();
+
+        // Scene loading buttons
+        if (ImGui::Button("Load Galaxy Scene")) {
+            // Only create new scene if we don't have one
+            if (!*currentScenePtr) {
+                (*currentScenePtr) = std::make_unique<GalaxyScene>(
+                    vgeDevice,
+                    renderPass,
+                    globalSetLayout
+                );
+            }
+        }
+
+        ImGui::Spacing();
+
+        // Unload button - only enabled if there's a scene loaded
+        if (*currentScenePtr) {
+            if (ImGui::Button("Unload Scene")) {
+                // Mark scene for destruction instead of immediate deletion
+                (*currentScenePtr)->shouldDestroy = true;
+            }
+        }
+
+        ImGui::Spacing();
+        ImGui::Separator();
+    }
+
 /*------------------------MAIN------------------------------ */
 
 
@@ -259,9 +298,12 @@ namespace vge {
         ImGui::Begin("Hierarchy", nullptr, ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoScrollbar);
 
         renderGlobalControls();
+        renderSceneSelector();
         renderCameraControls();
-        if(currentScene){
-            currentScene->renderUI();
+
+        // Only render scene UI if there's an active scene
+        if(*currentScenePtr){
+            (*currentScenePtr)->renderUI();
         }
         renderPerformanceMetrics();
 

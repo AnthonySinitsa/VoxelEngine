@@ -8,7 +8,7 @@ namespace vge {
     class Scene {
     public:
         Scene(VgeDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout)
-            : device{device}, renderPass{renderPass}, globalSetLayout{globalSetLayout} {}
+            : device{device}, renderPass{renderPass}, globalSetLayout{globalSetLayout}, shouldDestroy{false} {}
         virtual ~Scene() = default;
 
         Scene(const Scene&) = delete;
@@ -19,6 +19,8 @@ namespace vge {
         virtual void render(FrameInfo& frameInfo) = 0;
         virtual void renderUI() = 0;
         virtual const char* getName() const = 0;
+
+        bool shouldDestroy{false};
 
     protected:
         VgeDevice& device;

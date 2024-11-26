@@ -38,11 +38,11 @@ namespace vge{
         // Load game objects
         // loadGameObjects();
 
-        currentScene = std::make_unique<GalaxyScene>(
+        currentScene = std::unique_ptr<Scene>(new GalaxyScene(
             vgeDevice,
             vgeRenderer.getSwapChainRenderPass(),
             globalSetLayout->getDescriptorSetLayout()
-        );
+        ));
 
         // Initialize ImGui
         vgeImgui = std::make_unique<VgeImgui>(
@@ -51,7 +51,8 @@ namespace vge{
             vgeRenderer,
             vgeRenderer.getSwapChainRenderPass(),
             VgeSwapChain::MAX_FRAMES_IN_FLIGHT,
-            currentScene.get(),
+            &currentScene,
+            globalSetLayout->getDescriptorSetLayout(),
             &input
         );
     }
@@ -147,12 +148,22 @@ namespace vge{
                 uboBuffers[frameIndex]->writeToBuffer(&ubo);
                 uboBuffers[frameIndex]->flush();
 
-                // Update and render current scene
-                currentScene->update(frameInfo);
+                // Wait for GPU to finish before destroying scene
+                if (currentScene && currentScene->shouldDestroy) {
+                    vkDeviceWaitIdle(vgeDevice.device());
+                    currentScene.reset();  // This will properly destroy the scene
+                }
+
+                // Only update and render if we have a valid scene
+                if (currentScene) {
+                    currentScene->update(frameInfo);
+                }
 
                 vgeRenderer.beginSwapChainRenderPass(commandBuffer); // Begin swapchain render pass
 
-                currentScene->render(frameInfo);
+                if (currentScene) {
+                    currentScene->render(frameInfo);
+                }
 
                 vgeImgui->newFrame(); // Start new ImGui frame
                 vgeImgui->beginDockspace();
