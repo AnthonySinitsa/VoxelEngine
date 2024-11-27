@@ -2,13 +2,14 @@
 
 #include "../Device/Device.h"
 #include "../FrameInfo.h"
+#include "../Rendering/Renderer.h"
 
 namespace vge {
 
     class Scene {
     public:
-        Scene(VgeDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout)
-            : device{device}, renderPass{renderPass}, globalSetLayout{globalSetLayout}, shouldDestroy{false} {}
+        Scene(VgeDevice& device, Renderer& renderer, VkDescriptorSetLayout globalSetLayout)
+            : device{device}, renderer{renderer}, globalSetLayout{globalSetLayout}, shouldDestroy{false} {}
         virtual ~Scene() = default;
 
         Scene(const Scene&) = delete;
@@ -24,7 +25,7 @@ namespace vge {
 
     protected:
         VgeDevice& device;
-        VkRenderPass renderPass;
+        Renderer& renderer;
         VkDescriptorSetLayout globalSetLayout;
     };
 

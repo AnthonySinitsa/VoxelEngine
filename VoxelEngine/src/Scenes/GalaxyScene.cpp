@@ -3,8 +3,8 @@
 
 namespace vge {
 
-    GalaxyScene::GalaxyScene(VgeDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout)
-        : Scene(device, renderPass, globalSetLayout) {
+    GalaxyScene::GalaxyScene(VgeDevice& device, Renderer& renderer, VkDescriptorSetLayout globalSetLayout)
+        : Scene(device, renderer, globalSetLayout) {
         init();
     }
 
@@ -12,7 +12,7 @@ namespace vge {
         // Create galaxy system
         galaxySystem = std::make_unique<GalaxySystem>(
             device,
-            renderPass,
+            renderer.getSwapChainRenderPass(),
             globalSetLayout
         );
     }
