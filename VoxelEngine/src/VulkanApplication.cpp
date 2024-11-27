@@ -78,11 +78,6 @@ namespace vge{
             uboBuffers[i]->map();
         }
 
-        // MAYBE DELETE ME
-        auto globalSetLayout = VgeDescriptorSetLayout::Builder(vgeDevice)
-            .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
-            .build();
-
         std::vector<VkDescriptorSet> globalDescriptorSets(VgeSwapChain::MAX_FRAMES_IN_FLIGHT);
         for(int i = 0; i < globalDescriptorSets.size(); i++){
             auto bufferInfo = uboBuffers[i]->descriptorInfo();
@@ -143,14 +138,14 @@ namespace vge{
                 ubo.projection = camera.getProjection();
                 ubo.view = camera.getView();
                 ubo.inverseView = camera.getInverseView();
-                pointLightSystem.update(frameInfo, ubo);
+                // pointLightSystem.update(frameInfo, ubo);
                 uboBuffers[frameIndex]->writeToBuffer(&ubo);
                 uboBuffers[frameIndex]->flush();
 
                 // Wait for GPU to finish before destroying scene
                 if (currentScene && currentScene->shouldDestroy) {
                     vkDeviceWaitIdle(vgeDevice.device());
-                    currentScene.reset();  // This will properly destroy the scene
+                    currentScene.reset();
                 }
 
                 // Only update and render if we have a valid scene
