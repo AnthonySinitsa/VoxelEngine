@@ -24,14 +24,12 @@ namespace vge {
         Window &window,
         VgeDevice &device,
         Renderer &renderer,
-        VkRenderPass renderPass,
         uint32_t imageCount,
         std::unique_ptr<Scene>* scenePtr,
         VkDescriptorSetLayout globalSetLayout,
         Input* input
     ) : vgeDevice{device},
         vgeRenderer{renderer},
-        renderPass{renderPass},
         currentScenePtr{scenePtr},
         globalSetLayout{globalSetLayout},
         input{input} {
@@ -96,7 +94,9 @@ namespace vge {
         init_info.ImageCount = imageCount;
         init_info.CheckVkResultFn = check_vk_result;
         init_info.MSAASamples = VK_SAMPLE_COUNT_1_BIT;
-        init_info.RenderPass = renderPass;
+
+        // Get render pass from renderer
+        init_info.RenderPass = vgeRenderer.getSwapChainRenderPass();
 
         if (!ImGui_ImplVulkan_Init(&init_info)) {
             throw std::runtime_error("Failed to initialize ImGui Vulkan implementation!!!");
@@ -269,7 +269,7 @@ namespace vge {
             if (!*currentScenePtr) {
                 (*currentScenePtr) = std::make_unique<GalaxyScene>(
                     vgeDevice,
-                    renderPass,
+                    vgeRenderer,
                     globalSetLayout
                 );
             }

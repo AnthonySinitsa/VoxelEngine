@@ -3,13 +3,14 @@
 #include "Scene.h"
 #include "../systems/Galaxy/GalaxySystem.h"
 #include "../Device/Device.h"
+#include "../Rendering/Renderer.h"
 
 
 namespace vge {
 
     class GalaxyScene : public Scene {
     public:
-        GalaxyScene(VgeDevice& device, VkRenderPass renderPass, VkDescriptorSetLayout globalSetLayout);
+        GalaxyScene(VgeDevice& device, Renderer& renderer, VkDescriptorSetLayout globalSetLayout);
         ~GalaxyScene() override = default;
 
         void init() override;

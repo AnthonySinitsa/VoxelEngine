@@ -40,7 +40,7 @@ namespace vge{
 
         currentScene = std::unique_ptr<Scene>(new GalaxyScene(
             vgeDevice,
-            vgeRenderer.getSwapChainRenderPass(),
+            vgeRenderer,
             globalSetLayout->getDescriptorSetLayout()
         ));
 
@@ -49,7 +49,6 @@ namespace vge{
             vgeWindow,
             vgeDevice,
             vgeRenderer,
-            vgeRenderer.getSwapChainRenderPass(),
             VgeSwapChain::MAX_FRAMES_IN_FLIGHT,
             &currentScene,
             globalSetLayout->getDescriptorSetLayout(),

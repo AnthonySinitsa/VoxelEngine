@@ -28,7 +28,6 @@ namespace vge {
                 Window &window,
                 VgeDevice &device,
                 Renderer &renderer,
-                VkRenderPass renderPass,
                 uint32_t imageCount,
                 std::unique_ptr<Scene>* scenePtr,
                 VkDescriptorSetLayout globalSetLayout,
@@ -57,7 +56,6 @@ namespace vge {
             Renderer &vgeRenderer;
             VgeDevice &vgeDevice;
             VkDescriptorPool descriptorPool;
-            VkRenderPass renderPass;
             std::unique_ptr<Scene>* currentScenePtr;
             VkDescriptorSetLayout globalSetLayout;
 
