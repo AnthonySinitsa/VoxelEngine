@@ -121,13 +121,16 @@ namespace vge{
             // Render the rest of the game objects using Vulkan
             if(auto commandBuffer = vgeRenderer.beginFrame()){
                 int frameIndex = vgeRenderer.getFrameIndex();
+
+                GameObject::Map& sceneObjects = currentScene ? currentScene->getGameObjects() : gameObjects;
+
                 FrameInfo frameInfo{
                     frameIndex,
                     frameTime,
                     commandBuffer,
                     camera,
                     globalDescriptorSets[frameIndex],
-                    gameObjects
+                    sceneObjects
                 };
 
                 // update
@@ -135,8 +138,6 @@ namespace vge{
                 ubo.projection = camera.getProjection();
                 ubo.view = camera.getView();
                 ubo.inverseView = camera.getInverseView();
-                uboBuffers[frameIndex]->writeToBuffer(&ubo);
-                uboBuffers[frameIndex]->flush();
 
                 // Wait for GPU to finish before destroying scene
                 if (currentScene && currentScene->shouldDestroy) {
@@ -148,6 +149,9 @@ namespace vge{
                 if (currentScene) {
                     currentScene->update(frameInfo);
                 }
+
+                uboBuffers[frameIndex]->writeToBuffer(&ubo);
+                uboBuffers[frameIndex]->flush();
 
                 vgeRenderer.beginSwapChainRenderPass(commandBuffer); // Begin swapchain render pass
 
