@@ -3,6 +3,7 @@
 #include "../Device/Device.h"
 #include "../FrameInfo.h"
 #include "../Rendering/Renderer.h"
+#include "../Game/GameObject.h"
 
 namespace vge {
 
@@ -20,13 +21,16 @@ namespace vge {
         virtual void render(FrameInfo& frameInfo) = 0;
         virtual void renderUI() = 0;
         virtual const char* getName() const = 0;
+        virtual void updateUbo(GlobalUbo& ubo, FrameInfo& frameInfo) = 0;
 
         bool shouldDestroy{false};
+        GameObject::Map& getGameObjects() { return gameObjects; }
 
     protected:
         VgeDevice& device;
         Renderer& renderer;
         VkDescriptorSetLayout globalSetLayout;
+        GameObject::Map gameObjects;
     };
 
 } // namespace

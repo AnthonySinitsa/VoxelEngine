@@ -4,6 +4,7 @@
 #include "../Window.h"
 #include "../Rendering/Renderer.h"
 #include "../Scenes/GalaxyScene.h"
+#include "../Scenes/LightScene.h"
 
 // libs
 #include <cstdint>
@@ -268,6 +269,16 @@ namespace vge {
             // Only create new scene if we don't have one
             if (!*currentScenePtr) {
                 (*currentScenePtr) = std::make_unique<GalaxyScene>(
+                    vgeDevice,
+                    vgeRenderer,
+                    globalSetLayout
+                );
+            }
+        }
+
+        if (ImGui::Button("Load Light Scene")) {
+            if (!*currentScenePtr) {
+                (*currentScenePtr) = std::make_unique<LightScene>(
                     vgeDevice,
                     vgeRenderer,
                     globalSetLayout

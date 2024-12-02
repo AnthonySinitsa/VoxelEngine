@@ -35,9 +35,6 @@ namespace vge{
 
         createDescriptorSetLayout();
 
-        // Load game objects
-        // loadGameObjects();
-
         currentScene = std::unique_ptr<Scene>(new GalaxyScene(
             vgeDevice,
             vgeRenderer,
@@ -77,11 +74,6 @@ namespace vge{
             );
             uboBuffers[i]->map();
         }
-
-        // MAYBE DELETE ME
-        auto globalSetLayout = VgeDescriptorSetLayout::Builder(vgeDevice)
-            .addBinding(0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_ALL_GRAPHICS)
-            .build();
 
         std::vector<VkDescriptorSet> globalDescriptorSets(VgeSwapChain::MAX_FRAMES_IN_FLIGHT);
         for(int i = 0; i < globalDescriptorSets.size(); i++){
@@ -123,19 +115,22 @@ namespace vge{
 
             // Set camera perspective projection
             float aspect = vgeRenderer.getAspectRatio();
-            camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 1000.f); // FYI: 10.f is the clipping plane
+            camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 1000.f); // FYI: 1000.f is the clipping plane
 
 
             // Render the rest of the game objects using Vulkan
             if(auto commandBuffer = vgeRenderer.beginFrame()){
                 int frameIndex = vgeRenderer.getFrameIndex();
+
+                GameObject::Map& sceneObjects = currentScene ? currentScene->getGameObjects() : gameObjects;
+
                 FrameInfo frameInfo{
                     frameIndex,
                     frameTime,
                     commandBuffer,
                     camera,
                     globalDescriptorSets[frameIndex],
-                    gameObjects
+                    sceneObjects
                 };
 
                 // update
@@ -143,35 +138,35 @@ namespace vge{
                 ubo.projection = camera.getProjection();
                 ubo.view = camera.getView();
                 ubo.inverseView = camera.getInverseView();
-                pointLightSystem.update(frameInfo, ubo);
-                uboBuffers[frameIndex]->writeToBuffer(&ubo);
-                uboBuffers[frameIndex]->flush();
 
                 // Wait for GPU to finish before destroying scene
                 if (currentScene && currentScene->shouldDestroy) {
                     vkDeviceWaitIdle(vgeDevice.device());
-                    currentScene.reset();  // This will properly destroy the scene
+                    currentScene.reset();
                 }
 
-                // Only update and render if we have a valid scene
                 if (currentScene) {
                     currentScene->update(frameInfo);
+                    currentScene->updateUbo(ubo, frameInfo);
                 }
 
-                vgeRenderer.beginSwapChainRenderPass(commandBuffer); // Begin swapchain render pass
+                uboBuffers[frameIndex]->writeToBuffer(&ubo);
+                uboBuffers[frameIndex]->flush();
+
+                vgeRenderer.beginSwapChainRenderPass(commandBuffer);
 
                 if (currentScene) {
                     currentScene->render(frameInfo);
                 }
 
-                vgeImgui->newFrame(); // Start new ImGui frame
+                vgeImgui->newFrame();
                 vgeImgui->beginDockspace();
                 vgeImgui->runHierarchy();
                 vgeImgui->endDockspace();
-                vgeImgui->render(commandBuffer); // Render ImGui
+                vgeImgui->render(commandBuffer);
 
-                vgeRenderer.endSwapChainRenderPass(commandBuffer); // End swapchain render pass
-                vgeRenderer.endFrame(); // End frame
+                vgeRenderer.endSwapChainRenderPass(commandBuffer);
+                vgeRenderer.endFrame();
             }
         }
 
