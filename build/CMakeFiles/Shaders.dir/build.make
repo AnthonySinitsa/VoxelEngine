@@ -66,50 +66,50 @@ include CMakeFiles/Shaders.dir/compiler_depend.make
 # Include the progress variables for this target.
 include CMakeFiles/Shaders.dir/progress.make
 
-CMakeFiles/Shaders: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_compute.comp.spv
-CMakeFiles/Shaders: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_fragment.frag.spv
-CMakeFiles/Shaders: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_vertex.vert.spv
-CMakeFiles/Shaders: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/PointLight/point_light_fragment.frag.spv
-CMakeFiles/Shaders: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/PointLight/point_light_vertex.vert.spv
-CMakeFiles/Shaders: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/shaders/fragment_shader.frag.spv
-CMakeFiles/Shaders: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/shaders/vertex_shader.vert.spv
+CMakeFiles/Shaders: /home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_compute.comp.spv
+CMakeFiles/Shaders: /home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_fragment.frag.spv
+CMakeFiles/Shaders: /home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_vertex.vert.spv
+CMakeFiles/Shaders: /home/po/Projects/VoxelEngine/shaders/PointLight/point_light_fragment.frag.spv
+CMakeFiles/Shaders: /home/po/Projects/VoxelEngine/shaders/PointLight/point_light_vertex.vert.spv
+CMakeFiles/Shaders: /home/po/Projects/VoxelEngine/shaders/shaders/fragment_shader.frag.spv
+CMakeFiles/Shaders: /home/po/Projects/VoxelEngine/shaders/shaders/vertex_shader.vert.spv
 
-/home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_compute.comp.spv: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_compute.comp
+/home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_compute.comp.spv: /home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_compute.comp
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Compiling shader: galaxy_compute.comp"
-	/usr/bin/glslangValidator -V /home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_compute.comp -o /home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_compute.comp.spv
+	/usr/bin/glslangValidator -V /home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_compute.comp -o /home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_compute.comp.spv
 
-/home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_fragment.frag.spv: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_fragment.frag
+/home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_fragment.frag.spv: /home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_fragment.frag
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Compiling shader: galaxy_fragment.frag"
-	/usr/bin/glslangValidator -V /home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_fragment.frag -o /home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_fragment.frag.spv
+	/usr/bin/glslangValidator -V /home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_fragment.frag -o /home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_fragment.frag.spv
 
-/home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_vertex.vert.spv: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_vertex.vert
+/home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_vertex.vert.spv: /home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_vertex.vert
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Compiling shader: galaxy_vertex.vert"
-	/usr/bin/glslangValidator -V /home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_vertex.vert -o /home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_vertex.vert.spv
+	/usr/bin/glslangValidator -V /home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_vertex.vert -o /home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_vertex.vert.spv
 
-/home/po/Projects/VoxelEngine/VoxelEngine/shaders/PointLight/point_light_fragment.frag.spv: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/PointLight/point_light_fragment.frag
+/home/po/Projects/VoxelEngine/shaders/PointLight/point_light_fragment.frag.spv: /home/po/Projects/VoxelEngine/shaders/PointLight/point_light_fragment.frag
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Compiling shader: point_light_fragment.frag"
-	/usr/bin/glslangValidator -V /home/po/Projects/VoxelEngine/VoxelEngine/shaders/PointLight/point_light_fragment.frag -o /home/po/Projects/VoxelEngine/VoxelEngine/shaders/PointLight/point_light_fragment.frag.spv
+	/usr/bin/glslangValidator -V /home/po/Projects/VoxelEngine/shaders/PointLight/point_light_fragment.frag -o /home/po/Projects/VoxelEngine/shaders/PointLight/point_light_fragment.frag.spv
 
-/home/po/Projects/VoxelEngine/VoxelEngine/shaders/PointLight/point_light_vertex.vert.spv: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/PointLight/point_light_vertex.vert
+/home/po/Projects/VoxelEngine/shaders/PointLight/point_light_vertex.vert.spv: /home/po/Projects/VoxelEngine/shaders/PointLight/point_light_vertex.vert
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Compiling shader: point_light_vertex.vert"
-	/usr/bin/glslangValidator -V /home/po/Projects/VoxelEngine/VoxelEngine/shaders/PointLight/point_light_vertex.vert -o /home/po/Projects/VoxelEngine/VoxelEngine/shaders/PointLight/point_light_vertex.vert.spv
+	/usr/bin/glslangValidator -V /home/po/Projects/VoxelEngine/shaders/PointLight/point_light_vertex.vert -o /home/po/Projects/VoxelEngine/shaders/PointLight/point_light_vertex.vert.spv
 
-/home/po/Projects/VoxelEngine/VoxelEngine/shaders/shaders/fragment_shader.frag.spv: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/fragment_shader.frag
+/home/po/Projects/VoxelEngine/shaders/shaders/fragment_shader.frag.spv: /home/po/Projects/VoxelEngine/shaders/fragment_shader.frag
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Compiling shader: fragment_shader.frag"
-	/usr/bin/glslangValidator -V /home/po/Projects/VoxelEngine/VoxelEngine/shaders/fragment_shader.frag -o /home/po/Projects/VoxelEngine/VoxelEngine/shaders/shaders/fragment_shader.frag.spv
+	/usr/bin/glslangValidator -V /home/po/Projects/VoxelEngine/shaders/fragment_shader.frag -o /home/po/Projects/VoxelEngine/shaders/shaders/fragment_shader.frag.spv
 
-/home/po/Projects/VoxelEngine/VoxelEngine/shaders/shaders/vertex_shader.vert.spv: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/vertex_shader.vert
+/home/po/Projects/VoxelEngine/shaders/shaders/vertex_shader.vert.spv: /home/po/Projects/VoxelEngine/shaders/vertex_shader.vert
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Compiling shader: vertex_shader.vert"
-	/usr/bin/glslangValidator -V /home/po/Projects/VoxelEngine/VoxelEngine/shaders/vertex_shader.vert -o /home/po/Projects/VoxelEngine/VoxelEngine/shaders/shaders/vertex_shader.vert.spv
+	/usr/bin/glslangValidator -V /home/po/Projects/VoxelEngine/shaders/vertex_shader.vert -o /home/po/Projects/VoxelEngine/shaders/shaders/vertex_shader.vert.spv
 
-Shaders: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_compute.comp.spv
-Shaders: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_fragment.frag.spv
-Shaders: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_vertex.vert.spv
-Shaders: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/PointLight/point_light_fragment.frag.spv
-Shaders: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/PointLight/point_light_vertex.vert.spv
-Shaders: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/shaders/fragment_shader.frag.spv
-Shaders: /home/po/Projects/VoxelEngine/VoxelEngine/shaders/shaders/vertex_shader.vert.spv
 Shaders: CMakeFiles/Shaders
+Shaders: /home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_compute.comp.spv
+Shaders: /home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_fragment.frag.spv
+Shaders: /home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_vertex.vert.spv
+Shaders: /home/po/Projects/VoxelEngine/shaders/PointLight/point_light_fragment.frag.spv
+Shaders: /home/po/Projects/VoxelEngine/shaders/PointLight/point_light_vertex.vert.spv
+Shaders: /home/po/Projects/VoxelEngine/shaders/shaders/fragment_shader.frag.spv
+Shaders: /home/po/Projects/VoxelEngine/shaders/shaders/vertex_shader.vert.spv
 Shaders: CMakeFiles/Shaders.dir/build.make
 .PHONY : Shaders
 

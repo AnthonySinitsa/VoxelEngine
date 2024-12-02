@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DENGINE_DIR=\"\"
 
-CXX_INCLUDES = -I/home/po/Projects/VoxelEngine/VoxelEngine/external -I/home/po/Projects/VoxelEngine/VoxelEngine/src -I/home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking -I/home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/backends -I/home/po/Projects/VoxelEngine/VoxelEngine/external/tinyobjloader
+CXX_INCLUDES = -I/home/po/Projects/VoxelEngine/external -I/home/po/Projects/VoxelEngine/src -I/home/po/Projects/VoxelEngine/external/ImGuiDocking -I/home/po/Projects/VoxelEngine/external/ImGuiDocking/backends -I/home/po/Projects/VoxelEngine/external/tinyobjloader
 
 CXX_FLAGS = -std=gnu++20
 

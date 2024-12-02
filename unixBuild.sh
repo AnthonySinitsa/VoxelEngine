@@ -24,13 +24,7 @@ if ! make Shaders; then
     exit 1
 fi
 
-# Return to project root before running
+# Run the executable from the project root
 cd ..
-
-# Run the executable from the VoxelEngine directory
-cd VoxelEngine || exit
 echo "Running VgeEngine..."
-../build/VgeEngine
-
-# Return to original directory
-cd ..
+./build/VgeEngine

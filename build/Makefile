@@ -142,629 +142,629 @@ Shaders/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Shaders.dir/build.make CMakeFiles/Shaders.dir/build
 .PHONY : Shaders/fast
 
-VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.o: VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o
-.PHONY : VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.o
+external/ImGuiDocking/backends/imgui_impl_glfw.o: external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o
+.PHONY : external/ImGuiDocking/backends/imgui_impl_glfw.o
 
 # target to build an object file
-VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o
-.PHONY : VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o
+external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o
+.PHONY : external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o
 
-VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.i: VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.i
-.PHONY : VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.i
+external/ImGuiDocking/backends/imgui_impl_glfw.i: external/ImGuiDocking/backends/imgui_impl_glfw.cpp.i
+.PHONY : external/ImGuiDocking/backends/imgui_impl_glfw.i
 
 # target to preprocess a source file
-VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.i
-.PHONY : VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.i
+external/ImGuiDocking/backends/imgui_impl_glfw.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.i
+.PHONY : external/ImGuiDocking/backends/imgui_impl_glfw.cpp.i
 
-VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.s: VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.s
-.PHONY : VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.s
+external/ImGuiDocking/backends/imgui_impl_glfw.s: external/ImGuiDocking/backends/imgui_impl_glfw.cpp.s
+.PHONY : external/ImGuiDocking/backends/imgui_impl_glfw.s
 
 # target to generate assembly for a file
-VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.s
-.PHONY : VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.s
+external/ImGuiDocking/backends/imgui_impl_glfw.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.s
+.PHONY : external/ImGuiDocking/backends/imgui_impl_glfw.cpp.s
 
-VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.o: VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o
-.PHONY : VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.o
+external/ImGuiDocking/backends/imgui_impl_vulkan.o: external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o
+.PHONY : external/ImGuiDocking/backends/imgui_impl_vulkan.o
 
 # target to build an object file
-VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o
-.PHONY : VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o
+external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o
+.PHONY : external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o
 
-VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.i: VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.i
-.PHONY : VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.i
+external/ImGuiDocking/backends/imgui_impl_vulkan.i: external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.i
+.PHONY : external/ImGuiDocking/backends/imgui_impl_vulkan.i
 
 # target to preprocess a source file
-VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.i
-.PHONY : VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.i
+external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.i
+.PHONY : external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.i
 
-VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.s: VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.s
-.PHONY : VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.s
+external/ImGuiDocking/backends/imgui_impl_vulkan.s: external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.s
+.PHONY : external/ImGuiDocking/backends/imgui_impl_vulkan.s
 
 # target to generate assembly for a file
-VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.s
-.PHONY : VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.s
+external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.s
+.PHONY : external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.s
 
-VoxelEngine/external/ImGuiDocking/imgui.o: VoxelEngine/external/ImGuiDocking/imgui.cpp.o
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui.o
+external/ImGuiDocking/imgui.o: external/ImGuiDocking/imgui.cpp.o
+.PHONY : external/ImGuiDocking/imgui.o
 
 # target to build an object file
-VoxelEngine/external/ImGuiDocking/imgui.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui.cpp.o
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui.cpp.o
+external/ImGuiDocking/imgui.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui.cpp.o
+.PHONY : external/ImGuiDocking/imgui.cpp.o
 
-VoxelEngine/external/ImGuiDocking/imgui.i: VoxelEngine/external/ImGuiDocking/imgui.cpp.i
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui.i
+external/ImGuiDocking/imgui.i: external/ImGuiDocking/imgui.cpp.i
+.PHONY : external/ImGuiDocking/imgui.i
 
 # target to preprocess a source file
-VoxelEngine/external/ImGuiDocking/imgui.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui.cpp.i
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui.cpp.i
+external/ImGuiDocking/imgui.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui.cpp.i
+.PHONY : external/ImGuiDocking/imgui.cpp.i
 
-VoxelEngine/external/ImGuiDocking/imgui.s: VoxelEngine/external/ImGuiDocking/imgui.cpp.s
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui.s
+external/ImGuiDocking/imgui.s: external/ImGuiDocking/imgui.cpp.s
+.PHONY : external/ImGuiDocking/imgui.s
 
 # target to generate assembly for a file
-VoxelEngine/external/ImGuiDocking/imgui.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui.cpp.s
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui.cpp.s
+external/ImGuiDocking/imgui.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui.cpp.s
+.PHONY : external/ImGuiDocking/imgui.cpp.s
 
-VoxelEngine/external/ImGuiDocking/imgui_demo.o: VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.o
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_demo.o
+external/ImGuiDocking/imgui_demo.o: external/ImGuiDocking/imgui_demo.cpp.o
+.PHONY : external/ImGuiDocking/imgui_demo.o
 
 # target to build an object file
-VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.o
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.o
+external/ImGuiDocking/imgui_demo.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_demo.cpp.o
+.PHONY : external/ImGuiDocking/imgui_demo.cpp.o
 
-VoxelEngine/external/ImGuiDocking/imgui_demo.i: VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.i
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_demo.i
+external/ImGuiDocking/imgui_demo.i: external/ImGuiDocking/imgui_demo.cpp.i
+.PHONY : external/ImGuiDocking/imgui_demo.i
 
 # target to preprocess a source file
-VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.i
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.i
+external/ImGuiDocking/imgui_demo.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_demo.cpp.i
+.PHONY : external/ImGuiDocking/imgui_demo.cpp.i
 
-VoxelEngine/external/ImGuiDocking/imgui_demo.s: VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.s
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_demo.s
+external/ImGuiDocking/imgui_demo.s: external/ImGuiDocking/imgui_demo.cpp.s
+.PHONY : external/ImGuiDocking/imgui_demo.s
 
 # target to generate assembly for a file
-VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.s
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.s
+external/ImGuiDocking/imgui_demo.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_demo.cpp.s
+.PHONY : external/ImGuiDocking/imgui_demo.cpp.s
 
-VoxelEngine/external/ImGuiDocking/imgui_draw.o: VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.o
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_draw.o
+external/ImGuiDocking/imgui_draw.o: external/ImGuiDocking/imgui_draw.cpp.o
+.PHONY : external/ImGuiDocking/imgui_draw.o
 
 # target to build an object file
-VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.o
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.o
+external/ImGuiDocking/imgui_draw.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_draw.cpp.o
+.PHONY : external/ImGuiDocking/imgui_draw.cpp.o
 
-VoxelEngine/external/ImGuiDocking/imgui_draw.i: VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.i
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_draw.i
+external/ImGuiDocking/imgui_draw.i: external/ImGuiDocking/imgui_draw.cpp.i
+.PHONY : external/ImGuiDocking/imgui_draw.i
 
 # target to preprocess a source file
-VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.i
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.i
+external/ImGuiDocking/imgui_draw.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_draw.cpp.i
+.PHONY : external/ImGuiDocking/imgui_draw.cpp.i
 
-VoxelEngine/external/ImGuiDocking/imgui_draw.s: VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.s
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_draw.s
+external/ImGuiDocking/imgui_draw.s: external/ImGuiDocking/imgui_draw.cpp.s
+.PHONY : external/ImGuiDocking/imgui_draw.s
 
 # target to generate assembly for a file
-VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.s
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.s
+external/ImGuiDocking/imgui_draw.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_draw.cpp.s
+.PHONY : external/ImGuiDocking/imgui_draw.cpp.s
 
-VoxelEngine/external/ImGuiDocking/imgui_tables.o: VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.o
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_tables.o
+external/ImGuiDocking/imgui_tables.o: external/ImGuiDocking/imgui_tables.cpp.o
+.PHONY : external/ImGuiDocking/imgui_tables.o
 
 # target to build an object file
-VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.o
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.o
+external/ImGuiDocking/imgui_tables.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_tables.cpp.o
+.PHONY : external/ImGuiDocking/imgui_tables.cpp.o
 
-VoxelEngine/external/ImGuiDocking/imgui_tables.i: VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.i
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_tables.i
+external/ImGuiDocking/imgui_tables.i: external/ImGuiDocking/imgui_tables.cpp.i
+.PHONY : external/ImGuiDocking/imgui_tables.i
 
 # target to preprocess a source file
-VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.i
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.i
+external/ImGuiDocking/imgui_tables.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_tables.cpp.i
+.PHONY : external/ImGuiDocking/imgui_tables.cpp.i
 
-VoxelEngine/external/ImGuiDocking/imgui_tables.s: VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.s
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_tables.s
+external/ImGuiDocking/imgui_tables.s: external/ImGuiDocking/imgui_tables.cpp.s
+.PHONY : external/ImGuiDocking/imgui_tables.s
 
 # target to generate assembly for a file
-VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.s
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.s
+external/ImGuiDocking/imgui_tables.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_tables.cpp.s
+.PHONY : external/ImGuiDocking/imgui_tables.cpp.s
 
-VoxelEngine/external/ImGuiDocking/imgui_widgets.o: VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.o
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_widgets.o
+external/ImGuiDocking/imgui_widgets.o: external/ImGuiDocking/imgui_widgets.cpp.o
+.PHONY : external/ImGuiDocking/imgui_widgets.o
 
 # target to build an object file
-VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.o
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.o
+external/ImGuiDocking/imgui_widgets.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_widgets.cpp.o
+.PHONY : external/ImGuiDocking/imgui_widgets.cpp.o
 
-VoxelEngine/external/ImGuiDocking/imgui_widgets.i: VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.i
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_widgets.i
+external/ImGuiDocking/imgui_widgets.i: external/ImGuiDocking/imgui_widgets.cpp.i
+.PHONY : external/ImGuiDocking/imgui_widgets.i
 
 # target to preprocess a source file
-VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.i
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.i
+external/ImGuiDocking/imgui_widgets.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_widgets.cpp.i
+.PHONY : external/ImGuiDocking/imgui_widgets.cpp.i
 
-VoxelEngine/external/ImGuiDocking/imgui_widgets.s: VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.s
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_widgets.s
+external/ImGuiDocking/imgui_widgets.s: external/ImGuiDocking/imgui_widgets.cpp.s
+.PHONY : external/ImGuiDocking/imgui_widgets.s
 
 # target to generate assembly for a file
-VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.s
-.PHONY : VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.s
+external/ImGuiDocking/imgui_widgets.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_widgets.cpp.s
+.PHONY : external/ImGuiDocking/imgui_widgets.cpp.s
 
-VoxelEngine/src/Buffer/Buffer.o: VoxelEngine/src/Buffer/Buffer.cpp.o
-.PHONY : VoxelEngine/src/Buffer/Buffer.o
+src/Buffer/Buffer.o: src/Buffer/Buffer.cpp.o
+.PHONY : src/Buffer/Buffer.o
 
 # target to build an object file
-VoxelEngine/src/Buffer/Buffer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Buffer/Buffer.cpp.o
-.PHONY : VoxelEngine/src/Buffer/Buffer.cpp.o
+src/Buffer/Buffer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Buffer/Buffer.cpp.o
+.PHONY : src/Buffer/Buffer.cpp.o
 
-VoxelEngine/src/Buffer/Buffer.i: VoxelEngine/src/Buffer/Buffer.cpp.i
-.PHONY : VoxelEngine/src/Buffer/Buffer.i
+src/Buffer/Buffer.i: src/Buffer/Buffer.cpp.i
+.PHONY : src/Buffer/Buffer.i
 
 # target to preprocess a source file
-VoxelEngine/src/Buffer/Buffer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Buffer/Buffer.cpp.i
-.PHONY : VoxelEngine/src/Buffer/Buffer.cpp.i
+src/Buffer/Buffer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Buffer/Buffer.cpp.i
+.PHONY : src/Buffer/Buffer.cpp.i
 
-VoxelEngine/src/Buffer/Buffer.s: VoxelEngine/src/Buffer/Buffer.cpp.s
-.PHONY : VoxelEngine/src/Buffer/Buffer.s
+src/Buffer/Buffer.s: src/Buffer/Buffer.cpp.s
+.PHONY : src/Buffer/Buffer.s
 
 # target to generate assembly for a file
-VoxelEngine/src/Buffer/Buffer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Buffer/Buffer.cpp.s
-.PHONY : VoxelEngine/src/Buffer/Buffer.cpp.s
+src/Buffer/Buffer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Buffer/Buffer.cpp.s
+.PHONY : src/Buffer/Buffer.cpp.s
 
-VoxelEngine/src/Camera/Camera.o: VoxelEngine/src/Camera/Camera.cpp.o
-.PHONY : VoxelEngine/src/Camera/Camera.o
+src/Camera/Camera.o: src/Camera/Camera.cpp.o
+.PHONY : src/Camera/Camera.o
 
 # target to build an object file
-VoxelEngine/src/Camera/Camera.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Camera/Camera.cpp.o
-.PHONY : VoxelEngine/src/Camera/Camera.cpp.o
+src/Camera/Camera.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Camera/Camera.cpp.o
+.PHONY : src/Camera/Camera.cpp.o
 
-VoxelEngine/src/Camera/Camera.i: VoxelEngine/src/Camera/Camera.cpp.i
-.PHONY : VoxelEngine/src/Camera/Camera.i
+src/Camera/Camera.i: src/Camera/Camera.cpp.i
+.PHONY : src/Camera/Camera.i
 
 # target to preprocess a source file
-VoxelEngine/src/Camera/Camera.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Camera/Camera.cpp.i
-.PHONY : VoxelEngine/src/Camera/Camera.cpp.i
+src/Camera/Camera.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Camera/Camera.cpp.i
+.PHONY : src/Camera/Camera.cpp.i
 
-VoxelEngine/src/Camera/Camera.s: VoxelEngine/src/Camera/Camera.cpp.s
-.PHONY : VoxelEngine/src/Camera/Camera.s
+src/Camera/Camera.s: src/Camera/Camera.cpp.s
+.PHONY : src/Camera/Camera.s
 
 # target to generate assembly for a file
-VoxelEngine/src/Camera/Camera.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Camera/Camera.cpp.s
-.PHONY : VoxelEngine/src/Camera/Camera.cpp.s
+src/Camera/Camera.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Camera/Camera.cpp.s
+.PHONY : src/Camera/Camera.cpp.s
 
-VoxelEngine/src/Descriptor/Descriptors.o: VoxelEngine/src/Descriptor/Descriptors.cpp.o
-.PHONY : VoxelEngine/src/Descriptor/Descriptors.o
+src/Descriptor/Descriptors.o: src/Descriptor/Descriptors.cpp.o
+.PHONY : src/Descriptor/Descriptors.o
 
 # target to build an object file
-VoxelEngine/src/Descriptor/Descriptors.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Descriptor/Descriptors.cpp.o
-.PHONY : VoxelEngine/src/Descriptor/Descriptors.cpp.o
+src/Descriptor/Descriptors.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Descriptor/Descriptors.cpp.o
+.PHONY : src/Descriptor/Descriptors.cpp.o
 
-VoxelEngine/src/Descriptor/Descriptors.i: VoxelEngine/src/Descriptor/Descriptors.cpp.i
-.PHONY : VoxelEngine/src/Descriptor/Descriptors.i
+src/Descriptor/Descriptors.i: src/Descriptor/Descriptors.cpp.i
+.PHONY : src/Descriptor/Descriptors.i
 
 # target to preprocess a source file
-VoxelEngine/src/Descriptor/Descriptors.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Descriptor/Descriptors.cpp.i
-.PHONY : VoxelEngine/src/Descriptor/Descriptors.cpp.i
+src/Descriptor/Descriptors.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Descriptor/Descriptors.cpp.i
+.PHONY : src/Descriptor/Descriptors.cpp.i
 
-VoxelEngine/src/Descriptor/Descriptors.s: VoxelEngine/src/Descriptor/Descriptors.cpp.s
-.PHONY : VoxelEngine/src/Descriptor/Descriptors.s
+src/Descriptor/Descriptors.s: src/Descriptor/Descriptors.cpp.s
+.PHONY : src/Descriptor/Descriptors.s
 
 # target to generate assembly for a file
-VoxelEngine/src/Descriptor/Descriptors.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Descriptor/Descriptors.cpp.s
-.PHONY : VoxelEngine/src/Descriptor/Descriptors.cpp.s
+src/Descriptor/Descriptors.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Descriptor/Descriptors.cpp.s
+.PHONY : src/Descriptor/Descriptors.cpp.s
 
-VoxelEngine/src/Device/Device.o: VoxelEngine/src/Device/Device.cpp.o
-.PHONY : VoxelEngine/src/Device/Device.o
+src/Device/Device.o: src/Device/Device.cpp.o
+.PHONY : src/Device/Device.o
 
 # target to build an object file
-VoxelEngine/src/Device/Device.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Device/Device.cpp.o
-.PHONY : VoxelEngine/src/Device/Device.cpp.o
+src/Device/Device.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Device/Device.cpp.o
+.PHONY : src/Device/Device.cpp.o
 
-VoxelEngine/src/Device/Device.i: VoxelEngine/src/Device/Device.cpp.i
-.PHONY : VoxelEngine/src/Device/Device.i
+src/Device/Device.i: src/Device/Device.cpp.i
+.PHONY : src/Device/Device.i
 
 # target to preprocess a source file
-VoxelEngine/src/Device/Device.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Device/Device.cpp.i
-.PHONY : VoxelEngine/src/Device/Device.cpp.i
+src/Device/Device.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Device/Device.cpp.i
+.PHONY : src/Device/Device.cpp.i
 
-VoxelEngine/src/Device/Device.s: VoxelEngine/src/Device/Device.cpp.s
-.PHONY : VoxelEngine/src/Device/Device.s
+src/Device/Device.s: src/Device/Device.cpp.s
+.PHONY : src/Device/Device.s
 
 # target to generate assembly for a file
-VoxelEngine/src/Device/Device.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Device/Device.cpp.s
-.PHONY : VoxelEngine/src/Device/Device.cpp.s
+src/Device/Device.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Device/Device.cpp.s
+.PHONY : src/Device/Device.cpp.s
 
-VoxelEngine/src/Game/GameObject.o: VoxelEngine/src/Game/GameObject.cpp.o
-.PHONY : VoxelEngine/src/Game/GameObject.o
+src/Game/GameObject.o: src/Game/GameObject.cpp.o
+.PHONY : src/Game/GameObject.o
 
 # target to build an object file
-VoxelEngine/src/Game/GameObject.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Game/GameObject.cpp.o
-.PHONY : VoxelEngine/src/Game/GameObject.cpp.o
+src/Game/GameObject.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Game/GameObject.cpp.o
+.PHONY : src/Game/GameObject.cpp.o
 
-VoxelEngine/src/Game/GameObject.i: VoxelEngine/src/Game/GameObject.cpp.i
-.PHONY : VoxelEngine/src/Game/GameObject.i
+src/Game/GameObject.i: src/Game/GameObject.cpp.i
+.PHONY : src/Game/GameObject.i
 
 # target to preprocess a source file
-VoxelEngine/src/Game/GameObject.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Game/GameObject.cpp.i
-.PHONY : VoxelEngine/src/Game/GameObject.cpp.i
+src/Game/GameObject.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Game/GameObject.cpp.i
+.PHONY : src/Game/GameObject.cpp.i
 
-VoxelEngine/src/Game/GameObject.s: VoxelEngine/src/Game/GameObject.cpp.s
-.PHONY : VoxelEngine/src/Game/GameObject.s
+src/Game/GameObject.s: src/Game/GameObject.cpp.s
+.PHONY : src/Game/GameObject.s
 
 # target to generate assembly for a file
-VoxelEngine/src/Game/GameObject.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Game/GameObject.cpp.s
-.PHONY : VoxelEngine/src/Game/GameObject.cpp.s
+src/Game/GameObject.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Game/GameObject.cpp.s
+.PHONY : src/Game/GameObject.cpp.s
 
-VoxelEngine/src/Graphics/Pipeline.o: VoxelEngine/src/Graphics/Pipeline.cpp.o
-.PHONY : VoxelEngine/src/Graphics/Pipeline.o
+src/Graphics/Pipeline.o: src/Graphics/Pipeline.cpp.o
+.PHONY : src/Graphics/Pipeline.o
 
 # target to build an object file
-VoxelEngine/src/Graphics/Pipeline.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Graphics/Pipeline.cpp.o
-.PHONY : VoxelEngine/src/Graphics/Pipeline.cpp.o
+src/Graphics/Pipeline.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Graphics/Pipeline.cpp.o
+.PHONY : src/Graphics/Pipeline.cpp.o
 
-VoxelEngine/src/Graphics/Pipeline.i: VoxelEngine/src/Graphics/Pipeline.cpp.i
-.PHONY : VoxelEngine/src/Graphics/Pipeline.i
+src/Graphics/Pipeline.i: src/Graphics/Pipeline.cpp.i
+.PHONY : src/Graphics/Pipeline.i
 
 # target to preprocess a source file
-VoxelEngine/src/Graphics/Pipeline.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Graphics/Pipeline.cpp.i
-.PHONY : VoxelEngine/src/Graphics/Pipeline.cpp.i
+src/Graphics/Pipeline.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Graphics/Pipeline.cpp.i
+.PHONY : src/Graphics/Pipeline.cpp.i
 
-VoxelEngine/src/Graphics/Pipeline.s: VoxelEngine/src/Graphics/Pipeline.cpp.s
-.PHONY : VoxelEngine/src/Graphics/Pipeline.s
+src/Graphics/Pipeline.s: src/Graphics/Pipeline.cpp.s
+.PHONY : src/Graphics/Pipeline.s
 
 # target to generate assembly for a file
-VoxelEngine/src/Graphics/Pipeline.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Graphics/Pipeline.cpp.s
-.PHONY : VoxelEngine/src/Graphics/Pipeline.cpp.s
+src/Graphics/Pipeline.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Graphics/Pipeline.cpp.s
+.PHONY : src/Graphics/Pipeline.cpp.s
 
-VoxelEngine/src/ImGui/ImGuiManager.o: VoxelEngine/src/ImGui/ImGuiManager.cpp.o
-.PHONY : VoxelEngine/src/ImGui/ImGuiManager.o
+src/ImGui/ImGuiManager.o: src/ImGui/ImGuiManager.cpp.o
+.PHONY : src/ImGui/ImGuiManager.o
 
 # target to build an object file
-VoxelEngine/src/ImGui/ImGuiManager.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/ImGui/ImGuiManager.cpp.o
-.PHONY : VoxelEngine/src/ImGui/ImGuiManager.cpp.o
+src/ImGui/ImGuiManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/ImGui/ImGuiManager.cpp.o
+.PHONY : src/ImGui/ImGuiManager.cpp.o
 
-VoxelEngine/src/ImGui/ImGuiManager.i: VoxelEngine/src/ImGui/ImGuiManager.cpp.i
-.PHONY : VoxelEngine/src/ImGui/ImGuiManager.i
+src/ImGui/ImGuiManager.i: src/ImGui/ImGuiManager.cpp.i
+.PHONY : src/ImGui/ImGuiManager.i
 
 # target to preprocess a source file
-VoxelEngine/src/ImGui/ImGuiManager.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/ImGui/ImGuiManager.cpp.i
-.PHONY : VoxelEngine/src/ImGui/ImGuiManager.cpp.i
+src/ImGui/ImGuiManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/ImGui/ImGuiManager.cpp.i
+.PHONY : src/ImGui/ImGuiManager.cpp.i
 
-VoxelEngine/src/ImGui/ImGuiManager.s: VoxelEngine/src/ImGui/ImGuiManager.cpp.s
-.PHONY : VoxelEngine/src/ImGui/ImGuiManager.s
+src/ImGui/ImGuiManager.s: src/ImGui/ImGuiManager.cpp.s
+.PHONY : src/ImGui/ImGuiManager.s
 
 # target to generate assembly for a file
-VoxelEngine/src/ImGui/ImGuiManager.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/ImGui/ImGuiManager.cpp.s
-.PHONY : VoxelEngine/src/ImGui/ImGuiManager.cpp.s
+src/ImGui/ImGuiManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/ImGui/ImGuiManager.cpp.s
+.PHONY : src/ImGui/ImGuiManager.cpp.s
 
-VoxelEngine/src/Input/Input.o: VoxelEngine/src/Input/Input.cpp.o
-.PHONY : VoxelEngine/src/Input/Input.o
+src/Input/Input.o: src/Input/Input.cpp.o
+.PHONY : src/Input/Input.o
 
 # target to build an object file
-VoxelEngine/src/Input/Input.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Input/Input.cpp.o
-.PHONY : VoxelEngine/src/Input/Input.cpp.o
+src/Input/Input.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Input/Input.cpp.o
+.PHONY : src/Input/Input.cpp.o
 
-VoxelEngine/src/Input/Input.i: VoxelEngine/src/Input/Input.cpp.i
-.PHONY : VoxelEngine/src/Input/Input.i
+src/Input/Input.i: src/Input/Input.cpp.i
+.PHONY : src/Input/Input.i
 
 # target to preprocess a source file
-VoxelEngine/src/Input/Input.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Input/Input.cpp.i
-.PHONY : VoxelEngine/src/Input/Input.cpp.i
+src/Input/Input.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Input/Input.cpp.i
+.PHONY : src/Input/Input.cpp.i
 
-VoxelEngine/src/Input/Input.s: VoxelEngine/src/Input/Input.cpp.s
-.PHONY : VoxelEngine/src/Input/Input.s
+src/Input/Input.s: src/Input/Input.cpp.s
+.PHONY : src/Input/Input.s
 
 # target to generate assembly for a file
-VoxelEngine/src/Input/Input.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Input/Input.cpp.s
-.PHONY : VoxelEngine/src/Input/Input.cpp.s
+src/Input/Input.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Input/Input.cpp.s
+.PHONY : src/Input/Input.cpp.s
 
-VoxelEngine/src/Models/Model.o: VoxelEngine/src/Models/Model.cpp.o
-.PHONY : VoxelEngine/src/Models/Model.o
+src/Models/Model.o: src/Models/Model.cpp.o
+.PHONY : src/Models/Model.o
 
 # target to build an object file
-VoxelEngine/src/Models/Model.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Models/Model.cpp.o
-.PHONY : VoxelEngine/src/Models/Model.cpp.o
+src/Models/Model.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Models/Model.cpp.o
+.PHONY : src/Models/Model.cpp.o
 
-VoxelEngine/src/Models/Model.i: VoxelEngine/src/Models/Model.cpp.i
-.PHONY : VoxelEngine/src/Models/Model.i
+src/Models/Model.i: src/Models/Model.cpp.i
+.PHONY : src/Models/Model.i
 
 # target to preprocess a source file
-VoxelEngine/src/Models/Model.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Models/Model.cpp.i
-.PHONY : VoxelEngine/src/Models/Model.cpp.i
+src/Models/Model.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Models/Model.cpp.i
+.PHONY : src/Models/Model.cpp.i
 
-VoxelEngine/src/Models/Model.s: VoxelEngine/src/Models/Model.cpp.s
-.PHONY : VoxelEngine/src/Models/Model.s
+src/Models/Model.s: src/Models/Model.cpp.s
+.PHONY : src/Models/Model.s
 
 # target to generate assembly for a file
-VoxelEngine/src/Models/Model.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Models/Model.cpp.s
-.PHONY : VoxelEngine/src/Models/Model.cpp.s
+src/Models/Model.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Models/Model.cpp.s
+.PHONY : src/Models/Model.cpp.s
 
-VoxelEngine/src/Presentation/SwapChain.o: VoxelEngine/src/Presentation/SwapChain.cpp.o
-.PHONY : VoxelEngine/src/Presentation/SwapChain.o
+src/Presentation/SwapChain.o: src/Presentation/SwapChain.cpp.o
+.PHONY : src/Presentation/SwapChain.o
 
 # target to build an object file
-VoxelEngine/src/Presentation/SwapChain.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Presentation/SwapChain.cpp.o
-.PHONY : VoxelEngine/src/Presentation/SwapChain.cpp.o
+src/Presentation/SwapChain.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Presentation/SwapChain.cpp.o
+.PHONY : src/Presentation/SwapChain.cpp.o
 
-VoxelEngine/src/Presentation/SwapChain.i: VoxelEngine/src/Presentation/SwapChain.cpp.i
-.PHONY : VoxelEngine/src/Presentation/SwapChain.i
+src/Presentation/SwapChain.i: src/Presentation/SwapChain.cpp.i
+.PHONY : src/Presentation/SwapChain.i
 
 # target to preprocess a source file
-VoxelEngine/src/Presentation/SwapChain.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Presentation/SwapChain.cpp.i
-.PHONY : VoxelEngine/src/Presentation/SwapChain.cpp.i
+src/Presentation/SwapChain.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Presentation/SwapChain.cpp.i
+.PHONY : src/Presentation/SwapChain.cpp.i
 
-VoxelEngine/src/Presentation/SwapChain.s: VoxelEngine/src/Presentation/SwapChain.cpp.s
-.PHONY : VoxelEngine/src/Presentation/SwapChain.s
+src/Presentation/SwapChain.s: src/Presentation/SwapChain.cpp.s
+.PHONY : src/Presentation/SwapChain.s
 
 # target to generate assembly for a file
-VoxelEngine/src/Presentation/SwapChain.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Presentation/SwapChain.cpp.s
-.PHONY : VoxelEngine/src/Presentation/SwapChain.cpp.s
+src/Presentation/SwapChain.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Presentation/SwapChain.cpp.s
+.PHONY : src/Presentation/SwapChain.cpp.s
 
-VoxelEngine/src/Rendering/Renderer.o: VoxelEngine/src/Rendering/Renderer.cpp.o
-.PHONY : VoxelEngine/src/Rendering/Renderer.o
+src/Rendering/Renderer.o: src/Rendering/Renderer.cpp.o
+.PHONY : src/Rendering/Renderer.o
 
 # target to build an object file
-VoxelEngine/src/Rendering/Renderer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Rendering/Renderer.cpp.o
-.PHONY : VoxelEngine/src/Rendering/Renderer.cpp.o
+src/Rendering/Renderer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Rendering/Renderer.cpp.o
+.PHONY : src/Rendering/Renderer.cpp.o
 
-VoxelEngine/src/Rendering/Renderer.i: VoxelEngine/src/Rendering/Renderer.cpp.i
-.PHONY : VoxelEngine/src/Rendering/Renderer.i
+src/Rendering/Renderer.i: src/Rendering/Renderer.cpp.i
+.PHONY : src/Rendering/Renderer.i
 
 # target to preprocess a source file
-VoxelEngine/src/Rendering/Renderer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Rendering/Renderer.cpp.i
-.PHONY : VoxelEngine/src/Rendering/Renderer.cpp.i
+src/Rendering/Renderer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Rendering/Renderer.cpp.i
+.PHONY : src/Rendering/Renderer.cpp.i
 
-VoxelEngine/src/Rendering/Renderer.s: VoxelEngine/src/Rendering/Renderer.cpp.s
-.PHONY : VoxelEngine/src/Rendering/Renderer.s
+src/Rendering/Renderer.s: src/Rendering/Renderer.cpp.s
+.PHONY : src/Rendering/Renderer.s
 
 # target to generate assembly for a file
-VoxelEngine/src/Rendering/Renderer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Rendering/Renderer.cpp.s
-.PHONY : VoxelEngine/src/Rendering/Renderer.cpp.s
+src/Rendering/Renderer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Rendering/Renderer.cpp.s
+.PHONY : src/Rendering/Renderer.cpp.s
 
-VoxelEngine/src/Scenes/Galaxy/GalaxyScene.o: VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.o
-.PHONY : VoxelEngine/src/Scenes/Galaxy/GalaxyScene.o
+src/Scenes/Galaxy/GalaxyScene.o: src/Scenes/Galaxy/GalaxyScene.cpp.o
+.PHONY : src/Scenes/Galaxy/GalaxyScene.o
 
 # target to build an object file
-VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.o
-.PHONY : VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.o
+src/Scenes/Galaxy/GalaxyScene.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Scenes/Galaxy/GalaxyScene.cpp.o
+.PHONY : src/Scenes/Galaxy/GalaxyScene.cpp.o
 
-VoxelEngine/src/Scenes/Galaxy/GalaxyScene.i: VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.i
-.PHONY : VoxelEngine/src/Scenes/Galaxy/GalaxyScene.i
+src/Scenes/Galaxy/GalaxyScene.i: src/Scenes/Galaxy/GalaxyScene.cpp.i
+.PHONY : src/Scenes/Galaxy/GalaxyScene.i
 
 # target to preprocess a source file
-VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.i
-.PHONY : VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.i
+src/Scenes/Galaxy/GalaxyScene.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Scenes/Galaxy/GalaxyScene.cpp.i
+.PHONY : src/Scenes/Galaxy/GalaxyScene.cpp.i
 
-VoxelEngine/src/Scenes/Galaxy/GalaxyScene.s: VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.s
-.PHONY : VoxelEngine/src/Scenes/Galaxy/GalaxyScene.s
+src/Scenes/Galaxy/GalaxyScene.s: src/Scenes/Galaxy/GalaxyScene.cpp.s
+.PHONY : src/Scenes/Galaxy/GalaxyScene.s
 
 # target to generate assembly for a file
-VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.s
-.PHONY : VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.s
+src/Scenes/Galaxy/GalaxyScene.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Scenes/Galaxy/GalaxyScene.cpp.s
+.PHONY : src/Scenes/Galaxy/GalaxyScene.cpp.s
 
-VoxelEngine/src/Scenes/Light/LightScene.o: VoxelEngine/src/Scenes/Light/LightScene.cpp.o
-.PHONY : VoxelEngine/src/Scenes/Light/LightScene.o
+src/Scenes/Light/LightScene.o: src/Scenes/Light/LightScene.cpp.o
+.PHONY : src/Scenes/Light/LightScene.o
 
 # target to build an object file
-VoxelEngine/src/Scenes/Light/LightScene.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Light/LightScene.cpp.o
-.PHONY : VoxelEngine/src/Scenes/Light/LightScene.cpp.o
+src/Scenes/Light/LightScene.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Scenes/Light/LightScene.cpp.o
+.PHONY : src/Scenes/Light/LightScene.cpp.o
 
-VoxelEngine/src/Scenes/Light/LightScene.i: VoxelEngine/src/Scenes/Light/LightScene.cpp.i
-.PHONY : VoxelEngine/src/Scenes/Light/LightScene.i
+src/Scenes/Light/LightScene.i: src/Scenes/Light/LightScene.cpp.i
+.PHONY : src/Scenes/Light/LightScene.i
 
 # target to preprocess a source file
-VoxelEngine/src/Scenes/Light/LightScene.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Light/LightScene.cpp.i
-.PHONY : VoxelEngine/src/Scenes/Light/LightScene.cpp.i
+src/Scenes/Light/LightScene.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Scenes/Light/LightScene.cpp.i
+.PHONY : src/Scenes/Light/LightScene.cpp.i
 
-VoxelEngine/src/Scenes/Light/LightScene.s: VoxelEngine/src/Scenes/Light/LightScene.cpp.s
-.PHONY : VoxelEngine/src/Scenes/Light/LightScene.s
+src/Scenes/Light/LightScene.s: src/Scenes/Light/LightScene.cpp.s
+.PHONY : src/Scenes/Light/LightScene.s
 
 # target to generate assembly for a file
-VoxelEngine/src/Scenes/Light/LightScene.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Light/LightScene.cpp.s
-.PHONY : VoxelEngine/src/Scenes/Light/LightScene.cpp.s
+src/Scenes/Light/LightScene.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Scenes/Light/LightScene.cpp.s
+.PHONY : src/Scenes/Light/LightScene.cpp.s
 
-VoxelEngine/src/VulkanApplication.o: VoxelEngine/src/VulkanApplication.cpp.o
-.PHONY : VoxelEngine/src/VulkanApplication.o
+src/VulkanApplication.o: src/VulkanApplication.cpp.o
+.PHONY : src/VulkanApplication.o
 
 # target to build an object file
-VoxelEngine/src/VulkanApplication.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/VulkanApplication.cpp.o
-.PHONY : VoxelEngine/src/VulkanApplication.cpp.o
+src/VulkanApplication.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/VulkanApplication.cpp.o
+.PHONY : src/VulkanApplication.cpp.o
 
-VoxelEngine/src/VulkanApplication.i: VoxelEngine/src/VulkanApplication.cpp.i
-.PHONY : VoxelEngine/src/VulkanApplication.i
+src/VulkanApplication.i: src/VulkanApplication.cpp.i
+.PHONY : src/VulkanApplication.i
 
 # target to preprocess a source file
-VoxelEngine/src/VulkanApplication.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/VulkanApplication.cpp.i
-.PHONY : VoxelEngine/src/VulkanApplication.cpp.i
+src/VulkanApplication.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/VulkanApplication.cpp.i
+.PHONY : src/VulkanApplication.cpp.i
 
-VoxelEngine/src/VulkanApplication.s: VoxelEngine/src/VulkanApplication.cpp.s
-.PHONY : VoxelEngine/src/VulkanApplication.s
+src/VulkanApplication.s: src/VulkanApplication.cpp.s
+.PHONY : src/VulkanApplication.s
 
 # target to generate assembly for a file
-VoxelEngine/src/VulkanApplication.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/VulkanApplication.cpp.s
-.PHONY : VoxelEngine/src/VulkanApplication.cpp.s
+src/VulkanApplication.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/VulkanApplication.cpp.s
+.PHONY : src/VulkanApplication.cpp.s
 
-VoxelEngine/src/Window.o: VoxelEngine/src/Window.cpp.o
-.PHONY : VoxelEngine/src/Window.o
+src/Window.o: src/Window.cpp.o
+.PHONY : src/Window.o
 
 # target to build an object file
-VoxelEngine/src/Window.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Window.cpp.o
-.PHONY : VoxelEngine/src/Window.cpp.o
+src/Window.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Window.cpp.o
+.PHONY : src/Window.cpp.o
 
-VoxelEngine/src/Window.i: VoxelEngine/src/Window.cpp.i
-.PHONY : VoxelEngine/src/Window.i
+src/Window.i: src/Window.cpp.i
+.PHONY : src/Window.i
 
 # target to preprocess a source file
-VoxelEngine/src/Window.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Window.cpp.i
-.PHONY : VoxelEngine/src/Window.cpp.i
+src/Window.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Window.cpp.i
+.PHONY : src/Window.cpp.i
 
-VoxelEngine/src/Window.s: VoxelEngine/src/Window.cpp.s
-.PHONY : VoxelEngine/src/Window.s
+src/Window.s: src/Window.cpp.s
+.PHONY : src/Window.s
 
 # target to generate assembly for a file
-VoxelEngine/src/Window.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/Window.cpp.s
-.PHONY : VoxelEngine/src/Window.cpp.s
+src/Window.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/Window.cpp.s
+.PHONY : src/Window.cpp.s
 
-VoxelEngine/src/main.o: VoxelEngine/src/main.cpp.o
-.PHONY : VoxelEngine/src/main.o
+src/main.o: src/main.cpp.o
+.PHONY : src/main.o
 
 # target to build an object file
-VoxelEngine/src/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/main.cpp.o
-.PHONY : VoxelEngine/src/main.cpp.o
+src/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/main.cpp.o
+.PHONY : src/main.cpp.o
 
-VoxelEngine/src/main.i: VoxelEngine/src/main.cpp.i
-.PHONY : VoxelEngine/src/main.i
+src/main.i: src/main.cpp.i
+.PHONY : src/main.i
 
 # target to preprocess a source file
-VoxelEngine/src/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/main.cpp.i
-.PHONY : VoxelEngine/src/main.cpp.i
+src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
 
-VoxelEngine/src/main.s: VoxelEngine/src/main.cpp.s
-.PHONY : VoxelEngine/src/main.s
+src/main.s: src/main.cpp.s
+.PHONY : src/main.s
 
 # target to generate assembly for a file
-VoxelEngine/src/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/main.cpp.s
-.PHONY : VoxelEngine/src/main.cpp.s
+src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
 
-VoxelEngine/src/systems/Galaxy/GalaxySystem.o: VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.o
-.PHONY : VoxelEngine/src/systems/Galaxy/GalaxySystem.o
+src/systems/Galaxy/GalaxySystem.o: src/systems/Galaxy/GalaxySystem.cpp.o
+.PHONY : src/systems/Galaxy/GalaxySystem.o
 
 # target to build an object file
-VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.o
-.PHONY : VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.o
+src/systems/Galaxy/GalaxySystem.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/systems/Galaxy/GalaxySystem.cpp.o
+.PHONY : src/systems/Galaxy/GalaxySystem.cpp.o
 
-VoxelEngine/src/systems/Galaxy/GalaxySystem.i: VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.i
-.PHONY : VoxelEngine/src/systems/Galaxy/GalaxySystem.i
+src/systems/Galaxy/GalaxySystem.i: src/systems/Galaxy/GalaxySystem.cpp.i
+.PHONY : src/systems/Galaxy/GalaxySystem.i
 
 # target to preprocess a source file
-VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.i
-.PHONY : VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.i
+src/systems/Galaxy/GalaxySystem.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/systems/Galaxy/GalaxySystem.cpp.i
+.PHONY : src/systems/Galaxy/GalaxySystem.cpp.i
 
-VoxelEngine/src/systems/Galaxy/GalaxySystem.s: VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.s
-.PHONY : VoxelEngine/src/systems/Galaxy/GalaxySystem.s
+src/systems/Galaxy/GalaxySystem.s: src/systems/Galaxy/GalaxySystem.cpp.s
+.PHONY : src/systems/Galaxy/GalaxySystem.s
 
 # target to generate assembly for a file
-VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.s
-.PHONY : VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.s
+src/systems/Galaxy/GalaxySystem.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/systems/Galaxy/GalaxySystem.cpp.s
+.PHONY : src/systems/Galaxy/GalaxySystem.cpp.s
 
-VoxelEngine/src/systems/PointLight/PointLightSystem.o: VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.o
-.PHONY : VoxelEngine/src/systems/PointLight/PointLightSystem.o
+src/systems/PointLight/PointLightSystem.o: src/systems/PointLight/PointLightSystem.cpp.o
+.PHONY : src/systems/PointLight/PointLightSystem.o
 
 # target to build an object file
-VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.o
-.PHONY : VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.o
+src/systems/PointLight/PointLightSystem.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/systems/PointLight/PointLightSystem.cpp.o
+.PHONY : src/systems/PointLight/PointLightSystem.cpp.o
 
-VoxelEngine/src/systems/PointLight/PointLightSystem.i: VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.i
-.PHONY : VoxelEngine/src/systems/PointLight/PointLightSystem.i
+src/systems/PointLight/PointLightSystem.i: src/systems/PointLight/PointLightSystem.cpp.i
+.PHONY : src/systems/PointLight/PointLightSystem.i
 
 # target to preprocess a source file
-VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.i
-.PHONY : VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.i
+src/systems/PointLight/PointLightSystem.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/systems/PointLight/PointLightSystem.cpp.i
+.PHONY : src/systems/PointLight/PointLightSystem.cpp.i
 
-VoxelEngine/src/systems/PointLight/PointLightSystem.s: VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.s
-.PHONY : VoxelEngine/src/systems/PointLight/PointLightSystem.s
+src/systems/PointLight/PointLightSystem.s: src/systems/PointLight/PointLightSystem.cpp.s
+.PHONY : src/systems/PointLight/PointLightSystem.s
 
 # target to generate assembly for a file
-VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.s
-.PHONY : VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.s
+src/systems/PointLight/PointLightSystem.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/systems/PointLight/PointLightSystem.cpp.s
+.PHONY : src/systems/PointLight/PointLightSystem.cpp.s
 
-VoxelEngine/src/systems/RenderSystem.o: VoxelEngine/src/systems/RenderSystem.cpp.o
-.PHONY : VoxelEngine/src/systems/RenderSystem.o
+src/systems/RenderSystem.o: src/systems/RenderSystem.cpp.o
+.PHONY : src/systems/RenderSystem.o
 
 # target to build an object file
-VoxelEngine/src/systems/RenderSystem.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/RenderSystem.cpp.o
-.PHONY : VoxelEngine/src/systems/RenderSystem.cpp.o
+src/systems/RenderSystem.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/systems/RenderSystem.cpp.o
+.PHONY : src/systems/RenderSystem.cpp.o
 
-VoxelEngine/src/systems/RenderSystem.i: VoxelEngine/src/systems/RenderSystem.cpp.i
-.PHONY : VoxelEngine/src/systems/RenderSystem.i
+src/systems/RenderSystem.i: src/systems/RenderSystem.cpp.i
+.PHONY : src/systems/RenderSystem.i
 
 # target to preprocess a source file
-VoxelEngine/src/systems/RenderSystem.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/RenderSystem.cpp.i
-.PHONY : VoxelEngine/src/systems/RenderSystem.cpp.i
+src/systems/RenderSystem.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/systems/RenderSystem.cpp.i
+.PHONY : src/systems/RenderSystem.cpp.i
 
-VoxelEngine/src/systems/RenderSystem.s: VoxelEngine/src/systems/RenderSystem.cpp.s
-.PHONY : VoxelEngine/src/systems/RenderSystem.s
+src/systems/RenderSystem.s: src/systems/RenderSystem.cpp.s
+.PHONY : src/systems/RenderSystem.s
 
 # target to generate assembly for a file
-VoxelEngine/src/systems/RenderSystem.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/RenderSystem.cpp.s
-.PHONY : VoxelEngine/src/systems/RenderSystem.cpp.s
+src/systems/RenderSystem.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/VgeEngine.dir/build.make CMakeFiles/VgeEngine.dir/src/systems/RenderSystem.cpp.s
+.PHONY : src/systems/RenderSystem.cpp.s
 
 # Help Target
 help:
@@ -776,84 +776,84 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... Shaders"
 	@echo "... VgeEngine"
-	@echo "... VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.o"
-	@echo "... VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.i"
-	@echo "... VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.s"
-	@echo "... VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.o"
-	@echo "... VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.i"
-	@echo "... VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.s"
-	@echo "... VoxelEngine/external/ImGuiDocking/imgui.o"
-	@echo "... VoxelEngine/external/ImGuiDocking/imgui.i"
-	@echo "... VoxelEngine/external/ImGuiDocking/imgui.s"
-	@echo "... VoxelEngine/external/ImGuiDocking/imgui_demo.o"
-	@echo "... VoxelEngine/external/ImGuiDocking/imgui_demo.i"
-	@echo "... VoxelEngine/external/ImGuiDocking/imgui_demo.s"
-	@echo "... VoxelEngine/external/ImGuiDocking/imgui_draw.o"
-	@echo "... VoxelEngine/external/ImGuiDocking/imgui_draw.i"
-	@echo "... VoxelEngine/external/ImGuiDocking/imgui_draw.s"
-	@echo "... VoxelEngine/external/ImGuiDocking/imgui_tables.o"
-	@echo "... VoxelEngine/external/ImGuiDocking/imgui_tables.i"
-	@echo "... VoxelEngine/external/ImGuiDocking/imgui_tables.s"
-	@echo "... VoxelEngine/external/ImGuiDocking/imgui_widgets.o"
-	@echo "... VoxelEngine/external/ImGuiDocking/imgui_widgets.i"
-	@echo "... VoxelEngine/external/ImGuiDocking/imgui_widgets.s"
-	@echo "... VoxelEngine/src/Buffer/Buffer.o"
-	@echo "... VoxelEngine/src/Buffer/Buffer.i"
-	@echo "... VoxelEngine/src/Buffer/Buffer.s"
-	@echo "... VoxelEngine/src/Camera/Camera.o"
-	@echo "... VoxelEngine/src/Camera/Camera.i"
-	@echo "... VoxelEngine/src/Camera/Camera.s"
-	@echo "... VoxelEngine/src/Descriptor/Descriptors.o"
-	@echo "... VoxelEngine/src/Descriptor/Descriptors.i"
-	@echo "... VoxelEngine/src/Descriptor/Descriptors.s"
-	@echo "... VoxelEngine/src/Device/Device.o"
-	@echo "... VoxelEngine/src/Device/Device.i"
-	@echo "... VoxelEngine/src/Device/Device.s"
-	@echo "... VoxelEngine/src/Game/GameObject.o"
-	@echo "... VoxelEngine/src/Game/GameObject.i"
-	@echo "... VoxelEngine/src/Game/GameObject.s"
-	@echo "... VoxelEngine/src/Graphics/Pipeline.o"
-	@echo "... VoxelEngine/src/Graphics/Pipeline.i"
-	@echo "... VoxelEngine/src/Graphics/Pipeline.s"
-	@echo "... VoxelEngine/src/ImGui/ImGuiManager.o"
-	@echo "... VoxelEngine/src/ImGui/ImGuiManager.i"
-	@echo "... VoxelEngine/src/ImGui/ImGuiManager.s"
-	@echo "... VoxelEngine/src/Input/Input.o"
-	@echo "... VoxelEngine/src/Input/Input.i"
-	@echo "... VoxelEngine/src/Input/Input.s"
-	@echo "... VoxelEngine/src/Models/Model.o"
-	@echo "... VoxelEngine/src/Models/Model.i"
-	@echo "... VoxelEngine/src/Models/Model.s"
-	@echo "... VoxelEngine/src/Presentation/SwapChain.o"
-	@echo "... VoxelEngine/src/Presentation/SwapChain.i"
-	@echo "... VoxelEngine/src/Presentation/SwapChain.s"
-	@echo "... VoxelEngine/src/Rendering/Renderer.o"
-	@echo "... VoxelEngine/src/Rendering/Renderer.i"
-	@echo "... VoxelEngine/src/Rendering/Renderer.s"
-	@echo "... VoxelEngine/src/Scenes/Galaxy/GalaxyScene.o"
-	@echo "... VoxelEngine/src/Scenes/Galaxy/GalaxyScene.i"
-	@echo "... VoxelEngine/src/Scenes/Galaxy/GalaxyScene.s"
-	@echo "... VoxelEngine/src/Scenes/Light/LightScene.o"
-	@echo "... VoxelEngine/src/Scenes/Light/LightScene.i"
-	@echo "... VoxelEngine/src/Scenes/Light/LightScene.s"
-	@echo "... VoxelEngine/src/VulkanApplication.o"
-	@echo "... VoxelEngine/src/VulkanApplication.i"
-	@echo "... VoxelEngine/src/VulkanApplication.s"
-	@echo "... VoxelEngine/src/Window.o"
-	@echo "... VoxelEngine/src/Window.i"
-	@echo "... VoxelEngine/src/Window.s"
-	@echo "... VoxelEngine/src/main.o"
-	@echo "... VoxelEngine/src/main.i"
-	@echo "... VoxelEngine/src/main.s"
-	@echo "... VoxelEngine/src/systems/Galaxy/GalaxySystem.o"
-	@echo "... VoxelEngine/src/systems/Galaxy/GalaxySystem.i"
-	@echo "... VoxelEngine/src/systems/Galaxy/GalaxySystem.s"
-	@echo "... VoxelEngine/src/systems/PointLight/PointLightSystem.o"
-	@echo "... VoxelEngine/src/systems/PointLight/PointLightSystem.i"
-	@echo "... VoxelEngine/src/systems/PointLight/PointLightSystem.s"
-	@echo "... VoxelEngine/src/systems/RenderSystem.o"
-	@echo "... VoxelEngine/src/systems/RenderSystem.i"
-	@echo "... VoxelEngine/src/systems/RenderSystem.s"
+	@echo "... external/ImGuiDocking/backends/imgui_impl_glfw.o"
+	@echo "... external/ImGuiDocking/backends/imgui_impl_glfw.i"
+	@echo "... external/ImGuiDocking/backends/imgui_impl_glfw.s"
+	@echo "... external/ImGuiDocking/backends/imgui_impl_vulkan.o"
+	@echo "... external/ImGuiDocking/backends/imgui_impl_vulkan.i"
+	@echo "... external/ImGuiDocking/backends/imgui_impl_vulkan.s"
+	@echo "... external/ImGuiDocking/imgui.o"
+	@echo "... external/ImGuiDocking/imgui.i"
+	@echo "... external/ImGuiDocking/imgui.s"
+	@echo "... external/ImGuiDocking/imgui_demo.o"
+	@echo "... external/ImGuiDocking/imgui_demo.i"
+	@echo "... external/ImGuiDocking/imgui_demo.s"
+	@echo "... external/ImGuiDocking/imgui_draw.o"
+	@echo "... external/ImGuiDocking/imgui_draw.i"
+	@echo "... external/ImGuiDocking/imgui_draw.s"
+	@echo "... external/ImGuiDocking/imgui_tables.o"
+	@echo "... external/ImGuiDocking/imgui_tables.i"
+	@echo "... external/ImGuiDocking/imgui_tables.s"
+	@echo "... external/ImGuiDocking/imgui_widgets.o"
+	@echo "... external/ImGuiDocking/imgui_widgets.i"
+	@echo "... external/ImGuiDocking/imgui_widgets.s"
+	@echo "... src/Buffer/Buffer.o"
+	@echo "... src/Buffer/Buffer.i"
+	@echo "... src/Buffer/Buffer.s"
+	@echo "... src/Camera/Camera.o"
+	@echo "... src/Camera/Camera.i"
+	@echo "... src/Camera/Camera.s"
+	@echo "... src/Descriptor/Descriptors.o"
+	@echo "... src/Descriptor/Descriptors.i"
+	@echo "... src/Descriptor/Descriptors.s"
+	@echo "... src/Device/Device.o"
+	@echo "... src/Device/Device.i"
+	@echo "... src/Device/Device.s"
+	@echo "... src/Game/GameObject.o"
+	@echo "... src/Game/GameObject.i"
+	@echo "... src/Game/GameObject.s"
+	@echo "... src/Graphics/Pipeline.o"
+	@echo "... src/Graphics/Pipeline.i"
+	@echo "... src/Graphics/Pipeline.s"
+	@echo "... src/ImGui/ImGuiManager.o"
+	@echo "... src/ImGui/ImGuiManager.i"
+	@echo "... src/ImGui/ImGuiManager.s"
+	@echo "... src/Input/Input.o"
+	@echo "... src/Input/Input.i"
+	@echo "... src/Input/Input.s"
+	@echo "... src/Models/Model.o"
+	@echo "... src/Models/Model.i"
+	@echo "... src/Models/Model.s"
+	@echo "... src/Presentation/SwapChain.o"
+	@echo "... src/Presentation/SwapChain.i"
+	@echo "... src/Presentation/SwapChain.s"
+	@echo "... src/Rendering/Renderer.o"
+	@echo "... src/Rendering/Renderer.i"
+	@echo "... src/Rendering/Renderer.s"
+	@echo "... src/Scenes/Galaxy/GalaxyScene.o"
+	@echo "... src/Scenes/Galaxy/GalaxyScene.i"
+	@echo "... src/Scenes/Galaxy/GalaxyScene.s"
+	@echo "... src/Scenes/Light/LightScene.o"
+	@echo "... src/Scenes/Light/LightScene.i"
+	@echo "... src/Scenes/Light/LightScene.s"
+	@echo "... src/VulkanApplication.o"
+	@echo "... src/VulkanApplication.i"
+	@echo "... src/VulkanApplication.s"
+	@echo "... src/Window.o"
+	@echo "... src/Window.i"
+	@echo "... src/Window.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
+	@echo "... src/systems/Galaxy/GalaxySystem.o"
+	@echo "... src/systems/Galaxy/GalaxySystem.i"
+	@echo "... src/systems/Galaxy/GalaxySystem.s"
+	@echo "... src/systems/PointLight/PointLightSystem.o"
+	@echo "... src/systems/PointLight/PointLightSystem.i"
+	@echo "... src/systems/PointLight/PointLightSystem.s"
+	@echo "... src/systems/RenderSystem.o"
+	@echo "... src/systems/RenderSystem.i"
+	@echo "... src/systems/RenderSystem.s"
 .PHONY : help
 
 

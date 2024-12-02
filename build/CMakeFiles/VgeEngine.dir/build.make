@@ -69,428 +69,428 @@ include CMakeFiles/VgeEngine.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/VgeEngine.dir/flags.make
 
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Buffer/Buffer.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Buffer/Buffer.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/src/Buffer/Buffer.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Buffer/Buffer.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/src/Buffer/Buffer.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/src/Buffer/Buffer.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/src/Buffer/Buffer.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Buffer/Buffer.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/src/Buffer/Buffer.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Buffer/Buffer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/src/Buffer/Buffer.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/src/Buffer/Buffer.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/src/Buffer/Buffer.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Buffer/Buffer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/src/Buffer/Buffer.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/src/Buffer/Buffer.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Buffer/Buffer.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Camera/Camera.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Camera/Camera.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/src/Camera/Camera.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Camera/Camera.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/src/Camera/Camera.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/src/Camera/Camera.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/src/Camera/Camera.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Camera/Camera.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/src/Camera/Camera.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Camera/Camera.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/src/Camera/Camera.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/src/Camera/Camera.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/src/Camera/Camera.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Camera/Camera.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/src/Camera/Camera.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/src/Camera/Camera.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Camera/Camera.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Descriptor/Descriptors.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Descriptor/Descriptors.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/src/Descriptor/Descriptors.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Descriptor/Descriptors.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/src/Descriptor/Descriptors.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/src/Descriptor/Descriptors.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/src/Descriptor/Descriptors.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Descriptor/Descriptors.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/src/Descriptor/Descriptors.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Descriptor/Descriptors.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/src/Descriptor/Descriptors.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/src/Descriptor/Descriptors.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/src/Descriptor/Descriptors.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Descriptor/Descriptors.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/src/Descriptor/Descriptors.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/src/Descriptor/Descriptors.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Descriptor/Descriptors.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Device/Device.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Device/Device.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/src/Device/Device.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Device/Device.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/src/Device/Device.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/src/Device/Device.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/src/Device/Device.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Device/Device.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/src/Device/Device.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Device/Device.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/src/Device/Device.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/src/Device/Device.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/src/Device/Device.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Device/Device.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/src/Device/Device.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/src/Device/Device.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Device/Device.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Game/GameObject.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Game/GameObject.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/src/Game/GameObject.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Game/GameObject.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/src/Game/GameObject.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/src/Game/GameObject.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/src/Game/GameObject.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Game/GameObject.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/src/Game/GameObject.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Game/GameObject.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/src/Game/GameObject.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/src/Game/GameObject.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/src/Game/GameObject.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Game/GameObject.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/src/Game/GameObject.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/src/Game/GameObject.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Game/GameObject.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Graphics/Pipeline.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Graphics/Pipeline.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/src/Graphics/Pipeline.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Graphics/Pipeline.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/src/Graphics/Pipeline.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/src/Graphics/Pipeline.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/src/Graphics/Pipeline.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Graphics/Pipeline.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/src/Graphics/Pipeline.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Graphics/Pipeline.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/src/Graphics/Pipeline.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/src/Graphics/Pipeline.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/src/Graphics/Pipeline.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Graphics/Pipeline.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/src/Graphics/Pipeline.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/src/Graphics/Pipeline.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Graphics/Pipeline.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/ImGui/ImGuiManager.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/ImGui/ImGuiManager.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/src/ImGui/ImGuiManager.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/ImGui/ImGuiManager.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/src/ImGui/ImGuiManager.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/src/ImGui/ImGuiManager.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/src/ImGui/ImGuiManager.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/ImGui/ImGuiManager.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/src/ImGui/ImGuiManager.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/ImGui/ImGuiManager.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/src/ImGui/ImGuiManager.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/src/ImGui/ImGuiManager.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/src/ImGui/ImGuiManager.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/ImGui/ImGuiManager.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/src/ImGui/ImGuiManager.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/src/ImGui/ImGuiManager.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/ImGui/ImGuiManager.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Input/Input.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Input/Input.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/src/Input/Input.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Input/Input.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/src/Input/Input.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/src/Input/Input.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/src/Input/Input.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Input/Input.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/src/Input/Input.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Input/Input.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/src/Input/Input.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/src/Input/Input.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/src/Input/Input.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Input/Input.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/src/Input/Input.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/src/Input/Input.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Input/Input.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Models/Model.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Models/Model.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/src/Models/Model.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Models/Model.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/src/Models/Model.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/src/Models/Model.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/src/Models/Model.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Models/Model.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/src/Models/Model.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Models/Model.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/src/Models/Model.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/src/Models/Model.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/src/Models/Model.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Models/Model.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/src/Models/Model.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/src/Models/Model.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Models/Model.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Presentation/SwapChain.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Presentation/SwapChain.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/src/Presentation/SwapChain.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Presentation/SwapChain.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/src/Presentation/SwapChain.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/src/Presentation/SwapChain.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/src/Presentation/SwapChain.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Presentation/SwapChain.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/src/Presentation/SwapChain.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Presentation/SwapChain.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/src/Presentation/SwapChain.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/src/Presentation/SwapChain.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/src/Presentation/SwapChain.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Presentation/SwapChain.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/src/Presentation/SwapChain.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/src/Presentation/SwapChain.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Presentation/SwapChain.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Rendering/Renderer.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Rendering/Renderer.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/src/Rendering/Renderer.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Rendering/Renderer.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/src/Rendering/Renderer.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/src/Rendering/Renderer.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/src/Rendering/Renderer.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Rendering/Renderer.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/src/Rendering/Renderer.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Rendering/Renderer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/src/Rendering/Renderer.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/src/Rendering/Renderer.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/src/Rendering/Renderer.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Rendering/Renderer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/src/Rendering/Renderer.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/src/Rendering/Renderer.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Rendering/Renderer.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Light/LightScene.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Light/LightScene.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/src/Scenes/Light/LightScene.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Light/LightScene.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Light/LightScene.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Light/LightScene.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Light/LightScene.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Light/LightScene.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/src/Scenes/Light/LightScene.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Light/LightScene.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Light/LightScene.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/src/Scenes/Light/LightScene.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Light/LightScene.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Light/LightScene.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Light/LightScene.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/src/Scenes/Light/LightScene.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Light/LightScene.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/VulkanApplication.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/VulkanApplication.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/src/VulkanApplication.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/VulkanApplication.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/src/VulkanApplication.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/src/VulkanApplication.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/src/VulkanApplication.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/VulkanApplication.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/src/VulkanApplication.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/VulkanApplication.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/src/VulkanApplication.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/src/VulkanApplication.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/src/VulkanApplication.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/VulkanApplication.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/src/VulkanApplication.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/src/VulkanApplication.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/VulkanApplication.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Window.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Window.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/src/Window.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Window.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/src/Window.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/src/Window.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/src/Window.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Window.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/src/Window.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Window.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/src/Window.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/src/Window.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/src/Window.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/Window.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/src/Window.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/src/Window.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/Window.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/main.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/main.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/src/main.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/main.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/src/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/src/main.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/src/main.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/main.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/src/main.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/src/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/src/main.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/src/main.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/src/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/src/main.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/main.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/RenderSystem.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/RenderSystem.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/src/systems/RenderSystem.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/RenderSystem.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/RenderSystem.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/RenderSystem.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/RenderSystem.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/RenderSystem.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/src/systems/RenderSystem.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/RenderSystem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/RenderSystem.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/src/systems/RenderSystem.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/RenderSystem.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/RenderSystem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/RenderSystem.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/src/systems/RenderSystem.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/RenderSystem.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.s
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o: /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o -MF CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o.d -o CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o -c /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp > CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.i
-
-CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp -o CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.s
+CMakeFiles/VgeEngine.dir/src/Buffer/Buffer.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/src/Buffer/Buffer.cpp.o: /home/po/Projects/VoxelEngine/src/Buffer/Buffer.cpp
+CMakeFiles/VgeEngine.dir/src/Buffer/Buffer.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/VgeEngine.dir/src/Buffer/Buffer.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/src/Buffer/Buffer.cpp.o -MF CMakeFiles/VgeEngine.dir/src/Buffer/Buffer.cpp.o.d -o CMakeFiles/VgeEngine.dir/src/Buffer/Buffer.cpp.o -c /home/po/Projects/VoxelEngine/src/Buffer/Buffer.cpp
+
+CMakeFiles/VgeEngine.dir/src/Buffer/Buffer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/src/Buffer/Buffer.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/src/Buffer/Buffer.cpp > CMakeFiles/VgeEngine.dir/src/Buffer/Buffer.cpp.i
+
+CMakeFiles/VgeEngine.dir/src/Buffer/Buffer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/src/Buffer/Buffer.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/src/Buffer/Buffer.cpp -o CMakeFiles/VgeEngine.dir/src/Buffer/Buffer.cpp.s
+
+CMakeFiles/VgeEngine.dir/src/Camera/Camera.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/src/Camera/Camera.cpp.o: /home/po/Projects/VoxelEngine/src/Camera/Camera.cpp
+CMakeFiles/VgeEngine.dir/src/Camera/Camera.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/VgeEngine.dir/src/Camera/Camera.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/src/Camera/Camera.cpp.o -MF CMakeFiles/VgeEngine.dir/src/Camera/Camera.cpp.o.d -o CMakeFiles/VgeEngine.dir/src/Camera/Camera.cpp.o -c /home/po/Projects/VoxelEngine/src/Camera/Camera.cpp
+
+CMakeFiles/VgeEngine.dir/src/Camera/Camera.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/src/Camera/Camera.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/src/Camera/Camera.cpp > CMakeFiles/VgeEngine.dir/src/Camera/Camera.cpp.i
+
+CMakeFiles/VgeEngine.dir/src/Camera/Camera.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/src/Camera/Camera.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/src/Camera/Camera.cpp -o CMakeFiles/VgeEngine.dir/src/Camera/Camera.cpp.s
+
+CMakeFiles/VgeEngine.dir/src/Descriptor/Descriptors.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/src/Descriptor/Descriptors.cpp.o: /home/po/Projects/VoxelEngine/src/Descriptor/Descriptors.cpp
+CMakeFiles/VgeEngine.dir/src/Descriptor/Descriptors.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/VgeEngine.dir/src/Descriptor/Descriptors.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/src/Descriptor/Descriptors.cpp.o -MF CMakeFiles/VgeEngine.dir/src/Descriptor/Descriptors.cpp.o.d -o CMakeFiles/VgeEngine.dir/src/Descriptor/Descriptors.cpp.o -c /home/po/Projects/VoxelEngine/src/Descriptor/Descriptors.cpp
+
+CMakeFiles/VgeEngine.dir/src/Descriptor/Descriptors.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/src/Descriptor/Descriptors.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/src/Descriptor/Descriptors.cpp > CMakeFiles/VgeEngine.dir/src/Descriptor/Descriptors.cpp.i
+
+CMakeFiles/VgeEngine.dir/src/Descriptor/Descriptors.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/src/Descriptor/Descriptors.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/src/Descriptor/Descriptors.cpp -o CMakeFiles/VgeEngine.dir/src/Descriptor/Descriptors.cpp.s
+
+CMakeFiles/VgeEngine.dir/src/Device/Device.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/src/Device/Device.cpp.o: /home/po/Projects/VoxelEngine/src/Device/Device.cpp
+CMakeFiles/VgeEngine.dir/src/Device/Device.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/VgeEngine.dir/src/Device/Device.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/src/Device/Device.cpp.o -MF CMakeFiles/VgeEngine.dir/src/Device/Device.cpp.o.d -o CMakeFiles/VgeEngine.dir/src/Device/Device.cpp.o -c /home/po/Projects/VoxelEngine/src/Device/Device.cpp
+
+CMakeFiles/VgeEngine.dir/src/Device/Device.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/src/Device/Device.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/src/Device/Device.cpp > CMakeFiles/VgeEngine.dir/src/Device/Device.cpp.i
+
+CMakeFiles/VgeEngine.dir/src/Device/Device.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/src/Device/Device.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/src/Device/Device.cpp -o CMakeFiles/VgeEngine.dir/src/Device/Device.cpp.s
+
+CMakeFiles/VgeEngine.dir/src/Game/GameObject.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/src/Game/GameObject.cpp.o: /home/po/Projects/VoxelEngine/src/Game/GameObject.cpp
+CMakeFiles/VgeEngine.dir/src/Game/GameObject.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/VgeEngine.dir/src/Game/GameObject.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/src/Game/GameObject.cpp.o -MF CMakeFiles/VgeEngine.dir/src/Game/GameObject.cpp.o.d -o CMakeFiles/VgeEngine.dir/src/Game/GameObject.cpp.o -c /home/po/Projects/VoxelEngine/src/Game/GameObject.cpp
+
+CMakeFiles/VgeEngine.dir/src/Game/GameObject.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/src/Game/GameObject.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/src/Game/GameObject.cpp > CMakeFiles/VgeEngine.dir/src/Game/GameObject.cpp.i
+
+CMakeFiles/VgeEngine.dir/src/Game/GameObject.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/src/Game/GameObject.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/src/Game/GameObject.cpp -o CMakeFiles/VgeEngine.dir/src/Game/GameObject.cpp.s
+
+CMakeFiles/VgeEngine.dir/src/Graphics/Pipeline.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/src/Graphics/Pipeline.cpp.o: /home/po/Projects/VoxelEngine/src/Graphics/Pipeline.cpp
+CMakeFiles/VgeEngine.dir/src/Graphics/Pipeline.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/VgeEngine.dir/src/Graphics/Pipeline.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/src/Graphics/Pipeline.cpp.o -MF CMakeFiles/VgeEngine.dir/src/Graphics/Pipeline.cpp.o.d -o CMakeFiles/VgeEngine.dir/src/Graphics/Pipeline.cpp.o -c /home/po/Projects/VoxelEngine/src/Graphics/Pipeline.cpp
+
+CMakeFiles/VgeEngine.dir/src/Graphics/Pipeline.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/src/Graphics/Pipeline.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/src/Graphics/Pipeline.cpp > CMakeFiles/VgeEngine.dir/src/Graphics/Pipeline.cpp.i
+
+CMakeFiles/VgeEngine.dir/src/Graphics/Pipeline.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/src/Graphics/Pipeline.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/src/Graphics/Pipeline.cpp -o CMakeFiles/VgeEngine.dir/src/Graphics/Pipeline.cpp.s
+
+CMakeFiles/VgeEngine.dir/src/ImGui/ImGuiManager.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/src/ImGui/ImGuiManager.cpp.o: /home/po/Projects/VoxelEngine/src/ImGui/ImGuiManager.cpp
+CMakeFiles/VgeEngine.dir/src/ImGui/ImGuiManager.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/VgeEngine.dir/src/ImGui/ImGuiManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/src/ImGui/ImGuiManager.cpp.o -MF CMakeFiles/VgeEngine.dir/src/ImGui/ImGuiManager.cpp.o.d -o CMakeFiles/VgeEngine.dir/src/ImGui/ImGuiManager.cpp.o -c /home/po/Projects/VoxelEngine/src/ImGui/ImGuiManager.cpp
+
+CMakeFiles/VgeEngine.dir/src/ImGui/ImGuiManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/src/ImGui/ImGuiManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/src/ImGui/ImGuiManager.cpp > CMakeFiles/VgeEngine.dir/src/ImGui/ImGuiManager.cpp.i
+
+CMakeFiles/VgeEngine.dir/src/ImGui/ImGuiManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/src/ImGui/ImGuiManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/src/ImGui/ImGuiManager.cpp -o CMakeFiles/VgeEngine.dir/src/ImGui/ImGuiManager.cpp.s
+
+CMakeFiles/VgeEngine.dir/src/Input/Input.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/src/Input/Input.cpp.o: /home/po/Projects/VoxelEngine/src/Input/Input.cpp
+CMakeFiles/VgeEngine.dir/src/Input/Input.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/VgeEngine.dir/src/Input/Input.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/src/Input/Input.cpp.o -MF CMakeFiles/VgeEngine.dir/src/Input/Input.cpp.o.d -o CMakeFiles/VgeEngine.dir/src/Input/Input.cpp.o -c /home/po/Projects/VoxelEngine/src/Input/Input.cpp
+
+CMakeFiles/VgeEngine.dir/src/Input/Input.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/src/Input/Input.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/src/Input/Input.cpp > CMakeFiles/VgeEngine.dir/src/Input/Input.cpp.i
+
+CMakeFiles/VgeEngine.dir/src/Input/Input.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/src/Input/Input.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/src/Input/Input.cpp -o CMakeFiles/VgeEngine.dir/src/Input/Input.cpp.s
+
+CMakeFiles/VgeEngine.dir/src/Models/Model.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/src/Models/Model.cpp.o: /home/po/Projects/VoxelEngine/src/Models/Model.cpp
+CMakeFiles/VgeEngine.dir/src/Models/Model.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/VgeEngine.dir/src/Models/Model.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/src/Models/Model.cpp.o -MF CMakeFiles/VgeEngine.dir/src/Models/Model.cpp.o.d -o CMakeFiles/VgeEngine.dir/src/Models/Model.cpp.o -c /home/po/Projects/VoxelEngine/src/Models/Model.cpp
+
+CMakeFiles/VgeEngine.dir/src/Models/Model.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/src/Models/Model.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/src/Models/Model.cpp > CMakeFiles/VgeEngine.dir/src/Models/Model.cpp.i
+
+CMakeFiles/VgeEngine.dir/src/Models/Model.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/src/Models/Model.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/src/Models/Model.cpp -o CMakeFiles/VgeEngine.dir/src/Models/Model.cpp.s
+
+CMakeFiles/VgeEngine.dir/src/Presentation/SwapChain.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/src/Presentation/SwapChain.cpp.o: /home/po/Projects/VoxelEngine/src/Presentation/SwapChain.cpp
+CMakeFiles/VgeEngine.dir/src/Presentation/SwapChain.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/VgeEngine.dir/src/Presentation/SwapChain.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/src/Presentation/SwapChain.cpp.o -MF CMakeFiles/VgeEngine.dir/src/Presentation/SwapChain.cpp.o.d -o CMakeFiles/VgeEngine.dir/src/Presentation/SwapChain.cpp.o -c /home/po/Projects/VoxelEngine/src/Presentation/SwapChain.cpp
+
+CMakeFiles/VgeEngine.dir/src/Presentation/SwapChain.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/src/Presentation/SwapChain.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/src/Presentation/SwapChain.cpp > CMakeFiles/VgeEngine.dir/src/Presentation/SwapChain.cpp.i
+
+CMakeFiles/VgeEngine.dir/src/Presentation/SwapChain.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/src/Presentation/SwapChain.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/src/Presentation/SwapChain.cpp -o CMakeFiles/VgeEngine.dir/src/Presentation/SwapChain.cpp.s
+
+CMakeFiles/VgeEngine.dir/src/Rendering/Renderer.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/src/Rendering/Renderer.cpp.o: /home/po/Projects/VoxelEngine/src/Rendering/Renderer.cpp
+CMakeFiles/VgeEngine.dir/src/Rendering/Renderer.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/VgeEngine.dir/src/Rendering/Renderer.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/src/Rendering/Renderer.cpp.o -MF CMakeFiles/VgeEngine.dir/src/Rendering/Renderer.cpp.o.d -o CMakeFiles/VgeEngine.dir/src/Rendering/Renderer.cpp.o -c /home/po/Projects/VoxelEngine/src/Rendering/Renderer.cpp
+
+CMakeFiles/VgeEngine.dir/src/Rendering/Renderer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/src/Rendering/Renderer.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/src/Rendering/Renderer.cpp > CMakeFiles/VgeEngine.dir/src/Rendering/Renderer.cpp.i
+
+CMakeFiles/VgeEngine.dir/src/Rendering/Renderer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/src/Rendering/Renderer.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/src/Rendering/Renderer.cpp -o CMakeFiles/VgeEngine.dir/src/Rendering/Renderer.cpp.s
+
+CMakeFiles/VgeEngine.dir/src/Scenes/Galaxy/GalaxyScene.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/src/Scenes/Galaxy/GalaxyScene.cpp.o: /home/po/Projects/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp
+CMakeFiles/VgeEngine.dir/src/Scenes/Galaxy/GalaxyScene.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/VgeEngine.dir/src/Scenes/Galaxy/GalaxyScene.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/src/Scenes/Galaxy/GalaxyScene.cpp.o -MF CMakeFiles/VgeEngine.dir/src/Scenes/Galaxy/GalaxyScene.cpp.o.d -o CMakeFiles/VgeEngine.dir/src/Scenes/Galaxy/GalaxyScene.cpp.o -c /home/po/Projects/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp
+
+CMakeFiles/VgeEngine.dir/src/Scenes/Galaxy/GalaxyScene.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/src/Scenes/Galaxy/GalaxyScene.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp > CMakeFiles/VgeEngine.dir/src/Scenes/Galaxy/GalaxyScene.cpp.i
+
+CMakeFiles/VgeEngine.dir/src/Scenes/Galaxy/GalaxyScene.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/src/Scenes/Galaxy/GalaxyScene.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp -o CMakeFiles/VgeEngine.dir/src/Scenes/Galaxy/GalaxyScene.cpp.s
+
+CMakeFiles/VgeEngine.dir/src/Scenes/Light/LightScene.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/src/Scenes/Light/LightScene.cpp.o: /home/po/Projects/VoxelEngine/src/Scenes/Light/LightScene.cpp
+CMakeFiles/VgeEngine.dir/src/Scenes/Light/LightScene.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/VgeEngine.dir/src/Scenes/Light/LightScene.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/src/Scenes/Light/LightScene.cpp.o -MF CMakeFiles/VgeEngine.dir/src/Scenes/Light/LightScene.cpp.o.d -o CMakeFiles/VgeEngine.dir/src/Scenes/Light/LightScene.cpp.o -c /home/po/Projects/VoxelEngine/src/Scenes/Light/LightScene.cpp
+
+CMakeFiles/VgeEngine.dir/src/Scenes/Light/LightScene.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/src/Scenes/Light/LightScene.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/src/Scenes/Light/LightScene.cpp > CMakeFiles/VgeEngine.dir/src/Scenes/Light/LightScene.cpp.i
+
+CMakeFiles/VgeEngine.dir/src/Scenes/Light/LightScene.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/src/Scenes/Light/LightScene.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/src/Scenes/Light/LightScene.cpp -o CMakeFiles/VgeEngine.dir/src/Scenes/Light/LightScene.cpp.s
+
+CMakeFiles/VgeEngine.dir/src/VulkanApplication.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/src/VulkanApplication.cpp.o: /home/po/Projects/VoxelEngine/src/VulkanApplication.cpp
+CMakeFiles/VgeEngine.dir/src/VulkanApplication.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/VgeEngine.dir/src/VulkanApplication.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/src/VulkanApplication.cpp.o -MF CMakeFiles/VgeEngine.dir/src/VulkanApplication.cpp.o.d -o CMakeFiles/VgeEngine.dir/src/VulkanApplication.cpp.o -c /home/po/Projects/VoxelEngine/src/VulkanApplication.cpp
+
+CMakeFiles/VgeEngine.dir/src/VulkanApplication.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/src/VulkanApplication.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/src/VulkanApplication.cpp > CMakeFiles/VgeEngine.dir/src/VulkanApplication.cpp.i
+
+CMakeFiles/VgeEngine.dir/src/VulkanApplication.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/src/VulkanApplication.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/src/VulkanApplication.cpp -o CMakeFiles/VgeEngine.dir/src/VulkanApplication.cpp.s
+
+CMakeFiles/VgeEngine.dir/src/Window.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/src/Window.cpp.o: /home/po/Projects/VoxelEngine/src/Window.cpp
+CMakeFiles/VgeEngine.dir/src/Window.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/VgeEngine.dir/src/Window.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/src/Window.cpp.o -MF CMakeFiles/VgeEngine.dir/src/Window.cpp.o.d -o CMakeFiles/VgeEngine.dir/src/Window.cpp.o -c /home/po/Projects/VoxelEngine/src/Window.cpp
+
+CMakeFiles/VgeEngine.dir/src/Window.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/src/Window.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/src/Window.cpp > CMakeFiles/VgeEngine.dir/src/Window.cpp.i
+
+CMakeFiles/VgeEngine.dir/src/Window.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/src/Window.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/src/Window.cpp -o CMakeFiles/VgeEngine.dir/src/Window.cpp.s
+
+CMakeFiles/VgeEngine.dir/src/main.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/src/main.cpp.o: /home/po/Projects/VoxelEngine/src/main.cpp
+CMakeFiles/VgeEngine.dir/src/main.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/VgeEngine.dir/src/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/src/main.cpp.o -MF CMakeFiles/VgeEngine.dir/src/main.cpp.o.d -o CMakeFiles/VgeEngine.dir/src/main.cpp.o -c /home/po/Projects/VoxelEngine/src/main.cpp
+
+CMakeFiles/VgeEngine.dir/src/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/src/main.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/src/main.cpp > CMakeFiles/VgeEngine.dir/src/main.cpp.i
+
+CMakeFiles/VgeEngine.dir/src/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/src/main.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/src/main.cpp -o CMakeFiles/VgeEngine.dir/src/main.cpp.s
+
+CMakeFiles/VgeEngine.dir/src/systems/Galaxy/GalaxySystem.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/src/systems/Galaxy/GalaxySystem.cpp.o: /home/po/Projects/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp
+CMakeFiles/VgeEngine.dir/src/systems/Galaxy/GalaxySystem.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/VgeEngine.dir/src/systems/Galaxy/GalaxySystem.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/src/systems/Galaxy/GalaxySystem.cpp.o -MF CMakeFiles/VgeEngine.dir/src/systems/Galaxy/GalaxySystem.cpp.o.d -o CMakeFiles/VgeEngine.dir/src/systems/Galaxy/GalaxySystem.cpp.o -c /home/po/Projects/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp
+
+CMakeFiles/VgeEngine.dir/src/systems/Galaxy/GalaxySystem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/src/systems/Galaxy/GalaxySystem.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp > CMakeFiles/VgeEngine.dir/src/systems/Galaxy/GalaxySystem.cpp.i
+
+CMakeFiles/VgeEngine.dir/src/systems/Galaxy/GalaxySystem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/src/systems/Galaxy/GalaxySystem.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp -o CMakeFiles/VgeEngine.dir/src/systems/Galaxy/GalaxySystem.cpp.s
+
+CMakeFiles/VgeEngine.dir/src/systems/PointLight/PointLightSystem.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/src/systems/PointLight/PointLightSystem.cpp.o: /home/po/Projects/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp
+CMakeFiles/VgeEngine.dir/src/systems/PointLight/PointLightSystem.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/VgeEngine.dir/src/systems/PointLight/PointLightSystem.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/src/systems/PointLight/PointLightSystem.cpp.o -MF CMakeFiles/VgeEngine.dir/src/systems/PointLight/PointLightSystem.cpp.o.d -o CMakeFiles/VgeEngine.dir/src/systems/PointLight/PointLightSystem.cpp.o -c /home/po/Projects/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp
+
+CMakeFiles/VgeEngine.dir/src/systems/PointLight/PointLightSystem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/src/systems/PointLight/PointLightSystem.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp > CMakeFiles/VgeEngine.dir/src/systems/PointLight/PointLightSystem.cpp.i
+
+CMakeFiles/VgeEngine.dir/src/systems/PointLight/PointLightSystem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/src/systems/PointLight/PointLightSystem.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp -o CMakeFiles/VgeEngine.dir/src/systems/PointLight/PointLightSystem.cpp.s
+
+CMakeFiles/VgeEngine.dir/src/systems/RenderSystem.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/src/systems/RenderSystem.cpp.o: /home/po/Projects/VoxelEngine/src/systems/RenderSystem.cpp
+CMakeFiles/VgeEngine.dir/src/systems/RenderSystem.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/VgeEngine.dir/src/systems/RenderSystem.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/src/systems/RenderSystem.cpp.o -MF CMakeFiles/VgeEngine.dir/src/systems/RenderSystem.cpp.o.d -o CMakeFiles/VgeEngine.dir/src/systems/RenderSystem.cpp.o -c /home/po/Projects/VoxelEngine/src/systems/RenderSystem.cpp
+
+CMakeFiles/VgeEngine.dir/src/systems/RenderSystem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/src/systems/RenderSystem.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/src/systems/RenderSystem.cpp > CMakeFiles/VgeEngine.dir/src/systems/RenderSystem.cpp.i
+
+CMakeFiles/VgeEngine.dir/src/systems/RenderSystem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/src/systems/RenderSystem.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/src/systems/RenderSystem.cpp -o CMakeFiles/VgeEngine.dir/src/systems/RenderSystem.cpp.s
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui.cpp.o: /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui.cpp
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui.cpp.o -MF CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui.cpp.o.d -o CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui.cpp.o -c /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui.cpp
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui.cpp > CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui.cpp.i
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui.cpp -o CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui.cpp.s
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_demo.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_demo.cpp.o: /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_demo.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Building CXX object CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_demo.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_demo.cpp.o -MF CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_demo.cpp.o.d -o CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_demo.cpp.o -c /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_demo.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_demo.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp > CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_demo.cpp.i
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_demo.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_demo.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp -o CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_demo.cpp.s
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_draw.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_draw.cpp.o: /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_draw.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_22) "Building CXX object CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_draw.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_draw.cpp.o -MF CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_draw.cpp.o.d -o CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_draw.cpp.o -c /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_draw.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_draw.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp > CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_draw.cpp.i
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_draw.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_draw.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp -o CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_draw.cpp.s
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_tables.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_tables.cpp.o: /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_tables.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_23) "Building CXX object CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_tables.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_tables.cpp.o -MF CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_tables.cpp.o.d -o CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_tables.cpp.o -c /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_tables.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_tables.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp > CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_tables.cpp.i
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_tables.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_tables.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp -o CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_tables.cpp.s
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_widgets.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_widgets.cpp.o: /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_widgets.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_24) "Building CXX object CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_widgets.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_widgets.cpp.o -MF CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_widgets.cpp.o.d -o CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_widgets.cpp.o -c /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_widgets.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_widgets.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp > CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_widgets.cpp.i
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_widgets.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_widgets.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp -o CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_widgets.cpp.s
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o: /home/po/Projects/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_25) "Building CXX object CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o -MF CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o.d -o CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o -c /home/po/Projects/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp > CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.i
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp -o CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.s
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o: CMakeFiles/VgeEngine.dir/flags.make
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o: /home/po/Projects/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o: CMakeFiles/VgeEngine.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/po/Projects/VoxelEngine/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_26) "Building CXX object CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o -MF CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o.d -o CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o -c /home/po/Projects/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/po/Projects/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp > CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.i
+
+CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/po/Projects/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp -o CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.s
 
 # Object files for target VgeEngine
 VgeEngine_OBJECTS = \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/src/Buffer/Buffer.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/src/Camera/Camera.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/src/Descriptor/Descriptors.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/src/Device/Device.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/src/Game/GameObject.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/src/Graphics/Pipeline.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/src/ImGui/ImGuiManager.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/src/Input/Input.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/src/Models/Model.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/src/Presentation/SwapChain.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/src/Rendering/Renderer.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Light/LightScene.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/src/VulkanApplication.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/src/Window.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/src/main.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/RenderSystem.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o" \
-"CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o"
+"CMakeFiles/VgeEngine.dir/src/Buffer/Buffer.cpp.o" \
+"CMakeFiles/VgeEngine.dir/src/Camera/Camera.cpp.o" \
+"CMakeFiles/VgeEngine.dir/src/Descriptor/Descriptors.cpp.o" \
+"CMakeFiles/VgeEngine.dir/src/Device/Device.cpp.o" \
+"CMakeFiles/VgeEngine.dir/src/Game/GameObject.cpp.o" \
+"CMakeFiles/VgeEngine.dir/src/Graphics/Pipeline.cpp.o" \
+"CMakeFiles/VgeEngine.dir/src/ImGui/ImGuiManager.cpp.o" \
+"CMakeFiles/VgeEngine.dir/src/Input/Input.cpp.o" \
+"CMakeFiles/VgeEngine.dir/src/Models/Model.cpp.o" \
+"CMakeFiles/VgeEngine.dir/src/Presentation/SwapChain.cpp.o" \
+"CMakeFiles/VgeEngine.dir/src/Rendering/Renderer.cpp.o" \
+"CMakeFiles/VgeEngine.dir/src/Scenes/Galaxy/GalaxyScene.cpp.o" \
+"CMakeFiles/VgeEngine.dir/src/Scenes/Light/LightScene.cpp.o" \
+"CMakeFiles/VgeEngine.dir/src/VulkanApplication.cpp.o" \
+"CMakeFiles/VgeEngine.dir/src/Window.cpp.o" \
+"CMakeFiles/VgeEngine.dir/src/main.cpp.o" \
+"CMakeFiles/VgeEngine.dir/src/systems/Galaxy/GalaxySystem.cpp.o" \
+"CMakeFiles/VgeEngine.dir/src/systems/PointLight/PointLightSystem.cpp.o" \
+"CMakeFiles/VgeEngine.dir/src/systems/RenderSystem.cpp.o" \
+"CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui.cpp.o" \
+"CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_demo.cpp.o" \
+"CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_draw.cpp.o" \
+"CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_tables.cpp.o" \
+"CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_widgets.cpp.o" \
+"CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o" \
+"CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o"
 
 # External object files for target VgeEngine
 VgeEngine_EXTERNAL_OBJECTS =
 
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/src/Buffer/Buffer.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/src/Camera/Camera.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/src/Descriptor/Descriptors.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/src/Device/Device.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/src/Game/GameObject.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/src/Graphics/Pipeline.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/src/ImGui/ImGuiManager.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/src/Input/Input.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/src/Models/Model.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/src/Presentation/SwapChain.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/src/Rendering/Renderer.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Galaxy/GalaxyScene.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/src/Scenes/Light/LightScene.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/src/VulkanApplication.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/src/Window.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/src/main.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/Galaxy/GalaxySystem.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/PointLight/PointLightSystem.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/src/systems/RenderSystem.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_demo.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_draw.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_tables.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/imgui_widgets.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o
-VgeEngine: CMakeFiles/VgeEngine.dir/VoxelEngine/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/src/Buffer/Buffer.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/src/Camera/Camera.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/src/Descriptor/Descriptors.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/src/Device/Device.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/src/Game/GameObject.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/src/Graphics/Pipeline.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/src/ImGui/ImGuiManager.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/src/Input/Input.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/src/Models/Model.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/src/Presentation/SwapChain.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/src/Rendering/Renderer.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/src/Scenes/Galaxy/GalaxyScene.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/src/Scenes/Light/LightScene.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/src/VulkanApplication.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/src/Window.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/src/main.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/src/systems/Galaxy/GalaxySystem.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/src/systems/PointLight/PointLightSystem.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/src/systems/RenderSystem.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_demo.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_draw.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_tables.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/external/ImGuiDocking/imgui_widgets.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_glfw.cpp.o
+VgeEngine: CMakeFiles/VgeEngine.dir/external/ImGuiDocking/backends/imgui_impl_vulkan.cpp.o
 VgeEngine: CMakeFiles/VgeEngine.dir/build.make
 VgeEngine: /usr/lib/x86_64-linux-gnu/libvulkan.so
 VgeEngine: CMakeFiles/VgeEngine.dir/link.txt

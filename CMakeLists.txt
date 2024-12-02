@@ -66,16 +66,16 @@ else()
 endif()
 
 # 3. Include external directories
-include_directories(${PROJECT_SOURCE_DIR}/VoxelEngine/external)
+include_directories(${PROJECT_SOURCE_DIR}/external)
 
 # TinyObjLoader setup
 if (NOT TINYOBJ_PATH)
-    message(STATUS "TINYOBJ_PATH not specified in .env.cmake, using VoxelEngine/external/tinyobjloader")
-    set(TINYOBJ_PATH ${PROJECT_SOURCE_DIR}/VoxelEngine/external/tinyobjloader)
+    message(STATUS "TINYOBJ_PATH not specified in .env.cmake, using external/tinyobjloader")
+    set(TINYOBJ_PATH ${PROJECT_SOURCE_DIR}/external/tinyobjloader)
 endif()
 
 # ImGui setup
-set(IMGUI_PATH ${PROJECT_SOURCE_DIR}/VoxelEngine/external/ImGuiDocking)
+set(IMGUI_PATH ${PROJECT_SOURCE_DIR}/external/ImGuiDocking)
 set(IMGUI_SOURCES
     ${IMGUI_PATH}/imgui.cpp
     ${IMGUI_PATH}/imgui_demo.cpp
@@ -87,7 +87,7 @@ set(IMGUI_SOURCES
 )
 
 # Get all project source files
-file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/VoxelEngine/src/*.cpp)
+file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 
 # Create executable from sources and ImGui sources
 add_executable(${PROJECT_NAME} ${SOURCES} ${IMGUI_SOURCES})
@@ -114,14 +114,14 @@ if (WIN32)
         )
     endif()
     target_include_directories(${PROJECT_NAME} PUBLIC
-        ${PROJECT_SOURCE_DIR}/VoxelEngine/src
+        ${PROJECT_SOURCE_DIR}/src
         ${Vulkan_INCLUDE_DIRS}
         ${TINYOBJ_PATH}
         ${GLFW_INCLUDE_DIRS}
         ${GLM_PATH}
-        ${PROJECT_SOURCE_DIR}/VoxelEngine/external
-        ${PROJECT_SOURCE_DIR}/VoxelEngine/external/ImGuiDocking
-        ${PROJECT_SOURCE_DIR}/VoxelEngine/external/ImGuiDocking/backends
+        ${PROJECT_SOURCE_DIR}/external
+        ${PROJECT_SOURCE_DIR}/external/ImGuiDocking
+        ${PROJECT_SOURCE_DIR}/external/ImGuiDocking/backends
     )
     target_link_directories(${PROJECT_NAME} PUBLIC
         ${Vulkan_LIBRARIES}
@@ -131,10 +131,10 @@ if (WIN32)
 elseif (UNIX)
     message(STATUS "CREATING BUILD FOR UNIX")
     target_include_directories(${PROJECT_NAME} PUBLIC
-        ${PROJECT_SOURCE_DIR}/VoxelEngine/src
-        ${PROJECT_SOURCE_DIR}/VoxelEngine/external
-        ${PROJECT_SOURCE_DIR}/VoxelEngine/external/ImGuiDocking
-        ${PROJECT_SOURCE_DIR}/VoxelEngine/external/ImGuiDocking/backends
+        ${PROJECT_SOURCE_DIR}/src
+        ${PROJECT_SOURCE_DIR}/external
+        ${PROJECT_SOURCE_DIR}/external/ImGuiDocking
+        ${PROJECT_SOURCE_DIR}/external/ImGuiDocking/backends
         ${TINYOBJ_PATH}
     )
     target_link_libraries(${PROJECT_NAME} glfw ${Vulkan_LIBRARIES})
@@ -152,8 +152,8 @@ find_program(GLSL_VALIDATOR glslangValidator HINTS
 )
 
 # Define shader directories
-set(SHADER_SOURCE_DIR ${PROJECT_SOURCE_DIR}/VoxelEngine/shaders)
-set(SHADER_BINARY_DIR ${PROJECT_SOURCE_DIR}/VoxelEngine/shaders)
+set(SHADER_SOURCE_DIR ${PROJECT_SOURCE_DIR}/shaders)
+set(SHADER_BINARY_DIR ${PROJECT_SOURCE_DIR}/shaders)
 
 # Get all shader files, including compute shaders
 file(GLOB_RECURSE GLSL_SOURCE_FILES
