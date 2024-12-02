@@ -1,6 +1,6 @@
 # Graphics Pipeline
 
-![Graphics Pipeline](/VoxelEngine/images/GraphicsPipeline.png)
+![Graphics Pipeline](/images/GraphicsPipeline.png)
 
 1. Renderpass
 
