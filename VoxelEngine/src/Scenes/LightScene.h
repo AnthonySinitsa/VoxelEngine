@@ -15,6 +15,7 @@ namespace vge {
         void update(FrameInfo& frameInfo) override;
         void render(FrameInfo& frameInfo) override;
         void renderUI() override;
+        void updateUbo(GlobalUbo& ubo, FrameInfo& frameInfo) override;
         const char* getName() const override { return "Light Scene"; }
 
     private:

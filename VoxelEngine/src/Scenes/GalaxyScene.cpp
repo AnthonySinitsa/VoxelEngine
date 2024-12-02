@@ -17,6 +17,8 @@ namespace vge {
         );
     }
 
+    void GalaxyScene::updateUbo(GlobalUbo& ubo, FrameInfo& frameInfo) {}
+
     void GalaxyScene::update(FrameInfo& frameInfo) {
         galaxySystem->update(frameInfo);
         galaxySystem->computeStars(frameInfo);

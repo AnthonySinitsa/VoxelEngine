@@ -31,25 +31,30 @@ namespace vge {
         // Create vase object
         auto vase = GameObject::createGameObject();
         vase.model = vgeModel;
-        vase.transform.translation = {0.0f, 0.0f, 2.5f};  // Moved forward so it's visible from starting camera position
+        vase.transform.translation = {0.0f, 0.0f, 0.0f};
         vase.transform.scale = glm::vec3{3.0f};
         gameObjects.emplace(vase.getId(), std::move(vase));
 
         // Create point lights with different colors and positions
         // Central light
-        auto centerLight = GameObject::makePointLight(10.0f, 0.1f, glm::vec3{1.0f, 1.0f, 1.0f});
+        auto centerLight = GameObject::makePointLight(1.0f, 0.1f, glm::vec3{1.0f, 1.0f, 1.0f});
         centerLight.transform.translation = {0.0f, 1.0f, 2.5f};  // Above the vase
         gameObjects.emplace(centerLight.getId(), std::move(centerLight));
 
         // Red light
-        auto redLight = GameObject::makePointLight(8.0f, 0.1f, glm::vec3{1.0f, 0.0f, 0.0f});
+        auto redLight = GameObject::makePointLight(1.0f, 0.1f, glm::vec3{1.0f, 0.0f, 0.0f});
         redLight.transform.translation = {-1.0f, 0.0f, 2.5f};  // Left of the vase
         gameObjects.emplace(redLight.getId(), std::move(redLight));
 
         // Blue light
-        auto blueLight = GameObject::makePointLight(8.0f, 0.1f, glm::vec3{0.0f, 0.0f, 1.0f});
+        auto blueLight = GameObject::makePointLight(1.0f, 0.1f, glm::vec3{0.0f, 0.0f, 1.0f});
         blueLight.transform.translation = {1.0f, 0.0f, 2.5f};  // Right of the vase
         gameObjects.emplace(blueLight.getId(), std::move(blueLight));
+    }
+
+    void LightScene::updateUbo(GlobalUbo& ubo, FrameInfo& frameInfo) {
+        // Update point lights in UBO
+        pointLightSystem->update(frameInfo, ubo);
     }
 
     void LightScene::update(FrameInfo& frameInfo) {

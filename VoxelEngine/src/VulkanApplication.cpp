@@ -115,7 +115,7 @@ namespace vge{
 
             // Set camera perspective projection
             float aspect = vgeRenderer.getAspectRatio();
-            camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 1000.f); // FYI: 10.f is the clipping plane
+            camera.setPerspectiveProjection(glm::radians(50.f), aspect, 0.1f, 1000.f); // FYI: 1000.f is the clipping plane
 
 
             // Render the rest of the game objects using Vulkan
@@ -145,28 +145,28 @@ namespace vge{
                     currentScene.reset();
                 }
 
-                // Only update and render if we have a valid scene
                 if (currentScene) {
                     currentScene->update(frameInfo);
+                    currentScene->updateUbo(ubo, frameInfo);
                 }
 
                 uboBuffers[frameIndex]->writeToBuffer(&ubo);
                 uboBuffers[frameIndex]->flush();
 
-                vgeRenderer.beginSwapChainRenderPass(commandBuffer); // Begin swapchain render pass
+                vgeRenderer.beginSwapChainRenderPass(commandBuffer);
 
                 if (currentScene) {
                     currentScene->render(frameInfo);
                 }
 
-                vgeImgui->newFrame(); // Start new ImGui frame
+                vgeImgui->newFrame();
                 vgeImgui->beginDockspace();
                 vgeImgui->runHierarchy();
                 vgeImgui->endDockspace();
-                vgeImgui->render(commandBuffer); // Render ImGui
+                vgeImgui->render(commandBuffer);
 
-                vgeRenderer.endSwapChainRenderPass(commandBuffer); // End swapchain render pass
-                vgeRenderer.endFrame(); // End frame
+                vgeRenderer.endSwapChainRenderPass(commandBuffer);
+                vgeRenderer.endFrame();
             }
         }
 
