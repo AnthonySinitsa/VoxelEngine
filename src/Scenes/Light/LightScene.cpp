@@ -31,7 +31,7 @@ namespace vge {
     void LightScene::loadGameObjects() {
         // Load model
         std::shared_ptr<Model> vgeModel =
-            Model::createModelFromFile(device, ENGINE_DIR "src/3dModels/smooth_vase.obj");
+            Model::createModelFromFile(device, ENGINE_DIR "models/smooth_vase.obj");
 
         // Create vase object
         auto vase = GameObject::createGameObject();

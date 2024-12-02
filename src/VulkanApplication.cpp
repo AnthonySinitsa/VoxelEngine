@@ -176,7 +176,7 @@ namespace vge{
 
     void VulkanApplication::loadGameObjects(){
         std::shared_ptr<Model> vgeModel =
-            Model::createModelFromFile(vgeDevice, "src/3dModels/smooth_vase.obj");
+            Model::createModelFromFile(vgeDevice, "models/smooth_vase.obj");
         auto tree = GameObject::createGameObject();
         tree.model = vgeModel;
         tree.transform.translation = {1.0f, .0f, 0.f};
