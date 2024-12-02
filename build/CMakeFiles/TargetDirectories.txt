@@ -1,4 +1,0 @@
-/home/po/Projects/VoxelEngine/build/CMakeFiles/VgeEngine.dir
-/home/po/Projects/VoxelEngine/build/CMakeFiles/Shaders.dir
-/home/po/Projects/VoxelEngine/build/CMakeFiles/edit_cache.dir
-/home/po/Projects/VoxelEngine/build/CMakeFiles/rebuild_cache.dir
