@@ -1,7 +1,7 @@
 #include "PointLightSystem.h"
 #include <cstdint>
-#include <src/FrameInfo.h>
-#include <src/Game/GameObject.h>
+#include "../../FrameInfo.h"
+#include "../../Game/GameObject.h"
 
 // libs
 #define GLM_FORCE_RADIANS

@@ -1,7 +1,7 @@
 #include "Model.h"
 
 #include "../Utils/utils.h"
-#include <src/Buffer/Buffer.h>
+#include "../Buffer/Buffer.h"
 
 // libs
 #define TINYOBJLOADER_IMPLEMENTATION
@@ -18,6 +18,10 @@
 #include <cstddef>
 #include <memory>
 #include <iostream>
+
+#ifndef ENGINE_DIR
+#define ENGINE_DIR "../"
+#endif
 
 namespace std {
     template <>

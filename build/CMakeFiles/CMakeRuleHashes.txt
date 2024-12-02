@@ -1,0 +1,9 @@
+# Hashes of file build rules.
+6f9433eeaabd28ffddb5b4d733e95b83 /home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_compute.comp.spv
+23488fcda80b3008fad5148414e4b3bc /home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_fragment.frag.spv
+4708bc9cc35e6683c91f4bf43fa2024a /home/po/Projects/VoxelEngine/VoxelEngine/shaders/Galaxy/galaxy_vertex.vert.spv
+5fae2ae30c5ee5a0ccf648c125f51fa1 /home/po/Projects/VoxelEngine/VoxelEngine/shaders/PointLight/point_light_fragment.frag.spv
+6b39b37d9116539ff5b83e3b58f30f1b /home/po/Projects/VoxelEngine/VoxelEngine/shaders/PointLight/point_light_vertex.vert.spv
+2c2963aa7aec6576097c960b12419f8d /home/po/Projects/VoxelEngine/VoxelEngine/shaders/shaders/fragment_shader.frag.spv
+41e18e8c86053578c1aadea28bbf3cbb /home/po/Projects/VoxelEngine/VoxelEngine/shaders/shaders/vertex_shader.vert.spv
+833b7c88d3da178d0ba90d09a4376215 CMakeFiles/Shaders

@@ -1,5 +1,5 @@
 #include "LightScene.h"
-#include "external/ImGuiDocking/imgui.h"
+#include "imgui.h"
 
 namespace vge {
 

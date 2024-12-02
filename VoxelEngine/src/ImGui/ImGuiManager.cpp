@@ -8,10 +8,10 @@
 
 // libs
 #include <cstdint>
-#include "external/ImGuiDocking/imgui.h"
-#include "external/ImGuiDocking/imgui_internal.h"
-#include "external/ImGuiDocking/backends/imgui_impl_glfw.h"
-#include "external/ImGuiDocking/backends/imgui_impl_vulkan.h"
+#include "imgui.h"
+#include "imgui_internal.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_vulkan.h"
 
 // std
 #include <memory>

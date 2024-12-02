@@ -1,10 +1,10 @@
 #include "RenderSystem.h"
-#include <cstdint>
-#include <src/FrameInfo.h>
+#include "../FrameInfo.h"
 
 // libs
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
+#include <cstdint>
 #include <glm/glm.hpp>
 #include <glm/gtc/constants.hpp>
 

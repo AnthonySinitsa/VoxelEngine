@@ -7,7 +7,7 @@
 #include "../Input/Input.h"
 
 // libs
-#include "external/ImGuiDocking/imgui.h"
+#include "imgui.h"
 #include <vulkan/vulkan_core.h>
 #include <memory>
 

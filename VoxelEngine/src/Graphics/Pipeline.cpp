@@ -8,6 +8,10 @@
 #include <iostream>
 #include <vulkan/vulkan_core.h>
 
+#ifndef ENGINE_DIR
+#define ENGINE_DIR "../"
+#endif
+
 namespace vge{
 
     Pipeline::Pipeline(
@@ -63,10 +67,11 @@ namespace vge{
 
 
     std::vector<char> Pipeline::readFile(const std::string& filepath){
-        std::ifstream file{filepath, std::ios::ate | std::ios::binary};
+        std::string enginePath = ENGINE_DIR + filepath;
+        std::ifstream file{enginePath, std::ios::ate | std::ios::binary};
 
         if(!file.is_open()){
-            throw std::runtime_error("Failed to open file: " + filepath);
+            throw std::runtime_error("Failed to open file: " + enginePath);
         }
 
         size_t fileSize = static_cast<size_t>(file.tellg());

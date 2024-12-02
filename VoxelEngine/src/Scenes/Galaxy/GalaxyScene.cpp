@@ -1,5 +1,5 @@
 #include "GalaxyScene.h"
-#include "external/ImGuiDocking/imgui.h"
+#include "imgui.h"
 
 namespace vge {
 
