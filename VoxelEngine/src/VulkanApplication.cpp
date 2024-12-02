@@ -9,7 +9,7 @@
 #include "Rendering/Renderer.h"
 #include "systems/RenderSystem.h"
 #include "systems/PointLight/PointLightSystem.h"
-#include "Scenes/GalaxyScene.h"
+#include "Scenes/Galaxy/GalaxyScene.h"
 
 // libs
 #define GLM_FORCE_RADIANS

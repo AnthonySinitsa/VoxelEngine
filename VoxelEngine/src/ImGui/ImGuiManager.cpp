@@ -3,8 +3,8 @@
 #include "../Device/Device.h"
 #include "../Window.h"
 #include "../Rendering/Renderer.h"
-#include "../Scenes/GalaxyScene.h"
-#include "../Scenes/LightScene.h"
+#include "../Scenes/Galaxy/GalaxyScene.h"
+#include "../Scenes/Light/LightScene.h"
 
 // libs
 #include <cstdint>

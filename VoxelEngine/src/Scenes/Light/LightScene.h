@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Scene.h"
-#include "../systems/RenderSystem.h"
-#include "../systems/PointLight/PointLightSystem.h"
+#include "../Scene.h"
+#include "../../systems/RenderSystem.h"
+#include "../../systems/PointLight/PointLightSystem.h"
 
 namespace vge {
 

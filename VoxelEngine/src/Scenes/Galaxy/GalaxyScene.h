@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Scene.h"
-#include "../systems/Galaxy/GalaxySystem.h"
-#include "../Device/Device.h"
-#include "../Rendering/Renderer.h"
+#include "../Scene.h"
+#include "../../systems/Galaxy/GalaxySystem.h"
+#include "../../Device/Device.h"
+#include "../../Rendering/Renderer.h"
 
 
 namespace vge {
