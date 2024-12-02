@@ -92,11 +92,11 @@ file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
 # Create executable from sources and ImGui sources
 add_executable(${PROJECT_NAME} ${SOURCES} ${IMGUI_SOURCES})
 
-# Define the engine directory relative to the binary
+# Define the engine directory as an absolute path
 if (WIN32)
-    target_compile_definitions(${PROJECT_NAME} PRIVATE ENGINE_DIR="")
+    target_compile_definitions(${PROJECT_NAME} PRIVATE ENGINE_DIR="${CMAKE_SOURCE_DIR}/")
 else()
-    target_compile_definitions(${PROJECT_NAME} PRIVATE ENGINE_DIR="")
+    target_compile_definitions(${PROJECT_NAME} PRIVATE ENGINE_DIR="${CMAKE_SOURCE_DIR}/")
 endif()
 
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_20)

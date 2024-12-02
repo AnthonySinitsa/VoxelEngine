@@ -1,6 +1,10 @@
 #include "LightScene.h"
 #include "imgui.h"
 
+#ifndef ENGINE_DIR
+#define ENGINE_DIR "../"
+#endif
+
 namespace vge {
 
     LightScene::LightScene(VgeDevice& device, Renderer& renderer, VkDescriptorSetLayout globalSetLayout)
@@ -26,7 +30,8 @@ namespace vge {
 
     void LightScene::loadGameObjects() {
         // Load model
-        std::shared_ptr<Model> vgeModel = Model::createModelFromFile(device, "src/3dModels/smooth_vase.obj");
+        std::shared_ptr<Model> vgeModel =
+            Model::createModelFromFile(device, ENGINE_DIR "src/3dModels/smooth_vase.obj");
 
         // Create vase object
         auto vase = GameObject::createGameObject();

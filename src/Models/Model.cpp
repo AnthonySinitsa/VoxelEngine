@@ -19,10 +19,6 @@
 #include <memory>
 #include <iostream>
 
-#ifndef ENGINE_DIR
-#define ENGINE_DIR "../"
-#endif
-
 namespace std {
     template <>
     struct hash<vge::Model::Vertex> {
