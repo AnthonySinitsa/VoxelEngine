@@ -153,7 +153,6 @@ find_program(GLSL_VALIDATOR glslangValidator HINTS
 
 # Define shader directories
 set(SHADER_SOURCE_DIR ${PROJECT_SOURCE_DIR}/shaders)
-set(SHADER_BINARY_DIR ${PROJECT_SOURCE_DIR}/shaders)
 
 # Get all shader files, including compute shaders
 file(GLOB_RECURSE GLSL_SOURCE_FILES
@@ -165,13 +164,8 @@ file(GLOB_RECURSE GLSL_SOURCE_FILES
 foreach(GLSL ${GLSL_SOURCE_FILES})
     get_filename_component(FILE_NAME ${GLSL} NAME)
     get_filename_component(FILE_PATH ${GLSL} PATH)
-    get_filename_component(FILE_DIR ${FILE_PATH} NAME)
 
-    # Create output directory if it doesn't exist
-    set(SPIRV_OUTPUT_DIR "${SHADER_BINARY_DIR}/${FILE_DIR}")
-    file(MAKE_DIRECTORY ${SPIRV_OUTPUT_DIR})
-
-    set(SPIRV "${SPIRV_OUTPUT_DIR}/${FILE_NAME}.spv")
+    set(SPIRV "${FILE_PATH}/${FILE_NAME}.spv")
 
     add_custom_command(
         OUTPUT ${SPIRV}

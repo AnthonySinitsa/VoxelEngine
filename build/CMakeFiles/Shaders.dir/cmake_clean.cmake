@@ -4,8 +4,8 @@ file(REMOVE_RECURSE
   "/home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_vertex.vert.spv"
   "/home/po/Projects/VoxelEngine/shaders/PointLight/point_light_fragment.frag.spv"
   "/home/po/Projects/VoxelEngine/shaders/PointLight/point_light_vertex.vert.spv"
-  "/home/po/Projects/VoxelEngine/shaders/shaders/fragment_shader.frag.spv"
-  "/home/po/Projects/VoxelEngine/shaders/shaders/vertex_shader.vert.spv"
+  "/home/po/Projects/VoxelEngine/shaders/fragment_shader.frag.spv"
+  "/home/po/Projects/VoxelEngine/shaders/vertex_shader.vert.spv"
   "CMakeFiles/Shaders"
 )
 

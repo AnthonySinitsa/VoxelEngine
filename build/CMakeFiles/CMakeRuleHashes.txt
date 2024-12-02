@@ -4,6 +4,6 @@ df03c91c23c6ee31f05dce4166bf2c19 /home/po/Projects/VoxelEngine/shaders/Galaxy/ga
 fba89f6e40dc99b39a0e0868555f86fe /home/po/Projects/VoxelEngine/shaders/Galaxy/galaxy_vertex.vert.spv
 c36cad74eed212e477312170fa8fa4dc /home/po/Projects/VoxelEngine/shaders/PointLight/point_light_fragment.frag.spv
 c3262005819bd8ed1a4470a1c1039889 /home/po/Projects/VoxelEngine/shaders/PointLight/point_light_vertex.vert.spv
-927048d44f2c53d96b0d8169f19c03d9 /home/po/Projects/VoxelEngine/shaders/shaders/fragment_shader.frag.spv
-f54bba7392f1f89b43200fd88c8ad029 /home/po/Projects/VoxelEngine/shaders/shaders/vertex_shader.vert.spv
+4cb0436e8d77e25c6f72e0fda92340f0 /home/po/Projects/VoxelEngine/shaders/fragment_shader.frag.spv
+16d8da5ffc685e370eba3036767aaf44 /home/po/Projects/VoxelEngine/shaders/vertex_shader.vert.spv
 833b7c88d3da178d0ba90d09a4376215 CMakeFiles/Shaders
