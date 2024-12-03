@@ -43,19 +43,23 @@ namespace vge {
 
         // Create point lights with different colors and positions
         // Central light
-        auto centerLight = GameObject::makePointLight(1.0f, 0.1f, glm::vec3{1.0f, 1.0f, 1.0f});
-        centerLight.transform.translation = {0.0f, 1.0f, 2.5f};
+        auto centerLight = GameObject::makePointLight(20.0f, 0.1f, glm::vec3{1.0f, 1.0f, 1.0f});
+        centerLight.transform.translation = {6.6f, -12.6f, 12.0f};
         gameObjects.emplace(centerLight.getId(), std::move(centerLight));
 
         // Red light
-        auto redLight = GameObject::makePointLight(1.0f, 0.1f, glm::vec3{1.0f, 0.0f, 0.0f});
-        redLight.transform.translation = {-1.0f, 0.0f, 2.5f};
+        auto redLight = GameObject::makePointLight(15.0f, 0.1f, glm::vec3{1.0f, 0.0f, 0.0f});
+        redLight.transform.translation = {-0.2f, -16.0f, 4.8f};
         gameObjects.emplace(redLight.getId(), std::move(redLight));
 
         // Blue light
-        auto blueLight = GameObject::makePointLight(1.0f, 0.1f, glm::vec3{0.0f, 0.0f, 1.0f});
-        blueLight.transform.translation = {1.0f, 0.0f, 2.5f};
+        auto blueLight = GameObject::makePointLight(10.0f, 0.1f, glm::vec3{0.0f, 0.0f, 1.0f});
+        blueLight.transform.translation = {0.0f, -5.6f, 2.5f};
         gameObjects.emplace(blueLight.getId(), std::move(blueLight));
+
+        auto greenLight = GameObject::makePointLight(20.0f, 0.1f, glm::vec3{0.0f, 1.0f, 0.0f});
+        greenLight.transform.translation = {0.0f, -30.0f, 0.0f};
+        gameObjects.emplace(greenLight.getId(), std::move(greenLight));
     }
 
     void LightScene::updateUbo(GlobalUbo& ubo, FrameInfo& frameInfo) {
