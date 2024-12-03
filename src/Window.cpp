@@ -3,7 +3,8 @@
 #include <stdexcept>
 
 namespace vge {
-    Window::Window(int w, int h, std::string name) : width{w}, height{h}, windowName{name} {
+    Window::Window(int w, int h, std::string name, bool fullscreen)
+        : width{w}, height{h}, windowName{name}, isFullscreen{fullscreen} {
         initWindow();
     }
 
@@ -17,7 +18,18 @@ namespace vge {
         glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
 
-        window = glfwCreateWindow(width, height, windowName.c_str(), nullptr, nullptr);
+        if (isFullscreen) {
+            GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+            const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+            glfwWindowHint(GLFW_RED_BITS, mode->redBits);
+            glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
+            glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
+            glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+            window = glfwCreateWindow(mode->width, mode->height, windowName.c_str(), monitor, nullptr);
+        } else {
+            window = glfwCreateWindow(width, height, windowName.c_str(), nullptr, nullptr);
+        }
+
         glfwSetWindowUserPointer(window, this);
         glfwSetFramebufferSizeCallback(window, frameBufferResizeCallback);
     }
