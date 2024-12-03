@@ -18,7 +18,7 @@ namespace vge {
             PointLightSystem(const PointLightSystem &) = delete;
             PointLightSystem &operator=(const PointLightSystem &) = delete;
 
-            void update(FrameInfo &frameInfo, GlobalUbo &ubo);
+            void update(FrameInfo &frameInfo, GlobalUbo &ubo, bool rotateLight = true);
             void render(FrameInfo &frameInfo);
 
         private:

@@ -60,7 +60,7 @@ namespace vge {
 
     void LightScene::updateUbo(GlobalUbo& ubo, FrameInfo& frameInfo) {
         // Update point lights in UBO
-        pointLightSystem->update(frameInfo, ubo);
+        pointLightSystem->update(frameInfo, ubo, false);
     }
 
     void LightScene::update(FrameInfo& frameInfo) {
@@ -72,9 +72,6 @@ namespace vge {
 
         // Set a low ambient light
         ubo.ambientLightColor = {0.02f, 0.02f, 0.02f, 0.02f};  // Last component is intensity
-
-        // Update point lights in UBO
-        pointLightSystem->update(frameInfo, ubo);
     }
 
     void LightScene::render(FrameInfo& frameInfo) {
