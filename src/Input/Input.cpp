@@ -7,6 +7,9 @@
 namespace vge{
 
     void Input::moveInPlaneXZ(GLFWwindow* window, float dt, GameObject & gameObject){
+        // Only process input if window is focused
+        if (!glfwGetWindowAttrib(window, GLFW_FOCUSED)) return;
+
         glm::vec3 rotate{0};
         if(glfwGetKey(window, keys.lookRight) == GLFW_PRESS)rotate.y += 1.f;
         if(glfwGetKey(window, keys.lookLeft) == GLFW_PRESS)rotate.y -= 1.f;
@@ -39,63 +42,67 @@ namespace vge{
         }
     }
 
-
-    // Toggle mouse lock state(called when "e" is pressed)
     void Input::toggleMouseLock(GLFWwindow* window) {
         mouseLocked = !mouseLocked;
         if (mouseLocked) {
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+            // Reset first mouse move flag when re-locking mouse
+            firstMouseMove = true;
         } else {
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         }
     }
 
+    void Input::update(GLFWwindow* window) {
+        // Check if window has focus
+        bool windowFocused = glfwGetWindowAttrib(window, GLFW_FOCUSED);
 
-    void Input::update(GLFWwindow* window){
-        int state = glfwGetKey(window, keys.unlockMouse);
-        if(state == GLFW_PRESS){
-            if(!unlockKeyPressed){
-                toggleMouseLock(window);
-                unlockKeyPressed = true;
-            }
-        } else if (state == GLFW_RELEASE){
-            unlockKeyPressed = false;
-        }
-    }
-
-
-    // Update mouse movement (only if mouse is locked)
-    void Input::mouseMove(GLFWwindow* window, GameObject& gameObject) {
-        if(!mouseLocked){
-            // Mouse if unlocked, so we don't move camera
+        // If window loses focus, automatically unlock mouse
+        if (!windowFocused && mouseLocked) {
+            toggleMouseLock(window);
             return;
         }
 
-        // Get current mouse position
+        // Only process unlock key if window is focused
+        if (windowFocused) {
+            int state = glfwGetKey(window, keys.unlockMouse);
+            if(state == GLFW_PRESS){
+                if(!unlockKeyPressed){
+                    toggleMouseLock(window);
+                    unlockKeyPressed = true;
+                }
+            } else if (state == GLFW_RELEASE){
+                unlockKeyPressed = false;
+            }
+        }
+    }
+
+    void Input::mouseMove(GLFWwindow* window, GameObject& gameObject) {
+        // Check both mouse lock and window focus
+        if (!mouseLocked || !glfwGetWindowAttrib(window, GLFW_FOCUSED)) {
+            return;
+        }
+
         double mouseX, mouseY;
         glfwGetCursorPos(window, &mouseX, &mouseY);
 
-        // On the first frame, set the lastMouseX/Y to the current position
         if (firstMouseMove) {
             lastMouseX = mouseX;
             lastMouseY = mouseY;
             firstMouseMove = false;
+            return;  // Skip the first frame to avoid sudden jumps
         }
 
-        // Calculate the delta (difference) in mouse position
         float deltaX = static_cast<float>(mouseX - lastMouseX);
         float deltaY = static_cast<float>(mouseY - lastMouseY);
 
-        // Update last mouse position
         lastMouseX = mouseX;
         lastMouseY = mouseY;
 
-        // Sensitivity and rotation (adjust sensitivity as needed)
         const float mouseSensitivity = 0.001f;
-        gameObject.transform.rotation.y += deltaX * mouseSensitivity; // Yaw (horizontal)
-        gameObject.transform.rotation.x -= deltaY * mouseSensitivity; // Pitch (vertical)
+        gameObject.transform.rotation.y += deltaX * mouseSensitivity;
+        gameObject.transform.rotation.x -= deltaY * mouseSensitivity;
 
-        // Limit pitch values to avoid flipping the camera
         gameObject.transform.rotation.x = glm::clamp(gameObject.transform.rotation.x, -1.5f, 1.5f);
     }
 } // namespace
