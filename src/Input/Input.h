@@ -44,7 +44,7 @@ namespace vge{
             double lastMouseX = 0.0;
             double lastMouseY = 0.0;
             bool firstMouseMove = true; // Helps initialize last position
-            bool mouseLocked = true; // Start with mouse locked
+            bool mouseLocked = false; // Start with mouse locked
             bool unlockKeyPressed = false;
     };
 } // namespace
