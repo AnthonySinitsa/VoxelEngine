@@ -13,28 +13,28 @@
 
 ## One-hundred-thousand
 
-![1.83](VoxelEngine/images/1.83radius.gif)
+![1.83](images/1.83radius.gif)
 
 ## 2 million stars rendered with average 7ms frame time
 
-![2mil](VoxelEngine/images/2milStars.png)
+![2mil](images/2milStars.png)
 
 
-![galaxy](VoxelEngine/images/SecondGalaxyAttempt.gif)
+![galaxy](images/SecondGalaxyAttempt.gif)
 
 ## Project Layout
 
-### [Windowing](VoxelEngine/README/Windowing.md)
+### [Windowing](README/Windowing.md)
 
-![Windowing](VoxelEngine/images/Windowing.png)
+![Windowing](images/Windowing.png)
 
-### [Graphics Pipeline](VoxelEngine/README/GraphicsPipeline.md)
+### [Graphics Pipeline](README/GraphicsPipeline.md)
 
-![Graphics Pipeline](VoxelEngine/images/GraphicsPipeline.png)
+![Graphics Pipeline](images/GraphicsPipeline.png)
 
-### [Drawing](VoxelEngine/README/Drawing.md)
+### [Drawing](README/Drawing.md)
 
-![Drawing](VoxelEngine/images/Drawing.png)
+![Drawing](images/Drawing.png)
 
 ## References and Resources Used
 
