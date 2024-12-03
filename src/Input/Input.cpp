@@ -75,6 +75,19 @@ namespace vge{
                 unlockKeyPressed = false;
             }
         }
+
+        int toggleFullscreenState = glfwGetKey(window, keys.toggleFullscreen);
+        if (toggleFullscreenState == GLFW_PRESS && !toggleFullscreenPressed) {
+            toggleFullscreen(window);
+            toggleFullscreenPressed = true;
+        } else if (toggleFullscreenState == GLFW_RELEASE) {
+            toggleFullscreenPressed = false;
+        }
+    }
+
+    void Input::toggleFullscreen(GLFWwindow* window) {
+        Window* vgeWindow = reinterpret_cast<Window*>(glfwGetWindowUserPointer(window));
+        vgeWindow->toggleFullscreen();
     }
 
     void Input::mouseMove(GLFWwindow* window, GameObject& gameObject) {

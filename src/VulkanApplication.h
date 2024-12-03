@@ -31,7 +31,7 @@ namespace vge {
             void loadGameObjects();
             void createDescriptorSetLayout();
 
-            Window vgeWindow{WIDTH, HEIGHT, "AAAAAAAAAA", false};
+            Window vgeWindow{WIDTH, HEIGHT, "AAAAAAAAAA"};
             VgeDevice vgeDevice{vgeWindow};
             Renderer vgeRenderer{vgeWindow, vgeDevice};
 

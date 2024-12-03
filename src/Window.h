@@ -21,9 +21,9 @@ namespace vge {
             bool wasWindowResized() { return frameBufferResized; }
             void resetWindowResizedFlag() { frameBufferResized = false; }
             GLFWwindow *getGLFWwindow() const { return window; }
-            bool isFullscreen = false;
 
             void createWindowSurface(VkInstance instance, VkSurfaceKHR *surface);
+            void toggleFullscreen();
 
         private:
             static void frameBufferResizeCallback(GLFWwindow *window, int width, int height);
@@ -33,6 +33,7 @@ namespace vge {
             int width;
             int height;
             bool frameBufferResized = false;
+            bool isFullscreen = false;
 
             std::string windowName;
             GLFWwindow *window;

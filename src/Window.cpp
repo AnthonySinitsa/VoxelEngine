@@ -48,4 +48,17 @@ namespace vge {
         vgeWindow->height = height;
     }
 
+
+    void Window::toggleFullscreen() {
+        if (isFullscreen) {
+            glfwSetWindowMonitor(window, nullptr, 0, 0, width, height, GLFW_DONT_CARE);
+        } else {
+            GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+            const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+            glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+        }
+        isFullscreen = !isFullscreen;
+        frameBufferResized = true;
+    }
+
 } // namespace
