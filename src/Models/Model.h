@@ -13,6 +13,14 @@
 #include <vector>
 
 namespace vge{
+
+    struct Material {
+        glm::vec3 diffuseColor{1.0f};   // Kd
+        glm::vec3 ambientColor{0.0f};   // Ka
+        glm::vec3 specularColor{0.0f};  // Ks
+        std::string name;
+    };
+
     class Model{
         public:
 
@@ -21,22 +29,29 @@ namespace vge{
             glm::vec3 color{};
             glm::vec3 normal{};
             glm::vec2 uv{};
+            int materialId{0};
 
             static std::vector<VkVertexInputBindingDescription> getBindingDescriptions();
             static std::vector<VkVertexInputAttributeDescription> getAttributeDescriptions();
 
             bool operator==(const Vertex &other) const {
-                return position == other.position && color == other.color &&
-                    normal == other.normal && uv == other.uv;
+                return  position == other.position &&
+                        color == other.color &&
+                        normal == other.normal &&
+                        uv == other.uv &&
+                        materialId == other.materialId;
             }
         };
 
         struct Builder {
             std::vector<Vertex> vertices{};
             std::vector<uint32_t> indices{};
+            std::vector<Material> materials{};
 
             void loadModel(const std::string &filepath);
         };
+
+        const std::vector<Material>& getMaterials() const { return materials; }
 
         Model(VgeDevice &device, const Model::Builder &builder);
         ~Model();
@@ -62,5 +77,7 @@ namespace vge{
         bool hasIndexBuffer = false;
         std::unique_ptr<VgeBuffer> indexBuffer;
         uint32_t indexCount;
+
+        std::vector<Material> materials{};
     };
 } // namespace
