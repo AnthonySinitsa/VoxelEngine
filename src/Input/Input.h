@@ -20,6 +20,7 @@ namespace vge{
                 int lookUp = GLFW_KEY_UP;
                 int lookDown = GLFW_KEY_DOWN;
                 int unlockMouse = GLFW_KEY_E;
+                int toggleFullscreen = GLFW_KEY_F11;
             };
 
             bool isEscapePressed(GLFWwindow* window){
@@ -33,18 +34,21 @@ namespace vge{
             void toggleMouseLock(GLFWwindow* window);
             void update(GLFWwindow* window);
             bool isMouseLocked() const { return mouseLocked; }
+            void toggleFullscreen(GLFWwindow* window);
 
             KeyMappings keys{};
             float moveSpeed{20.f};
             float lookSpeed{1.5f};
             float mouseSensitivity{0.1f};
 
+            bool toggleFullscreenPressed = false;
+
         private:
             // Variables to track previous mouse position
             double lastMouseX = 0.0;
             double lastMouseY = 0.0;
             bool firstMouseMove = true; // Helps initialize last position
-            bool mouseLocked = true; // Start with mouse locked
+            bool mouseLocked = false; // Start with mouse locked
             bool unlockKeyPressed = false;
     };
 } // namespace

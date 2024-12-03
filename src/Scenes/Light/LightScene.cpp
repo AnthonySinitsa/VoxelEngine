@@ -31,35 +31,40 @@ namespace vge {
     void LightScene::loadGameObjects() {
         // Load model
         std::shared_ptr<Model> vgeModel =
-            Model::createModelFromFile(device, ENGINE_DIR "models/smooth_vase.obj");
+            Model::createModelFromFile(device, ENGINE_DIR "models/Lowpoly_tree_sample.obj");
 
         // Create vase object
-        auto vase = GameObject::createGameObject();
-        vase.model = vgeModel;
-        vase.transform.translation = {0.0f, 0.0f, 0.0f};
-        vase.transform.scale = glm::vec3{3.0f};
-        gameObjects.emplace(vase.getId(), std::move(vase));
+        auto tree = GameObject::createGameObject();
+        tree.model = vgeModel;
+        tree.transform.translation = {0.0f, 0.0f, 0.0f};
+        tree.transform.scale = glm::vec3{1.0f};
+        tree.transform.rotation = glm::vec3{glm::radians(180.0f), 0.f, 0.f};
+        gameObjects.emplace(tree.getId(), std::move(tree));
 
         // Create point lights with different colors and positions
         // Central light
-        auto centerLight = GameObject::makePointLight(1.0f, 0.1f, glm::vec3{1.0f, 1.0f, 1.0f});
-        centerLight.transform.translation = {0.0f, 1.0f, 2.5f};  // Above the vase
+        auto centerLight = GameObject::makePointLight(20.0f, 0.1f, glm::vec3{1.0f, 1.0f, 1.0f});
+        centerLight.transform.translation = {6.6f, -12.6f, 12.0f};
         gameObjects.emplace(centerLight.getId(), std::move(centerLight));
 
         // Red light
-        auto redLight = GameObject::makePointLight(1.0f, 0.1f, glm::vec3{1.0f, 0.0f, 0.0f});
-        redLight.transform.translation = {-1.0f, 0.0f, 2.5f};  // Left of the vase
+        auto redLight = GameObject::makePointLight(15.0f, 0.1f, glm::vec3{1.0f, 0.0f, 0.0f});
+        redLight.transform.translation = {-0.2f, -16.0f, 4.8f};
         gameObjects.emplace(redLight.getId(), std::move(redLight));
 
         // Blue light
-        auto blueLight = GameObject::makePointLight(1.0f, 0.1f, glm::vec3{0.0f, 0.0f, 1.0f});
-        blueLight.transform.translation = {1.0f, 0.0f, 2.5f};  // Right of the vase
+        auto blueLight = GameObject::makePointLight(10.0f, 0.1f, glm::vec3{0.0f, 0.0f, 1.0f});
+        blueLight.transform.translation = {0.0f, -5.6f, 2.5f};
         gameObjects.emplace(blueLight.getId(), std::move(blueLight));
+
+        auto greenLight = GameObject::makePointLight(20.0f, 0.1f, glm::vec3{0.0f, 1.0f, 0.0f});
+        greenLight.transform.translation = {0.0f, -30.0f, 0.0f};
+        gameObjects.emplace(greenLight.getId(), std::move(greenLight));
     }
 
     void LightScene::updateUbo(GlobalUbo& ubo, FrameInfo& frameInfo) {
         // Update point lights in UBO
-        pointLightSystem->update(frameInfo, ubo);
+        pointLightSystem->update(frameInfo, ubo, false);
     }
 
     void LightScene::update(FrameInfo& frameInfo) {
@@ -71,9 +76,6 @@ namespace vge {
 
         // Set a low ambient light
         ubo.ambientLightColor = {0.02f, 0.02f, 0.02f, 0.02f};  // Last component is intensity
-
-        // Update point lights in UBO
-        pointLightSystem->update(frameInfo, ubo);
     }
 
     void LightScene::render(FrameInfo& frameInfo) {

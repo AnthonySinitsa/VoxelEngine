@@ -10,7 +10,7 @@ namespace vge {
     class Window{
 
         public:
-            Window(int w, int h, std::string name);
+            Window(int w, int h, std::string name, bool fullscreen = false);
             ~Window();
 
             Window(const Window &) = delete;
@@ -23,6 +23,7 @@ namespace vge {
             GLFWwindow *getGLFWwindow() const { return window; }
 
             void createWindowSurface(VkInstance instance, VkSurfaceKHR *surface);
+            void toggleFullscreen();
 
         private:
             static void frameBufferResizeCallback(GLFWwindow *window, int width, int height);
@@ -32,6 +33,7 @@ namespace vge {
             int width;
             int height;
             bool frameBufferResized = false;
+            bool isFullscreen = false;
 
             std::string windowName;
             GLFWwindow *window;

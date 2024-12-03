@@ -34,6 +34,7 @@ namespace vge{
     Model::Model(VgeDevice& device, const Model::Builder &builder) : vgeDevice{device}{
         createVertexBuffer(builder.vertices);
         createIndexBuffer(builder.indices);
+        materials = builder.materials;
     }
 
     Model::~Model(){}
@@ -152,40 +153,65 @@ namespace vge{
     }
 
 
-    void Model::Builder::loadModel(const std::string &filepath){
+    void Model::Builder::loadModel(const std::string &filepath) {
         tinyobj::attrib_t attrib;
         std::vector<tinyobj::shape_t> shapes;
-        std::vector<tinyobj::material_t> materials;
+        std::vector<tinyobj::material_t> tinyMaterials;
         std::string warn, err;
 
-        if(!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, filepath.c_str())){
+        std::string baseDir = filepath.substr(0, filepath.find_last_of('/') + 1);
+
+        if(!tinyobj::LoadObj(&attrib, &shapes, &tinyMaterials, &warn, &err, filepath.c_str(), baseDir.c_str())) {
             throw std::runtime_error(warn + err);
+        }
+
+        materials.clear();
+        // Convert tinyobj materials to our material format
+        for (const auto& mat : tinyMaterials) {
+            Material material{};
+            material.name = mat.name;
+            material.diffuseColor = glm::vec3(mat.diffuse[0], mat.diffuse[1], mat.diffuse[2]);
+            material.ambientColor = glm::vec3(mat.ambient[0], mat.ambient[1], mat.ambient[2]);
+            material.specularColor = glm::vec3(mat.specular[0], mat.specular[1], mat.specular[2]);
+            materials.push_back(material);
+        }
+
+        // If no materials were loaded, create a default white material
+        if (materials.empty()) {
+            Material defaultMaterial{};
+            defaultMaterial.name = "default";
+            defaultMaterial.diffuseColor = glm::vec3(1.0f);
+            materials.push_back(defaultMaterial);
         }
 
         vertices.clear();
         indices.clear();
 
         std::unordered_map<Vertex, uint32_t> uniqueVertices{};
-        for(const auto &shape : shapes) {
-            for(const auto &index : shape.mesh.indices){
+
+        for (const auto& shape : shapes) {
+            // Inside the shape loop, before processing indices
+            std::vector<int> faceMaterialIds;
+            int currentFace = 0;
+            for (size_t i = 0; i < shape.mesh.indices.size(); i += 3) {  // Since we have triangles
+                int materialId = shape.mesh.material_ids.empty() ? 0 : shape.mesh.material_ids[i / 3];
+                faceMaterialIds.push_back(materialId);
+            }
+
+            // Then in your vertex processing loop:
+            for (size_t i = 0; i < shape.mesh.indices.size(); i++) {
+                const auto& index = shape.mesh.indices[i];
                 Vertex vertex{};
 
-                if(index.vertex_index >= 0){
+                if (index.vertex_index >= 0) {
                     vertex.position = {
                         attrib.vertices[3 * index.vertex_index + 0],
                         attrib.vertices[3 * index.vertex_index + 1],
                         attrib.vertices[3 * index.vertex_index + 2],
                     };
-
-                    vertex.color = {
-                        attrib.colors[3 * index.vertex_index + 0],
-                        attrib.colors[3 * index.vertex_index + 1],
-                        attrib.colors[3 * index.vertex_index + 2],
-                    };
-
                 }
 
-                if(index.normal_index >= 0){
+                if (index.normal_index >= 0) {
                     vertex.normal = {
                         attrib.normals[3 * index.normal_index + 0],
                         attrib.normals[3 * index.normal_index + 1],
@@ -193,20 +219,28 @@ namespace vge{
                     };
                 }
 
-                if(index.texcoord_index >= 0){
+                if (index.texcoord_index >= 0) {
                     vertex.uv = {
                         attrib.texcoords[2 * index.texcoord_index + 0],
                         attrib.texcoords[2 * index.texcoord_index + 1],
                     };
                 }
 
-                if(uniqueVertices.count(vertex) == 0){
+                // Get material ID for this vertex based on which face it belongs to
+                int materialId = shape.mesh.material_ids.empty() ? 0 : shape.mesh.material_ids[i / 3];
+                vertex.materialId = materialId;
+
+                // Always use material colors since we know we don't have vertex colors
+                vertex.color = materials[materialId].diffuseColor;
+
+                if (uniqueVertices.count(vertex) == 0) {
                     uniqueVertices[vertex] = static_cast<uint32_t>(vertices.size());
                     vertices.push_back(vertex);
                 }
                 indices.push_back(uniqueVertices[vertex]);
             }
         }
+        std::cout << "Vertex Count: " << vertices.size() << std::endl;
     }
 
 
