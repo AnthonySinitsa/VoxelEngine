@@ -10,6 +10,12 @@ A real-time particle system simulating galactic motion using [Vulkan/WebGPU]
 
 > Note: Requires a browser with  WebGPU support (ie. Chrome)
 
+## Related Project
+
+This project is the original rendering project, I made a core reimplementation using WebGPU for user accesibility
+
+- [Galaxy Simulation (WebGPU)](https://github.com/AnthonySinitsa/webgpu-engine)
+
 ---
 ### Link to my trello board to the project organization.
 
