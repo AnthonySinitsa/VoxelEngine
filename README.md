@@ -1,6 +1,14 @@
-# VoxelEngine (WIP)
+# Vulkan Rendering Engine (WIP)
 
-```This is a Rendering Engine created using the Vulkan Graphics API. The backend is finished, currently working on creating different scenes to more showcase this project.```
+![1.83](images/1.83radius.gif)
+
+A real-time particle system simulating galactic motion using [Vulkan/WebGPU]
+
+## Live Demo (for WebGPU version only)
+
+[WebGPU](https://webgpu-engine.netlify.app/)
+
+> Note: Requires a browser with  WebGPU support (ie. Chrome)
 
 ---
 ### Link to my trello board to the project organization.
@@ -11,9 +19,6 @@
 
 ## Implementing galaxy particle system
 
-## One-hundred-thousand
-
-![1.83](images/1.83radius.gif)
 
 ## 2 million stars rendered with average 7ms frame time
 
