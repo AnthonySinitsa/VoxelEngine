@@ -1,8 +1,12 @@
 # Vulkan Rendering Engine (WIP)
 
+A real-time particle system simulating galactic motion using [Vulkan/WebGPU]
+
 ![1.83](images/1.83radius.gif)
 
-A real-time particle system simulating galactic motion using [Vulkan/WebGPU]
+Scene Management
+
+![scene](images/Scenemanagement.gif)
 
 ## Live Demo (for WebGPU version only)
 
