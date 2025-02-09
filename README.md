@@ -60,3 +60,5 @@ https://beltoforion.de/en/spiral_galaxy_renderer/
 [de Vaucouleurs's Law](https://www.desmos.com/calculator/bax4od28zj)
 
 <!-- command to run on linux `make test` --->
+
+<!-- DELETE ME -->
