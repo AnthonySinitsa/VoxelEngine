@@ -4,9 +4,9 @@
 mkdir -p build
 cd build || exit
 
-# Run cmake
+# Run cmake with the compatibility flag for older dependencies
 echo "Running CMake..."
-if ! cmake -S ../ -B .; then
+if ! cmake -S ../ -B . -DCMAKE_POLICY_VERSION_MINIMUM=3.5; then
     echo "CMake configuration failed"
     exit 1
 fi
@@ -18,6 +18,7 @@ if ! make; then
     exit 1
 fi
 
+# No need for "make Shaders" if added add_dependencies in CMakeLists.txt
 echo "Building shaders..."
 if ! make Shaders; then
     echo "Shader compilation failed"

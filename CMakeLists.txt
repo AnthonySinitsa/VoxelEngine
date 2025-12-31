@@ -1,4 +1,9 @@
-cmake_minimum_required(VERSION 3.14...3.28) # Added range to fix policy warning
+# 1. Set policy minimum as CACHE so dependencies see it
+set(CMAKE_POLICY_VERSION_MINIMUM 3.5 CACHE STRING "Minimum policy version for dependencies")
+
+# 2. Use range syntax to silence warnings about CMake < 3.10
+cmake_minimum_required(VERSION 3.14...3.31) 
+
 project(VgeEngine VERSION 0.1.0)
 
 set(CMAKE_CXX_STANDARD 20)
