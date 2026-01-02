@@ -90,6 +90,11 @@ find_program(GLSL_VALIDATOR glslangValidator HINTS
     $ENV{VULKAN_SDK}/Bin/
 )
 
+# Crucial: Check if the validator was actually found
+if(NOT GLSL_VALIDATOR)
+    message(FATAL_ERROR "glslangValidator not found! Cannot compile shaders.")
+endif()
+
 set(SHADER_SOURCE_DIR ${PROJECT_SOURCE_DIR}/shaders)
 file(GLOB_RECURSE GLSL_SOURCE_FILES
     "${SHADER_SOURCE_DIR}/*.frag"
@@ -98,21 +103,17 @@ file(GLOB_RECURSE GLSL_SOURCE_FILES
 )
 
 foreach(GLSL ${GLSL_SOURCE_FILES})
-    get_filename_component(FILE_NAME ${GLSL} NAME)
-    # Put .spv files in the build directory to keep source tree clean
-    set(SPIRV "${CMAKE_BINARY_DIR}/shaders/${FILE_NAME}.spv")
-    file(MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/shaders")
+    # This puts the .spv file right next to the source file (e.g., shaders/Galaxy/test.comp.spv)
+    set(SPIRV "${GLSL}.spv")
     
     add_custom_command(
         OUTPUT ${SPIRV}
         COMMAND ${GLSL_VALIDATOR} -V ${GLSL} -o ${SPIRV}
         DEPENDS ${GLSL}
-        COMMENT "Compiling shader: ${FILE_NAME}"
+        COMMENT "Compiling shader: ${GLSL}"
     )
     list(APPEND SPIRV_BINARY_FILES ${SPIRV})
 endforeach(GLSL)
 
 add_custom_target(Shaders DEPENDS ${SPIRV_BINARY_FILES})
-
-# This makes the main executable wait for shaders to finish compiling
 add_dependencies(${PROJECT_NAME} Shaders)

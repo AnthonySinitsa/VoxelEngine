@@ -1,27 +1,19 @@
 #!/bin/bash
 
-# Create build directory if it doesn't exist
 mkdir -p build
 cd build || exit
 
-# Run cmake with the compatibility flag for older dependencies
+# Run cmake
 echo "Running CMake..."
-if ! cmake -S ../ -B . -DCMAKE_POLICY_VERSION_MINIMUM=3.5; then
+if ! cmake -S ../ -B . -DCMAKE_EXPORT_COMPILE_COMMANDS=ON; then
     echo "CMake configuration failed"
     exit 1
 fi
 
-# Build project and shaders
-echo "Building project..."
+# Build project
+echo "Building project (including shaders)..."
 if ! make; then
     echo "Build failed"
-    exit 1
-fi
-
-# No need for "make Shaders" if added add_dependencies in CMakeLists.txt
-echo "Building shaders..."
-if ! make Shaders; then
-    echo "Shader compilation failed"
     exit 1
 fi
 
