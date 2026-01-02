@@ -1,6 +1,6 @@
 #pragma once
 
-#include <cstdint> // For uint32_t
+#include <cstdint>  // For uint32_t
 
 #ifdef __cplusplus
 namespace vge {
@@ -32,8 +32,6 @@ inline float hash3(float x, float y, float z) {
 #ifdef __cplusplus
 }  // namespace
 #endif
-
-
 
 /*
 
