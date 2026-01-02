@@ -23,33 +23,29 @@ namespace vge {
  * @return VkResult of the buffer mapping call
  */
 VkDeviceSize VgeBuffer::getAlignment(VkDeviceSize instanceSize, VkDeviceSize minOffsetAlignment) {
-  if (minOffsetAlignment > 0) {
-    return (instanceSize + minOffsetAlignment - 1) & ~(minOffsetAlignment - 1);
-  }
-  return instanceSize;
+    if (minOffsetAlignment > 0) {
+        return (instanceSize + minOffsetAlignment - 1) & ~(minOffsetAlignment - 1);
+    }
+    return instanceSize;
 }
 
-VgeBuffer::VgeBuffer(
-    VgeDevice &device,
-    VkDeviceSize instanceSize,
-    uint32_t instanceCount,
-    VkBufferUsageFlags usageFlags,
-    VkMemoryPropertyFlags memoryPropertyFlags,
-    VkDeviceSize minOffsetAlignment)
+VgeBuffer::VgeBuffer(VgeDevice& device, VkDeviceSize instanceSize, uint32_t instanceCount,
+                     VkBufferUsageFlags usageFlags, VkMemoryPropertyFlags memoryPropertyFlags,
+                     VkDeviceSize minOffsetAlignment)
     : vgeDevice{device},
       instanceSize{instanceSize},
       instanceCount{instanceCount},
       usageFlags{usageFlags},
       memoryPropertyFlags{memoryPropertyFlags} {
-  alignmentSize = getAlignment(instanceSize, minOffsetAlignment);
-  bufferSize = alignmentSize * instanceCount;
-  device.createBuffer(bufferSize, usageFlags, memoryPropertyFlags, buffer, memory);
+    alignmentSize = getAlignment(instanceSize, minOffsetAlignment);
+    bufferSize = alignmentSize * instanceCount;
+    device.createBuffer(bufferSize, usageFlags, memoryPropertyFlags, buffer, memory);
 }
 
 VgeBuffer::~VgeBuffer() {
-  unmap();
-  vkDestroyBuffer(vgeDevice.device(), buffer, nullptr);
-  vkFreeMemory(vgeDevice.device(), memory, nullptr);
+    unmap();
+    vkDestroyBuffer(vgeDevice.device(), buffer, nullptr);
+    vkFreeMemory(vgeDevice.device(), memory, nullptr);
 }
 
 /**
@@ -62,8 +58,8 @@ VgeBuffer::~VgeBuffer() {
  * @return VkResult of the buffer mapping call
  */
 VkResult VgeBuffer::map(VkDeviceSize size, VkDeviceSize offset) {
-  assert(buffer && memory && "Called map on buffer before create");
-  return vkMapMemory(vgeDevice.device(), memory, offset, size, 0, &mapped);
+    assert(buffer && memory && "Called map on buffer before create");
+    return vkMapMemory(vgeDevice.device(), memory, offset, size, 0, &mapped);
 }
 
 /**
@@ -72,10 +68,10 @@ VkResult VgeBuffer::map(VkDeviceSize size, VkDeviceSize offset) {
  * @note Does not return a result as vkUnmapMemory can't fail
  */
 void VgeBuffer::unmap() {
-  if (mapped) {
-    vkUnmapMemory(vgeDevice.device(), memory);
-    mapped = nullptr;
-  }
+    if (mapped) {
+        vkUnmapMemory(vgeDevice.device(), memory);
+        mapped = nullptr;
+    }
 }
 
 /**
@@ -87,16 +83,16 @@ void VgeBuffer::unmap() {
  * @param offset (Optional) Byte offset from beginning of mapped region
  *
  */
-void VgeBuffer::writeToBuffer(void *data, VkDeviceSize size, VkDeviceSize offset) {
-  assert(mapped && "Cannot copy to unmapped buffer");
+void VgeBuffer::writeToBuffer(void* data, VkDeviceSize size, VkDeviceSize offset) {
+    assert(mapped && "Cannot copy to unmapped buffer");
 
-  if (size == VK_WHOLE_SIZE) {
-    memcpy(mapped, data, bufferSize);
-  } else {
-    char *memOffset = (char *)mapped;
-    memOffset += offset;
-    memcpy(memOffset, data, size);
-  }
+    if (size == VK_WHOLE_SIZE) {
+        memcpy(mapped, data, bufferSize);
+    } else {
+        char* memOffset = (char*)mapped;
+        memOffset += offset;
+        memcpy(memOffset, data, size);
+    }
 }
 
 /**
@@ -111,12 +107,12 @@ void VgeBuffer::writeToBuffer(void *data, VkDeviceSize size, VkDeviceSize offset
  * @return VkResult of the flush call
  */
 VkResult VgeBuffer::flush(VkDeviceSize size, VkDeviceSize offset) {
-  VkMappedMemoryRange mappedRange = {};
-  mappedRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
-  mappedRange.memory = memory;
-  mappedRange.offset = offset;
-  mappedRange.size = size;
-  return vkFlushMappedMemoryRanges(vgeDevice.device(), 1, &mappedRange);
+    VkMappedMemoryRange mappedRange = {};
+    mappedRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
+    mappedRange.memory = memory;
+    mappedRange.offset = offset;
+    mappedRange.size = size;
+    return vkFlushMappedMemoryRanges(vgeDevice.device(), 1, &mappedRange);
 }
 
 /**
@@ -131,12 +127,12 @@ VkResult VgeBuffer::flush(VkDeviceSize size, VkDeviceSize offset) {
  * @return VkResult of the invalidate call
  */
 VkResult VgeBuffer::invalidate(VkDeviceSize size, VkDeviceSize offset) {
-  VkMappedMemoryRange mappedRange = {};
-  mappedRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
-  mappedRange.memory = memory;
-  mappedRange.offset = offset;
-  mappedRange.size = size;
-  return vkInvalidateMappedMemoryRanges(vgeDevice.device(), 1, &mappedRange);
+    VkMappedMemoryRange mappedRange = {};
+    mappedRange.sType = VK_STRUCTURE_TYPE_MAPPED_MEMORY_RANGE;
+    mappedRange.memory = memory;
+    mappedRange.offset = offset;
+    mappedRange.size = size;
+    return vkInvalidateMappedMemoryRanges(vgeDevice.device(), 1, &mappedRange);
 }
 
 /**
@@ -148,11 +144,11 @@ VkResult VgeBuffer::invalidate(VkDeviceSize size, VkDeviceSize offset) {
  * @return VkDescriptorBufferInfo of specified offset and range
  */
 VkDescriptorBufferInfo VgeBuffer::descriptorInfo(VkDeviceSize size, VkDeviceSize offset) {
-  return VkDescriptorBufferInfo{
-      buffer,
-      offset,
-      size,
-  };
+    return VkDescriptorBufferInfo{
+        buffer,
+        offset,
+        size,
+    };
 }
 
 /**
@@ -162,8 +158,8 @@ VkDescriptorBufferInfo VgeBuffer::descriptorInfo(VkDeviceSize size, VkDeviceSize
  * @param index Used in offset calculation
  *
  */
-void VgeBuffer::writeToIndex(void *data, int index) {
-  writeToBuffer(data, instanceSize, index * alignmentSize);
+void VgeBuffer::writeToIndex(void* data, int index) {
+    writeToBuffer(data, instanceSize, index * alignmentSize);
 }
 
 /**
@@ -172,7 +168,9 @@ void VgeBuffer::writeToIndex(void *data, int index) {
  * @param index Used in offset calculation
  *
  */
-VkResult VgeBuffer::flushIndex(int index) { return flush(alignmentSize, index * alignmentSize); }
+VkResult VgeBuffer::flushIndex(int index) {
+    return flush(alignmentSize, index * alignmentSize);
+}
 
 /**
  * Create a buffer info descriptor
@@ -182,7 +180,7 @@ VkResult VgeBuffer::flushIndex(int index) { return flush(alignmentSize, index * 
  * @return VkDescriptorBufferInfo for instance at index
  */
 VkDescriptorBufferInfo VgeBuffer::descriptorInfoForIndex(int index) {
-  return descriptorInfo(alignmentSize, index * alignmentSize);
+    return descriptorInfo(alignmentSize, index * alignmentSize);
 }
 
 /**
@@ -195,7 +193,7 @@ VkDescriptorBufferInfo VgeBuffer::descriptorInfoForIndex(int index) {
  * @return VkResult of the invalidate call
  */
 VkResult VgeBuffer::invalidateIndex(int index) {
-  return invalidate(alignmentSize, index * alignmentSize);
+    return invalidate(alignmentSize, index * alignmentSize);
 }
 
-}  // namespace lve
+}  // namespace vge

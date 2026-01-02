@@ -1,0 +1,6 @@
+BasedOnStyle: Google
+IndentWidth: 4
+TabWidth: 4
+UseTab: Never # This converts all tabs to spaces (highly recommended for consistency)
+ColumnLimit: 100
+AllowShortFunctionsOnASingleLine: Empty
