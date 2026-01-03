@@ -1,15 +1,15 @@
+#include <cstdlib>
+#include <exception>
+#include <iostream>
+
 #include "VulkanApplication.h"
 
-#include <cstdlib>
-#include <iostream>
-#include <exception>
-
-int main(){
+int main() {
     vge::VulkanApplication app{};
 
-    try{
+    try {
         app.run();
-    } catch(const std::exception &e) {
+    } catch (const std::exception& e) {
         std::cerr << e.what() << "\n";
         return EXIT_FAILURE;
     }

@@ -1,6 +1,16 @@
 BasedOnStyle: Google
 IndentWidth: 4
 TabWidth: 4
-UseTab: Never # This converts all tabs to spaces (highly recommended for consistency)
+UseTab: Never
 ColumnLimit: 100
+
+# This prevents that "infinite staircase" indentation on builders
+ConstructorInitializerIndentWidth: 4
+ContinuationIndentWidth: 4
+
+# This keeps public/private flush with the class
+AccessModifierOffset: -4
+
+# This allows your builder pattern to look cleaner
 AllowShortFunctionsOnASingleLine: Empty
+BinPackParameters: false
