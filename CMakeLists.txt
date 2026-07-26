@@ -2,7 +2,7 @@
 set(CMAKE_POLICY_VERSION_MINIMUM 3.5 CACHE STRING "Minimum policy version for dependencies")
 
 # 2. Use range syntax to silence warnings about CMake < 3.10
-cmake_minimum_required(VERSION 3.14...3.31) 
+cmake_minimum_required(VERSION 3.14...3.31)
 
 project(VgeEngine VERSION 0.1.0)
 
@@ -18,13 +18,13 @@ include(FetchContent)
 FetchContent_Declare(
     glfw
     GIT_REPOSITORY https://github.com/glfw/glfw.git
-    GIT_TAG        3.4 
+    GIT_TAG        3.4
 )
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(glfw)
 
-# GLM 
+# GLM
 FetchContent_Declare(
     glm
     GIT_REPOSITORY https://github.com/g-truc/glm.git
@@ -36,7 +36,7 @@ FetchContent_MakeAvailable(glm)
 FetchContent_Declare(
     tinyobjloader
     GIT_REPOSITORY https://github.com/tinyobjloader/tinyobjloader.git
-    GIT_TAG        v1.0.6 
+    GIT_TAG        v1.0.6
 )
 FetchContent_MakeAvailable(tinyobjloader)
 
@@ -49,7 +49,14 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(imgui)
 
 # --- System Dependencies ---
-find_package(Vulkan REQUIRED)
+find_package(Vulkan)
+if(NOT Vulkan_FOUND)
+    message(FATAL_ERROR "Vulkan not found! Please install the Vulkan dependencies:\n"
+            "  Arch:   sudo pacman -S vulkan-headers vulkan-icd-loader\n"
+            "  Ubuntu: sudo apt install libvulkan-dev\n"
+            "  Fedora: sudo dnf install vulkan-headers vulkan-loader-devel\n"
+            "  Windows: Install the LunarG Vulkan SDK")
+endif()
 
 # --- Source Files ---
 file(GLOB_RECURSE SOURCES ${PROJECT_SOURCE_DIR}/src/*.cpp)
@@ -68,7 +75,7 @@ add_executable(${PROJECT_NAME} ${SOURCES} ${IMGUI_SOURCES})
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE ENGINE_DIR="${CMAKE_SOURCE_DIR}/")
 
-target_include_directories(${PROJECT_NAME} PUBLIC 
+target_include_directories(${PROJECT_NAME} PUBLIC
     ${PROJECT_SOURCE_DIR}/src
     ${imgui_SOURCE_DIR}
     ${imgui_SOURCE_DIR}/backends
@@ -76,10 +83,10 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ${Vulkan_INCLUDE_DIRS}
 )
 
-target_link_libraries(${PROJECT_NAME} 
-    PRIVATE 
-    glfw 
-    glm::glm 
+target_link_libraries(${PROJECT_NAME}
+    PRIVATE
+    glfw
+    glm::glm
     Vulkan::Vulkan
 )
 
@@ -92,7 +99,11 @@ find_program(GLSL_VALIDATOR glslangValidator HINTS
 
 # Crucial: Check if the validator was actually found
 if(NOT GLSL_VALIDATOR)
-    message(FATAL_ERROR "glslangValidator not found! Cannot compile shaders.")
+    message(FATAL_ERROR "glslangValidator not found! Cannot compile shaders.\n"
+            "Please install the shader compiler:\n"
+            "  Arch:   sudo pacman -S glslang\n"
+            "  Ubuntu: sudo apt install glslang-tools\n"
+            "  Fedora: sudo dnf install glslang")
 endif()
 
 set(SHADER_SOURCE_DIR ${PROJECT_SOURCE_DIR}/shaders)
@@ -105,7 +116,7 @@ file(GLOB_RECURSE GLSL_SOURCE_FILES
 foreach(GLSL ${GLSL_SOURCE_FILES})
     # This puts the .spv file right next to the source file (e.g., shaders/Galaxy/test.comp.spv)
     set(SPIRV "${GLSL}.spv")
-    
+
     add_custom_command(
         OUTPUT ${SPIRV}
         COMMAND ${GLSL_VALIDATOR} -V ${GLSL} -o ${SPIRV}

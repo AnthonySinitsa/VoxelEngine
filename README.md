@@ -46,8 +46,16 @@ Detailed breakdowns of the engine modules can be found in the documentation:
 
 ## Getting Started
 
-### Prerequisites
+## Prerequisites
+
 You must have the **Vulkan SDK** and a **C++20 compatible compiler** installed.
+
+**Windows**:
+1. Install [Visual Studio C++ Build Tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
+2. Download and install the [LunarG Vulkan SDK](https://vulkan.lunarg.com/) (This includes headers, loaders, validation layers, and the shader compiler).
+
+**Linux**:
+Run the included `./unixBuild.sh` script, which will automatically detect your distribution and prompt you to install the necessary Vulkan prerequisites.
 
 **Arch:**
 ```bash
